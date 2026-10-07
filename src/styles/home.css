@@ -6,7 +6,7 @@
 .hero {
   position: relative; min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 0 var(--gutter);
+  padding: 7rem var(--gutter) 4.5rem;
 }
 .hero-label {
   display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2.5rem;
@@ -14,7 +14,7 @@
   animation: fadeUp 0.7s 0.15s both;
 }
 .hero-label::before { content: ''; width: 44px; height: 0.5px; background: rgba(184,149,106,0.4); }
-.hero-title { margin-bottom: 2.75rem; max-width: 12ch; }
+.hero-title { margin-bottom: 2.25rem; max-width: 12ch; font-size: clamp(3.4rem, 9vw, 9.5rem); }
 .hero-title .line-mask:nth-child(1) > span { animation-delay: 0.25s; }
 .hero-title .line-mask:nth-child(2) > span { animation-delay: 0.38s; }
 .hero-title em { transition: color 0.5s, text-shadow 0.5s; }
@@ -22,6 +22,11 @@
 .hero-tagline {
   color: var(--muted); font-size: clamp(0.95rem, 1.3vw, 1.08rem); line-height: 2; max-width: 340px;
   margin-bottom: 3rem; animation: fadeUp 0.7s 0.55s both;
+}
+.hero-role {
+  max-width: 44ch; margin: -1.5rem 0 2.75rem; font-size: clamp(1rem, 1.35vw, 1.12rem); line-height: 1.7;
+  color: var(--text); animation: fadeUp 0.7s 0.6s both;
+  text-shadow: 0 1px 2px rgba(6,12,16,0.55), 0 0 18px rgba(6,12,16,0.6);
 }
 .hero-ctas { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; animation: fadeUp 0.7s 0.65s both; }
 .hero-meta {
@@ -66,34 +71,27 @@
 .work-card--soon .work-title { font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .work-card--soon .work-tag { color: var(--dim); border-color: var(--border); }
 
-/* Practice */
+/* Practice — metric on the left, story on the right */
 .practice-list { margin-top: 4rem; border-top: 0.5px solid var(--border); }
-.pr { position: relative; padding: 2.4rem 0; border-bottom: 0.5px solid var(--border); transition: padding-left 0.5s var(--ease); }
+.pr {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 5rem;
+  padding: 2.6rem 0; border-bottom: 0.5px solid var(--border); transition: padding-left 0.35s var(--ease);
+}
 .pr::before {
   content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 2px; height: 0; background: var(--amber-soft); transition: height 0.5s var(--ease);
+  width: 2px; height: 0; background: var(--amber-soft); transition: height 0.35s var(--ease);
 }
-.pr:hover { padding-left: 1.75rem; }
+.pr:hover { padding-left: 1.5rem; }
 .pr:hover::before { height: 60%; }
-.pr-head { display: flex; justify-content: space-between; align-items: baseline; gap: 2rem; margin-bottom: 1rem; }
-.pr-scale { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-soft); white-space: nowrap; }
-.pr .body { max-width: 66ch; margin-bottom: 1rem; font-size: 0.98rem; }
-.pr-skill { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); }
-
-/* Two hats */
-.center { text-align: center; }
-.hats-intro { text-align: center; max-width: 46ch; margin: 0 auto 4.5rem; }
-.hats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.hat { border: 0.5px solid var(--border); padding: 3rem; background: var(--surface); transition: opacity 0.5s, border-color 0.5s, background 0.5s; }
-.hats:hover .hat { opacity: 0.42; }
-.hats .hat:hover { opacity: 1; border-color: var(--border-strong); background: var(--surface-strong); }
-.hat-label { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 2rem; }
-.hat-line { font-family: var(--serif); font-size: 1.65rem; font-weight: 300; line-height: 1.4; margin-bottom: 2.25rem; }
-.hat-line em { font-style: italic; color: var(--amber); }
-.hat ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-.hat li { font-size: 0.92rem; color: var(--muted); display: flex; align-items: center; gap: 1rem; }
-.hat li::before { content: ''; width: 18px; height: 0.5px; background: currentColor; flex-shrink: 0; }
-.is-touch .hats:hover .hat { opacity: 1; }
+.pr-head { display: flex; flex-direction: column; gap: 1.1rem; }
+.pr-metric { display: flex; flex-direction: column; gap: 0.3rem; }
+.pr-metric b {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 3.6vw, 3.4rem); line-height: 1;
+  color: var(--amber); font-variant-numeric: lining-nums tabular-nums;
+}
+.pr-metric span { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-soft); }
+.pr .body { max-width: 62ch; margin-bottom: 1rem; }
+.pr-skill { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
 
 /* Installation */
 .install { padding: 5rem 4rem; text-align: center; }
@@ -127,21 +125,23 @@
 
 /* Mobile */
 @media (max-width: 860px) {
-  .hero { justify-content: flex-end; padding-bottom: 5.5rem; }
+  .hero { justify-content: flex-end; padding-top: 6rem; padding-bottom: 5.5rem; }
   .hero-title { font-size: clamp(3.2rem, 15vw, 5rem); max-width: none; margin-bottom: 2rem; }
   .hero-tagline { margin-bottom: 2.25rem; }
-  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+  .hero-role {
+  max-width: 44ch; margin: -1.5rem 0 2.75rem; font-size: clamp(1rem, 1.35vw, 1.12rem); line-height: 1.7;
+  color: var(--text); animation: fadeUp 0.7s 0.6s both;
+  text-shadow: 0 1px 2px rgba(6,12,16,0.55), 0 0 18px rgba(6,12,16,0.6);
+}
+.hero-ctas { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .hero-meta { margin-top: 2.25rem; font-size: 0.74rem; letter-spacing: 0.16em; line-height: 1.8; }
   .think-grid { grid-template-columns: 1fr; }
   .work-card { grid-template-columns: 1fr; }
   .work-media { border-right: 0; border-bottom: 0.5px solid var(--border); aspect-ratio: 16 / 10; }
   .work-copy, .work-card--soon .work-copy { padding: 2rem 1.5rem; }
+  .pr { grid-template-columns: 1fr; gap: 1.25rem; padding: 2.25rem 0; }
   .pr:hover { padding-left: 0; }
-  .pr-head { flex-direction: column; gap: 0.5rem; }
-  .pr-scale { white-space: normal; }
-  .hats { grid-template-columns: 1fr; }
-  .hat { padding: 2rem; }
-  .hats-intro { margin-bottom: 2.5rem; }
+  .hero-role { margin-top: -1rem; margin-bottom: 2rem; }
   .install { padding: 3rem 1.5rem; }
   .c-label { font-size: 1.5rem; }
 }

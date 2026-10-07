@@ -65,7 +65,7 @@ a { color: inherit; }
 /* ---------- Atmosphere: image + vignette + scrim + grain ---------- */
 .atmosphere {
   position: fixed; inset: 0; z-index: 0;
-  background: url('/images/atmosphere.jpg') center / cover no-repeat;
+  background: url('/images/atmosphere.webp') center / cover no-repeat;
   transform: scale(1.08) translate3d(0, 0, 0);
   transition: filter 1.1s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, filter;
@@ -96,7 +96,7 @@ a { color: inherit; }
 main, nav, footer { position: relative; z-index: 5; }
 
 /* Small uppercase text sits on a moving image — give it a soft dark halo so it always reads */
-.label, .hero-label, .hero-meta, .work-tag, .work-tags span, .pr-scale, .pr-skill, .hat-label,
+.label, .hero-label, .hero-meta, .work-tag, .work-tags span, .pr-metric span, .pr-skill,
 .install-status, .c-val, .scroll-hint, .nav-links a, .site-footer, .link-quiet, .body, .hero-tagline,
 .think-item span, .think-item em {
   text-shadow: 0 1px 2px rgba(6, 12, 16, 0.55), 0 0 18px rgba(6, 12, 16, 0.6);
@@ -118,7 +118,7 @@ main, nav, footer { position: relative; z-index: 5; }
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 1.75rem var(--gutter);
+  padding: 1.1rem var(--gutter);
   border-bottom: 0.5px solid transparent;
   transition: background 0.5s, padding 0.5s, border-color 0.5s;
 }
@@ -126,18 +126,19 @@ main, nav, footer { position: relative; z-index: 5; }
   background: rgba(8, 16, 20, 0.82);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   border-bottom-color: var(--border);
-  padding-top: 1.15rem; padding-bottom: 1.15rem;
+  padding-top: 0.55rem; padding-bottom: 0.55rem;
 }
-.nav-logo { font-family: var(--serif); font-style: italic; font-size: 1.15rem; text-decoration: none; letter-spacing: 0.05em; }
+.nav-logo { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; font-family: var(--serif); font-style: italic; font-size: 1.15rem; text-decoration: none; letter-spacing: 0.05em; }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 .nav-links a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.25rem;
   font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--muted); text-decoration: none; transition: color 0.35s;
 }
 .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); }
 @media (max-width: 860px) {
   .nav-links { gap: 1.1rem; }
-  .nav-links a { font-size: 0.75rem; letter-spacing: 0.12em; padding: 0.5rem 0; display: inline-block; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.12em; padding: 0 0.15rem; }
   .nav-links .hide-sm { display: none; }
 }
 
