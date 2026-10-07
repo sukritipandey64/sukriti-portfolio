@@ -14,12 +14,13 @@ if (!isTouch) root.classList.add('has-cursor');
    ------------------------------------------------------------------ */
 let lenis = null;
 if (!reduceMotion) {
+  // Light-touch smoothing: responsive like native scroll, just without the jitter.
+  // Touch devices keep their native momentum — it's already fast and familiar.
   lenis = new Lenis({
-    duration: isTouch ? 0.9 : 1.15,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    lerp: 0.16,
+    wheelMultiplier: 1.15,
     smoothWheel: true,
-    syncTouch: isTouch,
-    syncTouchLerp: 0.09,
+    syncTouch: false,
   });
   const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
@@ -31,7 +32,7 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     const target = id.length > 1 && document.querySelector(id);
     if (!target) return;
     e.preventDefault();
-    if (lenis) lenis.scrollTo(target, { duration: 1.4, offset: -40 });
+    if (lenis) lenis.scrollTo(target, { duration: 0.9, offset: -40 });
     else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   });
 });
@@ -132,28 +133,35 @@ document.querySelectorAll('[data-light]').forEach((el) => roomIO.observe(el));
 enter(document.querySelector('[data-light]')?.dataset.light || 'warm');
 
 if (atm && !reduceMotion) {
-  let tx = 0, ty = 0, x = 0, y = 0, lastX = null, lastY = null;
-  if (isTouch) {
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? window.scrollY / max : 0;
-      tx = -2.4 * p; ty = -3.2 * p;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  } else {
+  /* A slow camera move through the image: as you scroll, the view dollies in
+     and pans across the room, so the background travels with you. On desktop
+     the cursor adds a small parallax on top. */
+  let p = 0, mx = 0, my = 0;            // targets
+  let cp = 0, cmx = 0, cmy = 0;         // eased values
+  let last = '';
+  const readScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+  };
+  window.addEventListener('scroll', readScroll, { passive: true });
+  window.addEventListener('resize', readScroll, { passive: true });
+  readScroll();
+  if (!isTouch) {
     document.addEventListener('mousemove', (e) => {
-      tx = (e.clientX / window.innerWidth - 0.5) * -1.1;
-      ty = (e.clientY / window.innerHeight - 0.5) * -0.7;
+      mx = (e.clientX / window.innerWidth - 0.5) * -1.6;
+      my = (e.clientY / window.innerHeight - 0.5) * -1.0;
     }, { passive: true });
   }
   const drift = () => {
-    x += (tx - x) * 0.06; y += (ty - y) * 0.06;
-    const rx = Math.round(x * 1000) / 1000, ry = Math.round(y * 1000) / 1000;
-    if (rx !== lastX || ry !== lastY) {
-      atm.style.transform = `scale(1.08) translate3d(${rx}%, ${ry}%, 0)`;
-      lastX = rx; lastY = ry;
-    }
+    cp += (p - cp) * 0.08; cmx += (mx - cmx) * 0.06; cmy += (my - cmy) * 0.06;
+    // a gentle wave so the pan isn't a straight line — it reads as walking, not sliding
+    const wave = Math.sin(cp * Math.PI * 2.2);
+    const scale = 1.1 + cp * 0.22;                // dolly in ~20% over the page
+    const tx = cmx + wave * 2.2 - cp * 2.5;       // drift across the room
+    const ty = cmy - cp * 4.5;                    // and slowly upward
+    const rot = wave * 0.6;                       // a hint of a turning head
+    const t = `scale(${scale.toFixed(4)}) translate3d(${tx.toFixed(3)}%, ${ty.toFixed(3)}%, 0) rotate(${rot.toFixed(3)}deg)`;
+    if (t !== last) { atm.style.transform = t; last = t; }
     requestAnimationFrame(drift);
   };
   drift();
