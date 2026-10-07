@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0A1419">
+  <title>Velocity AI — Case study · Sukriti Pandey</title>
+  <meta name="description" content="A capacity-intelligence tool designed and prototyped in Figma Make — and the user research that reframed the problem.">
+  <meta property="og:title" content="Velocity AI — Case study · Sukriti Pandey">
+  <meta property="og:image" content="/images/velocity/dashboard.jpg">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/case.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Case study">
+    <a href="/" class="nav-logo">SP</a>
+    <ul class="nav-links">
+      <li><a href="/#work">All work</a></li>
+      <li class="hide-sm"><a href="#moments">Decisions</a></li>
+      <li><a href="#research">Research</a></li>
+      <li class="hide-sm"><a href="#reflections">Reflections</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- 1 · Cover -->
+    <header class="cs-cover" data-light="warm">
+      <p class="cs-kicker">Case study 01 — Product &amp; UX</p>
+      <h1 class="display cs-title">
+        <span class="line-mask"><span>Velocity</span></span>
+        <span class="line-mask"><span><em>AI</em></span></span>
+      </h1>
+      <p class="cs-lede">I set out to fix capacity planning.<br>Three interviews later, I wasn't sure that was the problem.</p>
+
+      <ul class="tldr" aria-label="In short">
+        <li><span class="tldr-n">26</span><span>screens designed and prototyped in Figma Make, steered through <strong>40+ directed iterations</strong></span></li>
+        <li><span class="tldr-n">3</span><span>delivery leaders interviewed — two of them <strong>challenged the premise</strong></span></li>
+        <li><span class="tldr-n">1</span><span>sharper problem: <strong>predicting delivery risk</strong>, not counting hours</span></li>
+      </ul>
+
+      <div class="cs-ctas">
+        <a class="btn-pill" href="https://www.figma.com/make/Sho1iwOvhDxAd0g1laSmdW/Velocity-AI?fullscreen=1" target="_blank" rel="noopener">Open the prototype</a>
+        <a class="link-quiet" href="#context">Read the story</a>
+      </div>
+    </header>
+
+    <!-- Hero frame -->
+    <section class="cs-hero-frame" data-light="near">
+      <figure class="frame reveal" data-zoom>
+        <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>velocity · manager dashboard</span></div>
+        <img src="/images/velocity/dashboard.jpg" alt="Velocity AI manager dashboard: KPI cards, a team capacity timeline across projects, upcoming deadlines and an empty AI insights panel" width="2400" height="1500">
+      </figure>
+    </section>
+
+    <!-- 2 · Metadata -->
+    <section class="cs-meta" data-light="near" aria-label="Project details">
+      <dl class="meta-grid reveal">
+        <div><dt>Role</dt><dd>Product &amp; UX — concept to interactive prototype</dd></div>
+        <div><dt>Timeline</dt><dd>2026, self-initiated</dd></div>
+        <div><dt>Tools</dt><dd>Figma Make, user interviews</dd></div>
+        <div><dt>Research</dt><dd>3 in-depth exploratory interviews</dd></div>
+        <div><dt>Status</dt><dd>Interactive prototype, live in Figma Make</dd></div>
+      </dl>
+      <p class="honesty reveal d1">
+        Velocity is a personal project. It has no users and no shipped metrics. What it has is real research,
+        real decisions, and a hypothesis that didn't survive contact with the people I interviewed. That's the case study.
+      </p>
+    </section>
+
+    <!-- 3 · Context -->
+    <section class="room" id="context" data-light="cool">
+      <p class="label reveal">01 — Context</p>
+      <div class="two-col">
+        <h2 class="h2 reveal d1">Everyone thinks<br>they have <em>capacity.</em></h2>
+        <div>
+          <p class="body reveal d2">
+            Engineering managers plan in spreadsheets that are stale before they're saved. They ask "who's free?" in
+            chat, then discover their best engineer has been at 140% for a month. Jira tracks tasks, not people. The
+            real model lives in the manager's head, and it breaks somewhere past fifteen people.
+          </p>
+          <div class="hypothesis reveal d3">
+            <span>Starting hypothesis</span>
+            <p>Teams struggle with <em>capacity visibility</em>. An AI planning tool can make the invisible legible.</p>
+          </div>
+          <p class="body reveal d3">I designed the product first and tested the hypothesis second. In hindsight, that order is the most instructive thing here.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Final artifacts -->
+    <section class="room room--wide" id="prototype" data-light="cool">
+      <div class="rail-head">
+        <div>
+          <p class="label reveal">02 — The prototype</p>
+          <h2 class="h2 reveal d1">Two views. <em>One truth.</em></h2>
+        </div>
+        <p class="body reveal d2 rail-intro">A manager portal for planning and approvals, an employee portal for workload and time — with a view switcher for everyone who is both.</p>
+      </div>
+
+      <div class="rail" tabindex="0" aria-label="Prototype screens, scroll horizontally">
+        <figure class="rail-item reveal" data-zoom>
+          <img src="/images/velocity/plan-tasks.jpg" alt="Plan My Project: AI-generated task breakdown with feasibility score, duration and total effort" loading="lazy" width="1800" height="1125">
+          <figcaption><b>Plan My Project</b> Describe a project; get a task breakdown, estimates and a feasibility score — all editable.</figcaption>
+        </figure>
+        <figure class="rail-item reveal d1" data-zoom>
+          <img src="/images/velocity/plan-team.jpg" alt="Recommended team: candidate cards with skill match, availability and best-fit tasks" loading="lazy" width="1800" height="1125">
+          <figcaption><b>Allocate the team</b> Candidates ranked by skill match and real availability, with the tasks they fit best.</figcaption>
+        </figure>
+        <figure class="rail-item reveal d2" data-zoom>
+          <img src="/images/velocity/person-detail.jpg" alt="People and capacity: an overloaded engineer's detail panel with capacity timeline, projects, skills and AI suggestions" loading="lazy" width="1800" height="1125">
+          <figcaption><b>People &amp; capacity</b> Who's overloaded, for how long, on what — and what could change it.</figcaption>
+        </figure>
+        <figure class="rail-item reveal d3" data-zoom>
+          <img src="/images/velocity/leave.jpg" alt="Leave management: active leave requests with approve and deny actions, and a team calendar" loading="lazy" width="1800" height="1125">
+          <figcaption><b>Leave</b> Requests and a team calendar that flags overlap with project work.</figcaption>
+        </figure>
+        <figure class="rail-item reveal d4" data-zoom>
+          <img src="/images/velocity/new-team.jpg" alt="A new team's dashboard: two guided next steps instead of empty charts" loading="lazy" width="1800" height="1125">
+          <figcaption><b>Day one</b> A new team gets two clear next steps, not a dashboard full of zeros.</figcaption>
+        </figure>
+      </div>
+      <p class="rail-hint" aria-hidden="true">Drag or scroll sideways · tap any screen to enlarge</p>
+    </section>
+
+    <!-- 5 · Key design moments -->
+    <section class="room" id="moments" data-light="focus">
+      <p class="label reveal">03 — Key design moments</p>
+      <h2 class="h2 reveal d1 narrow-title">Four decisions<br>worth <em>defending.</em></h2>
+
+      <article class="moment reveal">
+        <figure class="moment-media moment-media--tall" data-zoom>
+          <img src="/images/velocity/leave-impact-modal.jpg" alt="PTO impact analysis: two projects affected, 29 hours lost, one critical project, with critical-path tasks and AI recommendations" loading="lazy" width="1024" height="1620">
+        </figure>
+        <div class="moment-copy">
+          <span class="moment-n">01</span>
+          <h3 class="h3">Approving leave shouldn't be <em>a guess.</em></h3>
+          <p class="body">Every interview described the same failure: risk shows up too late. So before a manager approves time off, Velocity shows what it costs — projects affected, hours lost, which critical-path tasks are exposed — and three ways forward, each with a confidence score.</p>
+          <p class="tradeoff">Trade-off — an extra step on every approval. The next version should skip it entirely when the impact is zero.</p>
+        </div>
+      </article>
+
+      <article class="moment moment--flip reveal">
+        <figure class="moment-media" data-zoom>
+          <img src="/images/velocity/plan-team.jpg" alt="Team allocation step with selected candidates and their match scores" loading="lazy" width="1800" height="1125">
+        </figure>
+        <div class="moment-copy">
+          <span class="moment-n">02</span>
+          <h3 class="h3">The AI drafts. <em>The manager commits.</em></h3>
+          <p class="body">"It's not as simple as counting tasks," one director told me. Judgement stays human. Plans live as editable drafts, separate from real projects, until a manager explicitly commits them — and every recommendation shows its reasoning and confidence rather than acting on its own.</p>
+          <p class="tradeoff">Trade-off — a two-step wizard is slower than one click. Being wrong quietly is worse than being slow.</p>
+        </div>
+      </article>
+
+      <article class="moment reveal">
+        <figure class="moment-media" data-zoom>
+          <img src="/images/velocity/create-team-preview.jpg" alt="Create your team: imported members with AI-suggested skills, editable before saving" loading="lazy" width="1800" height="1125">
+        </figure>
+        <div class="moment-copy">
+          <span class="moment-n">03</span>
+          <h3 class="h3">Empty states that <em>do the job.</em></h3>
+          <p class="body">"No team members yet — go to Settings" is a dead end. Velocity's empty states carry the action inline: import a CSV, paste rows from a spreadsheet, or add people by hand — with skills suggested from each role, so setup doesn't become a data-entry chore.</p>
+          <p class="tradeoff">Trade-off — far more design per screen. It's where the product starts to feel considered.</p>
+        </div>
+      </article>
+
+      <article class="moment moment--flip moment--ai reveal">
+        <div class="moment-media moment-compare">
+          <figure data-zoom>
+            <img src="/images/velocity/iteration-early.jpg" alt="An early Figma Make output: a generic centred login card with a bright blue button" loading="lazy" width="1400" height="1181">
+            <figcaption>An early output</figcaption>
+          </figure>
+          <figure data-zoom>
+            <img src="/images/velocity/iteration-late.jpg" alt="A later iteration: split-screen login with a dark brand panel and a restrained form" loading="lazy" width="1400" height="1181">
+            <figcaption>40+ iterations later</figcaption>
+          </figure>
+        </div>
+        <div class="moment-copy">
+          <span class="moment-n">04</span>
+          <h3 class="h3">Directing the tool, <em>not being directed by it.</em></h3>
+          <p class="body">Figma Make's first outputs were competent and generic. The work was in the correction: holding a point of view, rejecting the plausible-but-average, and writing constraints tight enough to get <em>this</em> interface rather than <em>an</em> interface.</p>
+          <p class="body">The failure mode I learned to watch for: AI wires beautiful UI to invented data. An early dashboard proudly reported a named engineer at 120% — connected to nothing. Today the insights panel stays empty until real data exists. <strong>If the data looks too clean, it's fake.</strong></p>
+        </div>
+      </article>
+
+      <details class="system reveal">
+        <summary>
+          <span class="system-k">Depth layer</span>
+          <span class="system-t">The design system, and the contrast fix that <em>didn't survive.</em></span>
+          <span class="system-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="system-body">
+          <div class="swatches">
+            <div class="sw"><i style="background:#141414"></i><b>#141414</b><span>Canvas</span></div>
+            <div class="sw"><i style="background:#1A1C1E"></i><b>#1A1C1E</b><span>Surface</span></div>
+            <div class="sw"><i style="background:#36565F"></i><b>#36565F</b><span>Petrol · borders</span></div>
+            <div class="sw"><i style="background:#5F8190"></i><b>#5F8190</b><span>Slate · primary</span></div>
+            <div class="sw"><i style="background:#E2F0F0"></i><b>#E2F0F0</b><span>Mist · text</span></div>
+            <div class="sw"><i style="background:#78716C"></i><b>#78716C</b><span>Muted text</span></div>
+          </div>
+          <div class="system-cols">
+            <div>
+              <h4>Type &amp; components</h4>
+              <p>Inter throughout; light 300 weights for page titles, 11px uppercase labels for structure. A small, reusable set — KPI card, status badge, and an AI suggestion card that always shows confidence, category and an <em>Ignore</em> option. The tool never gets the last word.</p>
+            </div>
+            <div>
+              <h4>The fix that didn't survive</h4>
+              <p>In the original light theme I swapped muted text from #A8A29E (2.5:1) to #78716C (4.7:1) to pass WCAG AA. Then the product went dark, and the same token on #141414 drops to <strong>3.8:1</strong> — below AA again. The lesson: a contrast fix is a fix for one background, not a property of the colour. It's first on the list for the next pass.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 6 · Impact: research -->
+    <section class="room" id="research" data-light="reading">
+      <p class="label reveal">04 — What users told me</p>
+      <h2 class="h2 reveal d1 narrow-title">The research that<br><em>dismantled the premise.</em></h2>
+      <p class="body reveal d2 research-intro">Three semi-structured interviews, 30–60 minutes each, with people who staff and deliver work for a living. Small sample, labelled as such.</p>
+
+      <div class="people-row">
+        <div class="pcard reveal d1"><b>P1</b><span>Audit director, Big Four</span><em>Ran resource deployment across engagements worth thousands of hours.</em></div>
+        <div class="pcard reveal d2"><b>P2</b><span>Product manager, B2B SaaS</span><em>Owns roadmap prioritisation; works daily with engineering managers.</em></div>
+        <div class="pcard reveal d3"><b>P3</b><span>UX director, consultancy</span><em>Balances staffing and utilisation against shifting client commitments.</em></div>
+      </div>
+
+      <div class="quotes">
+        <p class="quotes-k reveal">Where they told me I was wrong</p>
+        <blockquote class="q q--hard reveal">
+          <p>"The question today is not how many developers I have. The question is: what should those developers build?"</p>
+          <cite>P2 — Product manager</cite>
+        </blockquote>
+        <blockquote class="q q--hard reveal">
+          <p>"The first thing people would ask is, am I signing up to make my life more complex?"</p>
+          <cite>P1 — Audit director</cite>
+        </blockquote>
+        <p class="body reveal q-read">P2 was blunt: <em>"I'm not the ICP for that."</em> For product teams the scarce resource isn't hours, it's prioritisation. And P1 named the adoption killer — every insight Velocity produces depends on data someone has to keep feeding it. I had designed for the value of the output and ignored the cost of the input.</p>
+
+        <p class="quotes-k reveal">What held up</p>
+        <blockquote class="q reveal">
+          <p>"I thought 90% of the work was done. When I actually talked to the person, it was only 50% done."</p>
+          <cite>P1 — Audit director</cite>
+        </blockquote>
+      </div>
+
+      <div class="signals reveal" aria-label="How many participants raised each theme">
+        <div class="sig"><span>Risk is discovered too late</span><div class="bar"><i style="--n:3"></i></div><b>3 of 3</b></div>
+        <div class="sig"><span>Input burden kills adoption</span><div class="bar"><i style="--n:2"></i></div><b>2 of 3</b></div>
+        <div class="sig"><span>Allocation needs human judgement</span><div class="bar"><i style="--n:2"></i></div><b>2 of 3</b></div>
+        <div class="sig"><span>Capacity isn't the main problem</span><div class="bar"><i style="--n:2"></i></div><b>2 of 3</b></div>
+      </div>
+
+      <div class="pivot reveal">
+        <p class="pivot-k">The problem, restated</p>
+        <p class="pivot-before">Teams struggle with capacity visibility.</p>
+        <p class="pivot-after">Teams struggle to <em>predict delivery outcomes</em> before problems become visible.</p>
+        <p class="pivot-note">A small shift with a large consequence. The first framing builds a dashboard; the second builds an early-warning system — and dashboards were exactly what P1 kept pushing back on.</p>
+      </div>
+    </section>
+
+    <!-- 7 · Reflections -->
+    <section class="room" id="reflections" data-light="quiet">
+      <p class="label reveal">05 — Reflections</p>
+      <h2 class="h2 reveal d1">What I'd do <em>differently.</em></h2>
+      <div class="refs">
+        <div class="ref glow reveal d1">
+          <span>01</span>
+          <h4>Research before pixels</h4>
+          <p>I designed 26 screens, then validated the problem. Reversed, I'd have built fewer screens and a sharper product. The most expensive thing I made was confidence in an untested premise.</p>
+        </div>
+        <div class="ref glow reveal d2">
+          <span>02</span>
+          <h4>Design for the input</h4>
+          <p>The next version pulls signals from the tools teams already use instead of asking them to feed a new one — and leads with early warnings, not charts.</p>
+        </div>
+        <div class="ref glow reveal d3">
+          <span>03</span>
+          <h4>Talk to the real buyer</h4>
+          <p>Three interviews, one persona each — directional, not validated. P2 pointed me at programme managers more than once; they're who I'd interview next.</p>
+        </div>
+      </div>
+      <p class="closing reveal">"The strongest thing in this project isn't the interface. It's the interview where someone told me the premise was wrong — and that I kept it in."</p>
+      <div class="cs-end reveal">
+        <a class="btn-pill btn-pill--ghost" href="https://www.figma.com/make/Sho1iwOvhDxAd0g1laSmdW/Velocity-AI?fullscreen=1" target="_blank" rel="noopener">Open the prototype</a>
+        <a class="link-quiet" href="/#work">Back to all work</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Sukriti Pandey — 2026</span>
+    <em>Chaos, but curated.</em>
+  </footer>
+
+  <script type="module" src="/src/js/site.js"></script>
+</body>
+</html>
