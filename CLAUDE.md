@@ -37,5 +37,5 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
 - v2: analog-camera style contact form (EmailJS/Formspree, free tier).
 
 ## Workflow
-- `npm install && npm run dev` / `npm run build`. Check desktop 1440 and mobile 390 for overflow before pushing.
+- `npm install && npm run dev` / `npm run build`. Check 1440x760 (MacBook Air with browser chrome), 1440x900 and mobile 390 before pushing: hero, work card, case cover, screenshots and rail item + caption must each fit one screen (sizes use svh).
 - Commit to `main` and push; confirm the deploy on the live URL.
