@@ -146,16 +146,16 @@ main, nav, footer { position: relative; z-index: 5; }
 .label {
   display: flex; align-items: center; gap: 1.25rem;
   font-size: 0.76rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--amber-soft); margin-bottom: 2.75rem;
+  color: var(--amber-soft); margin-bottom: clamp(1.5rem, 4svh, 2.75rem);
 }
 .label::before { content: ''; width: 44px; height: 0.5px; background: rgba(184, 149, 106, 0.4); flex-shrink: 0; }
 .display {
   font-family: var(--serif); font-weight: 300;
-  font-size: clamp(3.4rem, 10.5vw, 10.5rem); line-height: 0.94; letter-spacing: -0.015em;
+  font-size: clamp(3.4rem, min(10.5vw, 17svh), 10.5rem); line-height: 0.94; letter-spacing: -0.015em;
 }
 .h2 {
   font-family: var(--serif); font-weight: 300;
-  font-size: clamp(2.3rem, 5vw, 4.6rem); line-height: 1.03; letter-spacing: -0.01em;
+  font-size: clamp(2.2rem, min(5vw, 8.5svh), 4.6rem); line-height: 1.03; letter-spacing: -0.01em;
   margin-bottom: 1.75rem;
 }
 .display em, .h2 em, .h3 em { font-style: italic; color: var(--muted); }
@@ -197,7 +197,7 @@ main, nav, footer { position: relative; z-index: 5; }
 .link-quiet:hover::after { width: 48px; }
 
 /* ---------- Layout ---------- */
-.room { position: relative; padding: 9rem var(--gutter); }
+.room { position: relative; padding: clamp(5rem, 14svh, 9rem) var(--gutter); }
 .two-col { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
 @media (max-width: 860px) {
   .room { padding: 5.5rem var(--gutter); }
@@ -261,3 +261,8 @@ main, nav, footer { position: relative; z-index: 5; }
   .reveal { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.08s !important; }
 }
+
+/* Lightbox sits in the browser's top layer, above the custom cursor — use the native one there */
+.has-cursor .lightbox, .has-cursor .lightbox * { cursor: zoom-out; }
+.has-cursor .lightbox .lightbox-close { cursor: pointer; }
+.lightbox-open .cursor, .lightbox-open .cursor-ring { opacity: 0; }

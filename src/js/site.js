@@ -186,7 +186,7 @@ const zoomables = document.querySelectorAll('[data-zoom]');
 if (zoomables.length) {
   const box = document.createElement('dialog');
   box.className = 'lightbox';
-  box.innerHTML = '<button class="lightbox-close" aria-label="Close">Close</button><img alt="">';
+  box.innerHTML = '<button class="lightbox-close" aria-label="Close image">Close <span aria-hidden="true">&times;</span></button><img alt="">';
   document.body.append(box);
   const img = box.querySelector('img');
   zoomables.forEach((el) => {
@@ -195,10 +195,40 @@ if (zoomables.length) {
       img.src = src;
       img.alt = el.querySelector('img')?.alt || '';
       box.showModal();
+      root.classList.add('lightbox-open');
       lenis?.stop();
     });
   });
   const close = () => { box.close(); };
-  box.addEventListener('close', () => lenis?.start());
-  box.addEventListener('click', (e) => { if (e.target === box || e.target.classList.contains('lightbox-close')) close(); });
+  box.addEventListener('close', () => { root.classList.remove('lightbox-open'); lenis?.start(); });
+  box.addEventListener('click', (e) => { if (e.target === box || e.target.closest('.lightbox-close')) close(); });
+}
+
+/* ------------------------------------------------------------------
+   Prototype rail — arrows + counter
+   ------------------------------------------------------------------ */
+const rail = document.querySelector('.rail');
+if (rail) {
+  const items = [...rail.querySelectorAll('.rail-item')];
+  const count = document.querySelector('.rail-count');
+  const [prev, next] = document.querySelectorAll('.rail-btn');
+  const current = () => {
+    const left = rail.scrollLeft;
+    let idx = 0, best = Infinity;
+    items.forEach((it, i) => { const d = Math.abs(it.offsetLeft - rail.offsetLeft - left - parseFloat(getComputedStyle(rail).scrollPaddingLeft || 0)); if (d < best) { best = d; idx = i; } });
+    return idx;
+  };
+  const update = () => {
+    const i = current();
+    if (count) count.textContent = `${i + 1} / ${items.length}`;
+    if (prev) prev.disabled = rail.scrollLeft < 4;
+    if (next) next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+  };
+  let t = null;
+  rail.addEventListener('scroll', () => { cancelAnimationFrame(t); t = requestAnimationFrame(update); }, { passive: true });
+  document.querySelectorAll('.rail-btn').forEach((b) => b.addEventListener('click', () => {
+    const i = Math.max(0, Math.min(items.length - 1, current() + Number(b.dataset.dir)));
+    rail.scrollTo({ left: items[i].offsetLeft - rail.offsetLeft - parseFloat(getComputedStyle(rail).scrollPaddingLeft || 0), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }));
+  update();
 }
