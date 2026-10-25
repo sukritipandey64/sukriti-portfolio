@@ -96,7 +96,7 @@ a { color: inherit; }
 main, nav, footer { position: relative; z-index: 5; }
 
 /* Small uppercase text sits on a moving image — give it a soft dark halo so it always reads */
-.label, .hero-label, .hero-meta, .work-tag, .work-tags span, .pr-metric span, .pr-skill,
+.label, .hero-label, .hero-meta, .work-tag, .work-tags span, .plaque-no, .plaque-medium, .plaque-figure span, .plaque-line, .practice-meta,
 .install-status, .c-val, .scroll-hint, .nav-links a, .site-footer, .link-quiet, .body, .hero-tagline,
 .think-item span, .think-item em {
   text-shadow: 0 1px 2px rgba(6, 12, 16, 0.55), 0 0 18px rgba(6, 12, 16, 0.6);

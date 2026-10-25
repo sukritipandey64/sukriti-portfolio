@@ -105,6 +105,18 @@ if (isTouch) {
 }
 
 /* ------------------------------------------------------------------
+   Exhibit labels — hover/focus on desktop, tap to turn on touch
+   ------------------------------------------------------------------ */
+const plaques = document.querySelectorAll('.plaque');
+if (isTouch) {
+  plaques.forEach((p) => p.addEventListener('click', () => {
+    const open = !p.classList.contains('open');
+    plaques.forEach((o) => o.classList.remove('open'));
+    p.classList.toggle('open', open);
+  }));
+}
+
+/* ------------------------------------------------------------------
    Atmosphere — the light changes room by room
    ------------------------------------------------------------------ */
 const atm = document.querySelector('.atmosphere');

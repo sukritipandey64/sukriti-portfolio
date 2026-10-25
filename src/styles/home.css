@@ -71,27 +71,43 @@
 .work-card--soon .work-title { font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .work-card--soon .work-tag { color: var(--dim); border-color: var(--border); }
 
-/* Practice — metric on the left, story on the right */
-.practice-list { margin-top: 4rem; border-top: 0.5px solid var(--border); }
-.pr {
-  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 5rem;
-  padding: 2.6rem 0; border-bottom: 0.5px solid var(--border); transition: padding-left 0.35s var(--ease);
+/* Practice — exhibit labels */
+.practice-head { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; margin-bottom: 4rem; }
+.practice-head .h2 { margin-bottom: 0; }
+.practice-meta { display: block; margin-top: 1rem; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-soft); }
+.plaques { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.plaque {
+  position: relative; display: flex; flex-direction: column; min-height: 20rem; padding: 1.6rem 1.6rem 1.75rem;
+  background: linear-gradient(160deg, rgba(240,237,230,0.05), rgba(6,12,16,0.55) 60%);
+  border: 0.5px solid var(--border-strong); outline-offset: 3px; cursor: default;
+  box-shadow: 0 18px 40px -24px rgba(0,0,0,0.8), inset 0 1px 0 rgba(240,237,230,0.06);
+  transition: border-color 0.3s, transform 0.4s var(--ease), box-shadow 0.4s;
+  -webkit-tap-highlight-color: transparent;
 }
-.pr::before {
-  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 2px; height: 0; background: var(--amber-soft); transition: height 0.35s var(--ease);
+.plaque:hover, .plaque:focus-visible, .plaque.open {
+  border-color: rgba(224,196,156,0.45); transform: translateY(-3px);
+  box-shadow: 0 26px 50px -24px rgba(0,0,0,0.9), 0 0 40px -18px rgba(184,149,106,0.35), inset 0 1px 0 rgba(240,237,230,0.08);
 }
-.pr:hover { padding-left: 1.5rem; }
-.pr:hover::before { height: 60%; }
-.pr-head { display: flex; flex-direction: column; gap: 1.1rem; }
-.pr-metric { display: flex; flex-direction: column; gap: 0.3rem; }
-.pr-metric b {
-  font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 3.6vw, 3.4rem); line-height: 1;
-  color: var(--amber); font-variant-numeric: lining-nums tabular-nums;
+.plaque-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.25rem; }
+.plaque-no { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
+.plaque-pin { width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #F3DDBA, #8A6B45); box-shadow: 0 0 10px rgba(224,196,156,0.35); }
+.plaque-title { font-family: var(--serif); font-weight: 300; font-size: clamp(1.55rem, 2vw, 1.9rem); line-height: 1.12; margin-bottom: 0.6rem; }
+.plaque-medium { font-family: var(--serif); font-style: italic; font-size: 1.05rem; line-height: 1.45; color: var(--dim); }
+.plaque-face { position: relative; margin-top: auto; padding-top: 1.4rem; border-top: 0.5px solid var(--border); min-height: 6.4rem; }
+.plaque-figure, .plaque-line { transition: opacity 0.3s var(--ease), transform 0.35s var(--ease); }
+.plaque-figure { display: flex; flex-direction: column; gap: 0.35rem; }
+.plaque-figure b { font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 3.2vw, 3rem); line-height: 1; color: var(--amber); font-variant-numeric: lining-nums; white-space: nowrap; }
+.plaque-figure span { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-soft); }
+.plaque-line {
+  position: absolute; left: 0; right: 0; top: 1.4rem;
+  font-size: 0.98rem; line-height: 1.6; color: var(--text); opacity: 0; transform: translateY(8px);
 }
-.pr-metric span { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-soft); }
-.pr .body { max-width: 62ch; margin-bottom: 1rem; }
-.pr-skill { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+.plaque:hover .plaque-figure, .plaque:focus-visible .plaque-figure, .plaque.open .plaque-figure { opacity: 0; transform: translateY(-8px); }
+.plaque:hover .plaque-line, .plaque:focus-visible .plaque-line, .plaque.open .plaque-line { opacity: 1; transform: none; }
+.is-touch .plaque { cursor: pointer; }
+.practice-more { margin-top: 3rem; }
+.plaques-hint { display: none; align-items: center; gap: 0.75rem; margin-top: 0.5rem; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); }
+.plaques-hint::after { content: ''; width: 30px; height: 0.5px; background: currentColor; }
 
 /* Installation */
 .install { padding: 5rem 4rem; text-align: center; }
@@ -124,6 +140,8 @@
 .c-val { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
 
 /* Mobile */
+@media (min-width: 861px) and (max-width: 1100px) { .plaques { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 @media (max-width: 860px) {
   .hero { justify-content: flex-end; padding-top: 6rem; padding-bottom: 5.5rem; }
   .hero-title { font-size: clamp(3.2rem, 15vw, 5rem); max-width: none; margin-bottom: 2rem; }
@@ -139,8 +157,19 @@
   .work-card { grid-template-columns: 1fr; }
   .work-media { border-right: 0; border-bottom: 0.5px solid var(--border); aspect-ratio: 16 / 10; }
   .work-copy, .work-card--soon .work-copy { padding: 2rem 1.5rem; }
-  .pr { grid-template-columns: 1fr; gap: 1.25rem; padding: 2.25rem 0; }
-  .pr:hover { padding-left: 0; }
+  .practice-head { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+  /* a wall you walk along: one plaque at a time, the next one peeking in */
+  .plaques {
+    display: flex; gap: 0.9rem; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin: 0 calc(var(--gutter) * -1); padding: 0.5rem var(--gutter) 1rem;
+    scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .plaques::-webkit-scrollbar { display: none; }
+  .plaques::after { content: ''; flex: 0 0 1px; }
+  .plaque { flex: 0 0 78%; scroll-snap-align: start; min-height: 19rem; padding: 1.35rem 1.35rem 1.5rem; }
+  .plaques-hint { display: flex; }
+  .plaque-top { margin-bottom: 1.25rem; }
+  .plaque:hover { transform: none; }
   .hero-role { margin-top: -1rem; margin-bottom: 2rem; }
   .install { padding: 3rem 1.5rem; }
   .c-label { font-size: 1.5rem; }

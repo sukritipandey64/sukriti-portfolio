@@ -23,6 +23,7 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
 - `src/styles/base.css` — tokens + shared components. `home.css`, `case.css` — page styles.
 - `src/js/site.js` — cursor, reveals, glow cards, room lighting (`data-light` → `LOOKS` map), scroll-driven
   background "camera" (zoom + pan + sway), lightbox for `[data-zoom]`.
+- Homepage "In practice" = six exhibit-label plaques (name, medium, one figure; hover/tap swaps to one line). Detail lives in the resume, not the site.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
 ## Legibility floor
