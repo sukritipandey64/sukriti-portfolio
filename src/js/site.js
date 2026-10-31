@@ -180,6 +180,19 @@ if (atm && !reduceMotion) {
 }
 
 /* ------------------------------------------------------------------
+   Image slots — show a labelled placeholder until the asset file exists
+   ------------------------------------------------------------------ */
+document.querySelectorAll('.shot[data-asset] img').forEach((im) => {
+  const fig = im.closest('.shot');
+  const w = +im.getAttribute('width'), h = +im.getAttribute('height');
+  if (w && h) fig.style.setProperty('--ar', (w / h).toFixed(3));
+  const miss = () => fig.classList.add('pending');
+  if (im.complete && im.naturalWidth === 0 && im.currentSrc) miss();
+  im.addEventListener('error', miss);
+  im.addEventListener('load', () => fig.classList.remove('pending'));
+});
+
+/* ------------------------------------------------------------------
    Image lightbox (case studies)
    ------------------------------------------------------------------ */
 const zoomables = document.querySelectorAll('[data-zoom]');
@@ -191,6 +204,7 @@ if (zoomables.length) {
   const img = box.querySelector('img');
   zoomables.forEach((el) => {
     el.addEventListener('click', () => {
+      if (el.classList.contains('pending')) return;
       const src = el.getAttribute('data-zoom') || el.querySelector('img')?.src;
       img.src = src;
       img.alt = el.querySelector('img')?.alt || '';
