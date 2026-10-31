@@ -32,6 +32,22 @@ def img(asset, alt, sample=False, sizes='(max-width: 860px) 92vw, 55vw', cls='',
             f'sizes="{sizes}" src="/images/velocity/v2/{asset}.webp" alt="{html.escape(alt)}"{load} '
             f'decoding="async" width="{w}" height="{h}">{cap}</figure>')
 
+def scrub(sketch, sketch_alt, shot, shot_alt, cap):
+    w, h = size_of(shot)
+    def layer(asset, alt, cls, sample=False):
+        aw, ah = size_of(asset)
+        small = f'/images/velocity/v2/{asset}-900.webp 900w, ' if aw > 900 else ''
+        tag = '<span class="sample-tag">Sample data</span>' if sample else ''
+        return (f'<figure class="shot {cls}" data-asset="{asset}">{tag}<img srcset="{small}/images/velocity/v2/{asset}.webp {aw}w" '
+                f'sizes="(max-width: 860px) 92vw, 80vw" src="/images/velocity/v2/{asset}.webp" alt="{html.escape(alt)}" '
+                f'loading="lazy" decoding="async" width="{aw}" height="{ah}"></figure>')
+    return (f'<div class="scrub reveal" data-scrub><div class="scrub-stage" style="--ar:{w/h:.3f}">'
+            + layer(shot, shot_alt, 'scrub-screen', sample=True) + layer(sketch, sketch_alt, 'scrub-sketch')
+            + '<span class="scrub-k scrub-k--l" aria-hidden="true">Notebook</span><span class="scrub-k scrub-k--r" aria-hidden="true">Final</span>'
+            + '<span class="scrub-handle" aria-hidden="true"><i></i></span>'
+            + f'<input class="scrub-range" type="range" min="0" max="100" value="100" aria-label="{html.escape(cap)}: slide between the notebook sketch and the final screen">'
+            + f'</div><p class="ss-cap">{cap} <span>Drag to compare</span></p></div>')
+
 MAIN = f'''
   <main id="main">
 
@@ -210,21 +226,9 @@ MAIN = f'''
     <section class="room" id="evolution" data-light="cool">
       <p class="label reveal">07 — Notebook to screen</p>
       <h2 class="h2 reveal d1 narrow-title">Same idea, <em>fewer crossings-out.</em></h2>
-      <div class="ss reveal">
-        {img('sketch-dashboard', 'Notebook sketch of the manager dashboard with a capacity formula', sizes='(max-width: 860px) 45vw, 30vw')}
-        {img('shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights', sample=True)}
-        <p class="ss-cap">Manager dashboard</p>
-      </div>
-      <div class="ss reveal">
-        {img('sketch-timesheet', 'Notebook sketch of a timesheet with a time block', sizes='(max-width: 860px) 45vw, 30vw')}
-        {img('shot-employee-time', 'The employee Time area: timesheets, leave and company holidays in three tabs', sample=True)}
-        <p class="ss-cap">Employee time</p>
-      </div>
-      <div class="ss reveal">
-        {img('sketch-roles-flow', 'Notebook sketch of the roles flow: a user becomes a manager, an employee or an individual contributor', sizes='(max-width: 860px) 45vw, 30vw')}
-        {img('shot-people-drawer', 'People and capacity with a person’s side drawer open: four-week capacity, projects, skills and AI recommendations', sample=True)}
-        <p class="ss-cap">People and roles</p>
-      </div>
+      {scrub('sketch-dashboard', 'Notebook sketch of the manager dashboard with a capacity formula', 'shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights', 'Manager dashboard')}
+      {scrub('sketch-timesheet', 'Notebook sketch of a timesheet with a time block', 'shot-employee-time', 'The employee Time area: timesheets, leave and company holidays in three tabs', 'Employee time')}
+      {scrub('sketch-roles-flow', 'Notebook sketch of the roles flow: a user becomes a manager, an employee or an individual contributor', 'shot-people-drawer', 'People and capacity with a person’s side drawer open: four-week capacity, projects, skills and AI recommendations', 'People and roles')}
     </section>
 
     <!-- 9 · Reflections + next -->

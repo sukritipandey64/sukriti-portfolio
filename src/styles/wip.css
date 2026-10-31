@@ -94,3 +94,16 @@
   .tl li::after { top: 0.45rem; left: -4px; }
   .wip-page .cs-end { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
 }
+
+/* ---------- Motion: tasting notes, translated ---------- */
+.translate { margin-top: 1.5rem; max-width: 30rem; padding: 1rem 1.2rem 1.1rem; border: 0.5px solid var(--border-strong); background: var(--surface-strong); }
+.tr-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); transition: color 0.4s; }
+.tr-words { margin-top: 0.35rem; min-height: 1.5em; font-family: var(--serif); font-style: italic; font-size: clamp(1.35rem, 2.1vw, 1.75rem); line-height: 1.3; color: var(--muted); transition: color 0.5s; }
+.translate.is-to .tr-label { color: var(--amber-soft); }
+.translate.is-to .tr-words { color: var(--amber); }
+/* without JS or with reduced motion: both lines, no animation */
+.tr-static { display: none; }
+.translate:not(.is-live) .tr-label, .translate:not(.is-live) .tr-words { display: none; }
+.translate:not(.is-live) .tr-static { display: block; font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.6; color: var(--text); }
+.translate:not(.is-live) .tr-static span { display: block; font-family: var(--sans); font-style: normal; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-soft); margin-top: 0.4rem; }
+.translate.is-live .tr-static { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); display: block; }

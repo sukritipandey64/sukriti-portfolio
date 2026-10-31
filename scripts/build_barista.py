@@ -107,6 +107,12 @@ PAGE = f'''<!DOCTYPE html>
         <div>
           <p class="pull reveal d1">The barrier isn't information. <em>It's asking.</em></p>
           <p class="idea reveal d2"><span>02 — The idea</span>Scan the QR code on the table, say what you usually drink, and get two picks from today's menu, explained in plain words. A two-tap check-in after the cup makes the next pick better.</p>
+          <div class="translate reveal d3" data-translate data-from="blueberry · floral · bright" data-to="jamun · jaggery · filter coffee"
+               data-from-label="The menu says" data-to-label="In your words">
+            <p class="tr-label">The menu says</p>
+            <p class="tr-words" aria-hidden="true">blueberry · floral · bright</p>
+            <p class="tr-static"><span>The menu says</span> blueberry · floral · bright <span>In your words</span> jamun · jaggery · filter coffee</p>
+          </div>
         </div>
       </div>
     </section>

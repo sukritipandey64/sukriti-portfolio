@@ -185,3 +185,39 @@
   .install { padding: 3rem 1.5rem; }
   .c-label { font-size: 1.5rem; }
 }
+
+/* ---------- Motion: chaos, then curated ---------- */
+.hero-line { display: block; padding-bottom: 0.06em; }
+.hero-line--chaos .ch {
+  display: inline-block; will-change: transform;
+  transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0));
+  transition: transform 0.9s cubic-bezier(0.34, 1.36, 0.5, 1) calc(var(--i) * 28ms), opacity 0.45s ease calc(var(--i) * 18ms);
+}
+.hero-title.is-chaos .ch { opacity: 0.85; transition-duration: 0.01s; }
+.hero-title:not(.is-chaos):not(.is-curated) .ch { opacity: 0; }
+.hero-title.is-curated:not(.is-stirred) .ch { transform: translate(0, 0) rotate(0); }
+.hero-title.is-stirred .ch { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
+/* "curated." lands only after the letters have settled */
+.hero-title .line-mask:nth-child(2) > span { animation-delay: 1.35s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-line--chaos .ch { transform: none !important; transition: none; opacity: 1 !important; }
+}
+
+/* ---------- Motion: living Velocity card ---------- */
+.work-reel { position: relative; }
+.work-reel .reel-frame {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top;
+  opacity: 0; transform: scale(1.02); transition: opacity 0.7s ease, transform 2.6s ease-out;
+}
+.work-reel .reel-frame.is-on { opacity: 0.94; transform: scale(1); }
+.work-reel.is-playing .reel-frame.is-on { transform: scale(1.045) translate(-0.6%, -0.8%); opacity: 1; }
+.work-card:hover .work-media.work-reel img { transform: none; }
+.reel-chip {
+  position: absolute; left: 0.9rem; bottom: 0.9rem; z-index: 2; display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.3rem 0.7rem; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text);
+  background: rgba(6,12,16,0.72); border: 0.5px solid var(--border-strong); opacity: 0; transition: opacity 0.4s;
+}
+.reel-chip i { width: 6px; height: 6px; border-radius: 50%; background: #E06A5C; animation: pulse 1.6s ease-in-out infinite; }
+.reel-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: var(--progress, 25%); background: var(--amber); opacity: 0; transition: width 0.5s ease, opacity 0.4s; z-index: 2; }
+.work-reel.is-playing .reel-chip, .work-reel.is-playing .reel-bar { opacity: 1; }
+@media (max-width: 860px) { .work-reel { aspect-ratio: 16 / 10; } }

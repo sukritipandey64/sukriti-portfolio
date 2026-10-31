@@ -31,6 +31,7 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
 - `src/styles/base.css` — tokens + shared components. `home.css`, `case.css` — page styles.
 - `src/js/site.js` — cursor, reveals, glow cards, room lighting (`data-light` → `LOOKS` map), scroll-driven
   background "camera" (zoom + pan + sway), lightbox for `[data-zoom]`.
+- `src/js/motion.js` — signature motion: hero letters scatter then snap ("Chaos, but curated"), living Velocity card (frame reel on hover / in view), sketch→screen scrub on Velocity (scroll-driven until dragged; range input for keyboard), tasting-note decode on Digital Barista. All off under prefers-reduced-motion. One signature moment per page.
 - Homepage "In practice" = six exhibit-label plaques (name, medium, one figure; hover/tap swaps to one line). Detail lives in the resume, not the site.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
