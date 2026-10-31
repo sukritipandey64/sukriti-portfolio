@@ -8,6 +8,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         velocity: resolve(__dirname, 'velocity-ai.html'),
+        barista: resolve(__dirname, 'digital-barista.html'),
       },
     },
   },

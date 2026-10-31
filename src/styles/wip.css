@@ -1,0 +1,96 @@
+/* ==========================================================================
+   In-progress case study (Digital Barista) — compact: tighter rooms, smaller cover
+   ========================================================================== */
+.wip-cover {
+  position: relative; display: flex; flex-direction: column;
+  padding: clamp(6rem, 14svh, 7.5rem) var(--gutter) clamp(1.5rem, 3svh, 2rem);
+}
+.wip-status {
+  display: inline-flex; align-items: center; gap: 0.7rem; align-self: flex-start; margin-bottom: clamp(1rem, 3svh, 1.75rem);
+  padding: 0.45rem 0.95rem; border: 0.5px solid rgba(184,138,149,0.5); border-radius: 999px;
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #E7BFC9;
+  animation: fadeUp 0.7s 0.1s both;
+}
+.wip-status span, .status-line span { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0; }
+.wip-title { font-size: clamp(2.6rem, min(6.4vw, 11svh), 6rem); margin-bottom: clamp(0.75rem, 2.5svh, 1.5rem); animation: fadeUp 0.8s 0.2s both; }
+.wip-title em { font-size: 0.42em; letter-spacing: 0; color: var(--dim); white-space: nowrap; }
+.wip-cover .cs-lede { margin-bottom: 0; }
+.meta-row--3 { grid-template-columns: 0.9fr 1.4fr 0.8fr; margin-top: clamp(1.25rem, 4svh, 2.25rem); }
+
+.wip-room { position: relative; padding: clamp(2rem, 5svh, 3rem) var(--gutter); }
+.wip-room .label { margin-bottom: 1.25rem; }
+.wip-room--end { padding-bottom: clamp(3rem, 7svh, 4.5rem); }
+
+/* insight + idea */
+.wip-insight { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
+.insight-list { list-style: none; border-top: 0.5px solid var(--border); }
+.insight-list li { padding: 0.75rem 0 0.75rem 1.6rem; border-bottom: 0.5px solid var(--border); position: relative; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+.insight-list li::before { content: ''; position: absolute; left: 0; top: 1.6rem; width: 0.8rem; height: 0.5px; background: var(--amber-soft); }
+.wip-insight .pull { margin-top: 0; font-size: clamp(1.6rem, 2.6vw, 2.3rem); }
+.idea { margin-top: 1.25rem; max-width: 46ch; font-size: 1.02rem; line-height: 1.75; color: var(--text); }
+.idea span { display: block; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 0.6rem; }
+
+/* decisions */
+.dcards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); }
+.dcard { padding: 1.1rem 1.25rem 1.2rem; background: rgba(8,16,20,0.82); }
+.dcard b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.2rem; line-height: 1.25; margin-bottom: 0.4rem; }
+.dcard p { font-size: 0.9rem; line-height: 1.6; color: var(--muted); }
+.dcard--wide { grid-column: span 2; background: rgba(184,149,106,0.1); }
+.dcard--wide b { color: var(--amber); }
+
+/* research */
+.wip-research { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.lead-line { font-family: var(--serif); font-weight: 300; font-size: clamp(1.4rem, 2.1vw, 1.85rem); line-height: 1.3; margin-bottom: 1.1rem; }
+.lead-line em { color: var(--amber); }
+.status-line { display: flex; gap: 0.8rem; align-items: baseline; margin-bottom: 1.25rem; padding: 0.9rem 1.1rem; border: 0.5px solid rgba(184,138,149,0.45); background: rgba(184,138,149,0.07); font-size: 0.96rem; line-height: 1.55; color: var(--text); }
+.status-line span { transform: translateY(-0.1rem); }
+.wip-research .shot { margin-top: 1.5rem; }
+.qh { padding: 1.25rem 1.5rem; border: 0.5px solid var(--border-strong); background: var(--surface-strong); }
+.qh-k { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 0.75rem; }
+.qh-k i { font-style: normal; color: var(--dim); letter-spacing: 0.12em; }
+.qh-k--hyp { margin-top: 1.1rem; color: #E7BFC9; }
+.qh ul { list-style: none; }
+.qh li { padding: 0.4rem 0; border-bottom: 0.5px solid var(--border); font-size: 0.98rem; line-height: 1.55; color: var(--muted); }
+.qh .hyp li { font-family: var(--serif); font-style: italic; font-size: 1.12rem; color: var(--text); }
+.qh .hyp li::before { content: 'H — '; font-family: var(--sans); font-style: normal; font-size: 0.74rem; letter-spacing: 0.14em; color: var(--dim); }
+
+/* wireframes */
+.wip-lofi { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3rem; align-items: end; }
+.wires { --wh: min(40svh, 20rem); display: flex; gap: 1.25rem; }
+.wires .shot img { height: var(--wh); width: auto; max-width: none; object-fit: contain; filter: grayscale(1); }
+.wires .shot.pending img { width: calc(var(--wh) * var(--ar, 0.49)); }
+.wires .shot.pending::before { inset: 0 auto auto 0; aspect-ratio: auto; width: calc(var(--wh) * var(--ar, 0.49)); height: var(--wh); font-size: 0.74rem; letter-spacing: 0.08em; }
+.wires .shot figcaption { max-width: calc(var(--wh) * var(--ar, 0.49)); }
+.wires-cap { max-width: 34ch; font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.6; color: var(--muted); }
+
+/* timeline */
+.tl { list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); counter-reset: t; border-top: 0.5px solid var(--border-strong); }
+.tl li { counter-increment: t; position: relative; padding: 1rem 1rem 0 0; font-size: 0.94rem; line-height: 1.45; color: var(--muted); }
+.tl li::before { content: counter(t, decimal-leading-zero); display: block; font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--dim); margin-bottom: 0.35rem; }
+.tl li::after { content: ''; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); }
+.tl .tl-now { color: var(--text); }
+.tl .tl-now::before { color: var(--amber-soft); }
+.tl .tl-now::after { background: var(--amber); box-shadow: 0 0 12px rgba(184,149,106,0.6); }
+.wip-page .cs-end { justify-content: flex-start; margin-top: 2rem; }
+
+.insight-list li, .idea, .dcard p, .status-line, .qh li, .wires-cap, .tl li { text-shadow: 0 1px 2px rgba(6,12,16,0.55), 0 0 18px rgba(6,12,16,0.6); }
+
+@media (max-width: 1000px) {
+  .dcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wip-lofi { grid-template-columns: 1fr; gap: 1.5rem; }
+  .tl { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.25rem; }
+}
+@media (max-width: 860px) {
+  .wip-cover { min-height: 0; }
+  .meta-row--3 { grid-template-columns: 1fr; }
+  .wip-insight, .wip-research { grid-template-columns: 1fr; gap: 2rem; }
+  .dcards { grid-template-columns: 1fr; }
+  .dcard--wide { grid-column: auto; }
+  .wires { --wh: min(52svh, 24rem); overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 0.5rem; scrollbar-width: none; }
+  .wires .shot { flex: 0 0 auto; scroll-snap-align: start; }
+  .tl { grid-template-columns: 1fr; border-top: 0; border-left: 0.5px solid var(--border-strong); row-gap: 0; }
+  .tl li { padding: 0 0 1.25rem 1.5rem; }
+  .tl li::before { display: inline; margin-right: 0.6rem; }
+  .tl li::after { top: 0.45rem; left: -4px; }
+  .wip-page .cs-end { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+}

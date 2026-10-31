@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0A1419">
+  <title>Digital Barista — In progress · Sukriti Pandey</title>
+  <meta name="description" content="In progress: a phone web app that helps people new to specialty coffee order without having to ask. Research first, build second.">
+  <link rel="canonical" href="https://sukritipandey.vercel.app/digital-barista.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sukriti Pandey">
+  <meta property="og:url" content="https://sukritipandey.vercel.app/digital-barista.html">
+  <meta property="og:title" content="Digital Barista — In progress · Sukriti Pandey">
+  <meta property="og:description" content="In progress: a phone web app that helps people new to specialty coffee order without having to ask. Research first, build second.">
+  <meta property="og:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Digital Barista — In progress · Sukriti Pandey">
+  <meta name="twitter:description" content="In progress: a phone web app that helps people new to specialty coffee order without having to ask. Research first, build second.">
+  <meta name="twitter:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/case.css">
+  <link rel="stylesheet" href="/src/styles/wip.css">
+</head>
+<body class="wip-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Case study">
+    <a href="/" class="nav-logo">SP</a>
+    <ul class="nav-links">
+      <li><a href="/#work">All work</a></li>
+      <li class="hide-sm"><a href="#decisions">Decisions</a></li>
+      <li><a href="#research">Research</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- 1 · Cover + 2 · metadata -->
+    <header class="wip-cover" data-light="warm">
+      <p class="wip-status"><span aria-hidden="true"></span>In progress · Research phase</p>
+      <h1 class="display wip-title">Digital Barista <em>(working title)</em></h1>
+      <p class="cs-lede">Ordering coffee shouldn't feel like an oral exam.</p>
+      <dl class="meta-row meta-row--3">
+        <div><dt>Role</dt><dd>Solo — research, product design, build</dd></div>
+        <div><dt>Platform</dt><dd>Phone web app, opened from a café table QR code, no download</dd></div>
+        <div><dt>Timeline</dt><dd>Oct 2026 – ongoing</dd></div>
+      </dl>
+    </header>
+
+    <!-- 3 · Insight + 4 · Idea -->
+    <section class="wip-room" data-light="near">
+      <div class="wip-insight">
+        <div>
+          <p class="label reveal">01 — The insight</p>
+          <ul class="insight-list reveal d1">
+            <li>Specialty coffee is growing fast in India, but menus assume you already speak coffee: brew methods, estates, processing, roast levels, tasting notes.</li>
+            <li>Beginners feel judged asking the barista, so they default to a hazelnut latte, or guess.</li>
+            <li>Tasting notes describe the coffee, not whether you'll like it. You can love blueberries and hate blueberry coffee.</li>
+          </ul>
+        </div>
+        <div>
+          <p class="pull reveal d1">The barrier isn't information. <em>It's asking.</em></p>
+          <p class="idea reveal d2"><span>02 — The idea</span>Scan the QR code on the table, say what you usually drink, and get two picks from today's menu, explained in plain words. A two-tap check-in after the cup makes the next pick better.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Key decisions -->
+    <section class="wip-room" id="decisions" data-light="cool">
+      <p class="label reveal">03 — Decisions so far</p>
+      <div class="dcards">
+        <div class="dcard reveal"><b>No prompt needed</b><p>Scan, one tap, two picks. Good help shouldn't require knowing what to ask.</p></div>
+        <div class="dcard reveal d1"><b>One onboarding question</b><p>"What do you usually order?" It starts from what people already know.</p></div>
+        <div class="dcard reveal d2"><b>Always two picks: safe and stretch</b><p>The user keeps the choice, and a miss is framed as part of the experiment.</p></div>
+        <div class="dcard reveal"><b>Tasting notes, translated</b><p>Into Indian food memories: jamun, jaggery, filter coffee. Unfamiliar language becomes familiar taste.</p></div>
+        <div class="dcard reveal d1"><b>A two-tap check-in</b><p>It returns the next suggestion right away. The tone: come back and we'll explore together.</p></div>
+        <div class="dcard reveal d2"><b>Cold start</b><p>Seeded with barista knowledge and a small tasting session. Real reactions take over as data grows.</p></div>
+        <div class="dcard dcard--wide reveal"><b>Why not just ask a chatbot?</b><p>Picks come from the café's actual menu today. And the record of how beginners react to specific coffees is data no general chatbot has.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 · Research -->
+    <section class="wip-room" id="research" data-light="reading">
+      <p class="label reveal">04 — Research, before building</p>
+      <div class="wip-research">
+        <div>
+          <p class="lead-line reveal d1">My last project taught me to validate before I build. <em>This time, research comes first.</em></p>
+          <p class="status-line reveal d2"><span aria-hidden="true"></span>Research underway: reaching out to 24 Indian baristas, coffee creators and educators.</p>
+          <p class="body reveal d2">The outreach asks about the problem, not the solution. Alongside it, I'm reading reel comments by hand to hear how beginners describe the experience in their own words.</p>
+          
+        </div>
+        <div class="qh reveal d2">
+          <p class="qh-k">Questions I'm trying to answer</p>
+          <ul><li>What makes beginners hesitate at the counter?</li><li>Where do they look for help today, if anywhere?</li><li>What do baristas wish customers felt comfortable asking?</li></ul>
+          <p class="qh-k qh-k--hyp">Hypotheses to test <i>— not findings</i></p>
+          <ul class="hyp"><li>The barrier is social, not informational.</li><li>Beginners want a starting point, not an education.</li><li>Baristas would welcome better questions from customers.</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Lo-fi -->
+    <section class="wip-room" id="wireframes" data-light="cool">
+      <p class="label reveal">05 — Lo-fi, first wireframes</p>
+      <div class="wip-lofi">
+      <div class="wires reveal">
+        <figure class="shot" data-zoom data-asset="wireframe-onboarding"><img srcset="/images/barista/wireframe-onboarding.webp 780w" sizes="(max-width: 860px) 80vw, 26vw" src="/images/barista/wireframe-onboarding.webp" alt="Grayscale phone wireframe of the single onboarding question: What do you usually order?" loading="lazy" decoding="async" width="780" height="1600"><figcaption>One question</figcaption></figure>
+        <figure class="shot" data-zoom data-asset="wireframe-two-picks"><img srcset="/images/barista/wireframe-two-picks.webp 780w" sizes="(max-width: 860px) 80vw, 26vw" src="/images/barista/wireframe-two-picks.webp" alt="Grayscale phone wireframe showing two picks from today’s menu: a safe pick and a stretch pick, each explained in plain words" loading="lazy" decoding="async" width="780" height="1600"><figcaption>Two picks: safe and stretch</figcaption></figure>
+        <figure class="shot" data-zoom data-asset="wireframe-check-in"><img srcset="/images/barista/wireframe-check-in.webp 780w" sizes="(max-width: 860px) 80vw, 26vw" src="/images/barista/wireframe-check-in.webp" alt="Grayscale phone wireframe of the two-tap reaction after the cup, followed by the next suggestion" loading="lazy" decoding="async" width="780" height="1600"><figcaption>Two-tap check-in</figcaption></figure>
+      </div>
+        <p class="wires-cap reveal">Grayscale structure first. The app gets its own design system once the research says what it needs.</p>
+      </div>
+    </section>
+
+    <!-- 8 · Next + 9 · footer -->
+    <section class="wip-room wip-room--end" data-light="quiet">
+      <p class="label reveal">06 — What's next</p>
+      <ol class="tl reveal" aria-label="Next steps, in order">
+        <li class="tl-now">Research synthesis</li><li>Refine the flow</li><li>Design system</li><li>Micro-interactions</li><li>Build</li><li>Café test with 5–6 beginners</li>
+      </ol>
+      <div class="cs-end reveal">
+        <a class="btn-pill btn-pill--ghost" href="/#work">Back to work</a>
+        <a class="link-quiet" href="https://www.linkedin.com/in/sukritipandey1908/" target="_blank" rel="noopener">Follow along on LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Sukriti Pandey — 2026</span>
+    <em>Chaos, but curated.</em>
+  </footer>
+
+  <script type="module" src="/src/js/site.js"></script>
+</body>
+</html>

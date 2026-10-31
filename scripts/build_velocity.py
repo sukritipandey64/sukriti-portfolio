@@ -1,5 +1,5 @@
 """Generates the <main> of velocity-ai.html (v2 spec, Oct 2026).
-Image slots reference /images/velocity/v2/<asset>.webp; run scripts/velocity_assets.py
+Image slots reference /images/velocity/v2/<asset>.webp; run `python3 scripts/assets.py velocity <folder>`
 to convert dropped-in files and stamp real width/height into the page."""
 import re, html
 from pathlib import Path
@@ -28,7 +28,7 @@ def img(asset, alt, sample=False, sizes='(max-width: 860px) 92vw, 55vw', cls='',
     cap = f'<figcaption>{caption}</figcaption>' if caption else ''
     load = '' if eager else ' loading="lazy"'
     return (f'<figure class="shot {cls}" data-zoom data-asset="{asset}">{tag}'
-            f'<img srcset="/images/velocity/v2/{asset}-900.webp 900w, /images/velocity/v2/{asset}.webp {w}w" '
+            f'<img srcset="{"/images/velocity/v2/" + asset + "-900.webp 900w, " if w > 900 else ""}/images/velocity/v2/{asset}.webp {w}w" '
             f'sizes="{sizes}" src="/images/velocity/v2/{asset}.webp" alt="{html.escape(alt)}"{load} '
             f'decoding="async" width="{w}" height="{h}">{cap}</figure>')
 
