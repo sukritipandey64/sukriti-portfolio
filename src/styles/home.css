@@ -35,7 +35,7 @@
 }
 
 /* How I think */
-.think-grid { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid var(--border); }
+.think-grid { margin-top: var(--gap-block); display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid var(--border); }
 .think-item { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.4rem 2rem 1.4rem 0; border-bottom: 0.5px solid var(--border); }
 .think-item span { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; }
 .think-item em { font-family: var(--serif); font-size: 1.15rem; color: var(--muted); }
@@ -43,8 +43,8 @@
 /* Work */
 .work-card {
   display: grid; grid-template-columns: 1.25fr 1fr; align-items: stretch;
-  height: clamp(24rem, calc(100svh - 8.5rem), 38rem);
-  text-decoration: none; color: inherit; margin-bottom: 1.5rem;
+  height: clamp(20rem, calc(100svh - 17rem), 30rem);
+  text-decoration: none; color: inherit; margin-bottom: 1.25rem;
 }
 .work-media { overflow: hidden; border-right: 0.5px solid var(--border); background: #141414; }
 .work-media img { width: 100%; height: 100%; object-fit: cover; object-position: left top; transition: transform 1.2s var(--ease), opacity 0.6s; opacity: 0.92; }
@@ -56,7 +56,7 @@
   font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber-soft);
   border: 0.5px solid rgba(184,149,106,0.3); padding: 0.35rem 0.9rem;
 }
-.work-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2.2rem, min(4.5vw, 8svh), 4rem); line-height: 1; margin-bottom: clamp(0.75rem, 2svh, 1.25rem); }
+.work-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, min(3.6vw, 6.5svh), 3.2rem); line-height: 1; margin-bottom: clamp(0.75rem, 2svh, 1.25rem); }
 .work-title em { font-style: italic; color: var(--muted); }
 .work-desc { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: clamp(1rem, 3svh, 1.75rem); }
 .work-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: clamp(1rem, 3svh, 2rem); }
@@ -82,7 +82,7 @@
 .work-card--soon .work-tag { color: var(--dim); border-color: var(--border); }
 
 /* Practice — exhibit labels */
-.practice-head { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; margin-bottom: 4rem; }
+.practice-head { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; margin-bottom: var(--gap-head); }
 .practice-head .h2 { margin-bottom: 0; }
 .practice-meta { display: block; margin-top: 1rem; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-soft); }
 .plaques { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
@@ -115,12 +115,12 @@
 .plaque:hover .plaque-figure, .plaque:focus-visible .plaque-figure, .plaque.open .plaque-figure { opacity: 0; transform: translateY(-8px); }
 .plaque:hover .plaque-line, .plaque:focus-visible .plaque-line, .plaque.open .plaque-line { opacity: 1; transform: none; }
 .is-touch .plaque { cursor: pointer; }
-.practice-more { margin-top: 3rem; }
+.practice-more { margin-top: var(--gap-block); }
 .plaques-hint { display: none; align-items: center; gap: 0.75rem; margin-top: 0.5rem; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); }
 .plaques-hint::after { content: ''; width: 30px; height: 0.5px; background: currentColor; }
 
 /* Installation */
-.install { padding: 5rem 4rem; text-align: center; }
+.install { padding: var(--gap-block) 4rem; text-align: center; }
 .install-glow {
   position: absolute; top: -30%; left: 50%; transform: translateX(-50%); width: 60%; height: 120%; pointer-events: none;
   background: radial-gradient(ellipse at center, rgba(184,138,149,0.18) 0%, rgba(184,149,106,0.08) 40%, transparent 70%);
@@ -138,7 +138,7 @@
 
 /* Contact */
 .contact-title { max-width: 16ch; }
-.contact-links { margin-top: 3.5rem; border-top: 0.5px solid var(--border); }
+.contact-links { margin-top: var(--gap-head); border-top: 0.5px solid var(--border); }
 .contact-link {
   display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
   padding: 2rem 0; border-bottom: 0.5px solid var(--border); text-decoration: none;
@@ -168,7 +168,7 @@
   .wip-row { grid-template-columns: 1fr; gap: 1rem; }
   .work-media { border-right: 0; border-bottom: 0.5px solid var(--border); aspect-ratio: 16 / 10; }
   .work-copy, .work-card--soon .work-copy { padding: 2rem 1.5rem; }
-  .practice-head { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+  .practice-head { grid-template-columns: 1fr; gap: 1.5rem; }
   /* a wall you walk along: one plaque at a time, the next one peeking in */
   .plaques {
     display: flex; gap: 0.9rem; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -191,14 +191,14 @@
 .hero-line--chaos .ch {
   display: inline-block; will-change: transform;
   transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0));
-  transition: transform 0.9s cubic-bezier(0.34, 1.36, 0.5, 1) calc(var(--i) * 28ms), opacity 0.45s ease calc(var(--i) * 18ms);
+  transition: transform 0.7s cubic-bezier(0.25, 1.1, 0.4, 1) calc(var(--i) * 22ms), opacity 0.45s ease calc(var(--i) * 18ms);
 }
 .hero-title.is-chaos .ch { opacity: 0.85; transition-duration: 0.01s; }
 .hero-title:not(.is-chaos):not(.is-curated) .ch { opacity: 0; }
 .hero-title.is-curated:not(.is-stirred) .ch { transform: translate(0, 0) rotate(0); }
 .hero-title.is-stirred .ch { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1); }
 /* "curated." lands only after the letters have settled */
-.hero-title .line-mask:nth-child(2) > span { animation-delay: 1.35s; }
+.hero-title .line-mask:nth-child(2) > span { animation-delay: 0.85s; }
 @media (prefers-reduced-motion: reduce) {
   .hero-line--chaos .ch { transform: none !important; transition: none; opacity: 1 !important; }
 }

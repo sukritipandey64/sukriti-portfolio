@@ -35,6 +35,10 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
 - Homepage "In practice" = six exhibit-label plaques (name, medium, one figure; hover/tap swaps to one line). Detail lives in the resume, not the site.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
+## Spacing (one rhythm everywhere)
+- Use the tokens in base.css: `--room-y` (section top/bottom), `--gap-label` (eyebrow -> heading), `--gap-head`
+  (heading -> content), `--gap-block` (block -> block), `--gap-para`. No ad-hoc margins between sections or blocks.
+
 ## Legibility floor
 - Small uppercase text >= 0.74rem; amber text uses solid `--amber-soft` (#E0C49C); small text gets the dark halo
   text-shadow defined in base.css / case.css. Keep these when adding new text styles.

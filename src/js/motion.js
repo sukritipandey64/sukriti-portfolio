@@ -33,10 +33,10 @@ if (chaos) {
   if (reduce) {
     root.classList.add('is-curated');
   } else {
-    scatter(34);
+    scatter(9);
     root.classList.add('is-chaos');
-    // hold the mess just long enough to read it, then curate
-    setTimeout(() => { root.classList.remove('is-chaos'); root.classList.add('is-curated'); }, 950);
+    // a light stir, then it settles — the same gesture as the hover
+    setTimeout(() => { root.classList.remove('is-chaos'); root.classList.add('is-curated'); }, 420);
     if (!touch) {
       // a little chaos comes back when you poke it
       chaos.addEventListener('mouseenter', () => { scatter(9); root.classList.add('is-stirred'); });

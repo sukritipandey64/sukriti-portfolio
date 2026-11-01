@@ -30,6 +30,12 @@
   --sans: 'Syne', system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: 4rem;
+  /* vertical rhythm — the only spacing values sections should use */
+  --room-y: clamp(4.5rem, 11svh, 6.5rem);   /* top/bottom of every section */
+  --gap-label: 1.5rem;                      /* eyebrow label -> heading */
+  --gap-head: clamp(2rem, 5svh, 2.75rem);   /* heading -> its content */
+  --gap-block: clamp(2.5rem, 6svh, 3.5rem); /* block -> block inside a section */
+  --gap-para: 1.25rem;                      /* paragraph -> paragraph */
 }
 
 @media (max-width: 860px) {
@@ -146,7 +152,7 @@ main, nav, footer { position: relative; z-index: 5; }
 .label {
   display: flex; align-items: center; gap: 1.25rem;
   font-size: 0.76rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--amber-soft); margin-bottom: clamp(1.5rem, 4svh, 2.75rem);
+  color: var(--amber-soft); margin-bottom: var(--gap-label);
 }
 .label::before { content: ''; width: 44px; height: 0.5px; background: rgba(184, 149, 106, 0.4); flex-shrink: 0; }
 .display {
@@ -156,13 +162,13 @@ main, nav, footer { position: relative; z-index: 5; }
 .h2 {
   font-family: var(--serif); font-weight: 300;
   font-size: clamp(2.2rem, min(5vw, 8.5svh), 4.6rem); line-height: 1.03; letter-spacing: -0.01em;
-  margin-bottom: 1.75rem;
+  margin-bottom: var(--gap-head);
 }
 .display em, .h2 em, .h3 em { font-style: italic; color: var(--muted); }
 .h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; }
-.body { color: var(--muted); font-size: 1.05rem; line-height: 1.85; }
+.body { color: var(--muted); font-size: 1.05rem; line-height: 1.8; }
 .body strong { color: var(--text); font-weight: 500; }
-.body + .body { margin-top: 1.25rem; }
+.body + .body { margin-top: var(--gap-para); }
 .serif-note { font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.75; color: var(--muted); }
 
 /* ---------- Buttons ---------- */
@@ -197,10 +203,10 @@ main, nav, footer { position: relative; z-index: 5; }
 .link-quiet:hover::after { width: 48px; }
 
 /* ---------- Layout ---------- */
-.room { position: relative; padding: clamp(5rem, 14svh, 9rem) var(--gutter); }
+.room { position: relative; padding: var(--room-y) var(--gutter); }
 .two-col { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
 @media (max-width: 860px) {
-  .room { padding: 5.5rem var(--gutter); }
+  .room { padding: var(--room-y) var(--gutter); }
   .two-col { grid-template-columns: 1fr; gap: 2rem; }
 }
 
