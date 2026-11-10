@@ -256,7 +256,7 @@ const rooms = [...document.querySelectorAll('[data-light]')];
 if (atm && rooms.length && !reduceMotion) {
   const fx = document.createElement('div');
   fx.className = 'gallery-fx'; fx.setAttribute('aria-hidden', 'true');
-  fx.innerHTML = '<i class="g-beam"></i><i class="g-beam"></i><i class="g-pool"></i><i class="g-pool"></i><i class="g-wall"></i><i class="g-wall"></i><canvas class="g-dust"></canvas>';
+  fx.innerHTML = '<i class="g-beam"><b></b></i><i class="g-beam"><b></b></i><i class="g-pool"></i><i class="g-pool"></i><i class="g-wall"></i><i class="g-wall"></i><canvas class="g-dust"></canvas>';
   (document.querySelector('.scrim') || atm).after(fx);
   const beams = [...fx.querySelectorAll('.g-beam')], pools = [...fx.querySelectorAll('.g-pool')], walls = [...fx.querySelectorAll('.g-wall')];
   const cv = fx.querySelector('canvas'), ctx = cv.getContext('2d');

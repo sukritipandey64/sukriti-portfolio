@@ -277,12 +277,12 @@ main, nav, footer { position: relative; z-index: 5; }
 /* ---------- Gallery walk: track lights, partitions, dust (built in site.js) ---------- */
 .gallery-fx { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
 .gallery-fx i { position: absolute; top: 0; left: 0; display: block; will-change: transform, opacity; opacity: 0; }
-.g-beam { width: min(52vw, 700px); transform-origin: 50% 0;
-  clip-path: polygon(43% 0, 57% 0, 100% 100%, 0 100%);
-  background: linear-gradient(180deg, rgba(255, 226, 184, 0.20), rgba(255, 214, 160, 0.07) 55%, rgba(255, 205, 150, 0.12));
-  -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 32%, #000 68%, transparent 96%);
-          mask-image: linear-gradient(90deg, transparent 4%, #000 32%, #000 68%, transparent 96%);
-  mix-blend-mode: screen; filter: blur(26px); }
+.g-beam { width: min(56vw, 760px); transform-origin: 50% 0; mix-blend-mode: screen; filter: blur(24px); }
+.g-beam b { position: absolute; inset: 0; display: block;
+  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, rgba(255, 226, 184, 0.26), rgba(255, 214, 160, 0.12) 55%, rgba(255, 205, 150, 0.05) 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%, #000 65%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 35%, #000 65%, transparent); }
 .g-pool { width: min(64vw, 820px); height: min(52vh, 460px); border-radius: 50%;
   background: radial-gradient(closest-side, rgba(255, 220, 170, 0.30), rgba(255, 200, 140, 0.11) 45%, transparent 78%);
   mix-blend-mode: screen; filter: blur(6px); }
