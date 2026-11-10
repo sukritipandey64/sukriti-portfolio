@@ -317,3 +317,9 @@
   .brew-slide { inset: 1.75rem 1.5rem 3.75rem; }
   .brew-scale { left: 1.5rem; bottom: 1.25rem; }
 }
+
+/* Installation plaque is a link into /curator.html */
+a.install { display: block; color: inherit; text-decoration: none; }
+a.install .install-note { color: var(--amber-soft); font-family: var(--sans); font-style: normal; font-size: 0.76rem; letter-spacing: 0.2em; text-transform: uppercase; display: inline-flex; gap: 0.6rem; transition: gap 0.4s var(--ease); }
+a.install:hover .install-note, a.install:focus-visible .install-note { gap: 1rem; }
+a.install:focus-visible { outline: 1px solid var(--amber-soft); outline-offset: 4px; }

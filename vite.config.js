@@ -9,6 +9,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         velocity: resolve(__dirname, 'velocity-ai.html'),
         barista: resolve(__dirname, 'digital-barista.html'),
+        curator: resolve(__dirname, 'curator.html'),
       },
     },
   },
