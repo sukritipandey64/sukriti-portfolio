@@ -130,3 +130,33 @@
 @media (max-width: 860px) {
   .sig-head, .tension { grid-template-columns: 1fr; gap: 1.5rem; }
 }
+
+/* Cover: teaser phone + stage strip */
+.wip-cover-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.wip-cover-grid > .shot { margin: 0; animation: fadeUp 0.9s 0.45s both; }
+.wip-cover-grid > .shot img { height: min(52svh, 30rem); width: auto; border-radius: 18px; filter: grayscale(1); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8); }
+.wip-kicker { font-size: 0.76rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 1rem; animation: fadeUp 0.7s 0.15s both; }
+.stages { list-style: none; display: flex; gap: 0; margin-top: var(--gap-head); max-width: 560px; animation: fadeUp 0.7s 0.6s both; }
+.stages li { flex: 1; position: relative; padding-top: 1rem; border-top: 1px solid var(--border-strong); }
+.stages li::before { content: ''; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: rgba(240,237,230,0.3); }
+.stages b { display: block; font-weight: 400; font-size: 0.92rem; color: var(--muted); }
+.stages span { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+.stages .is-now { border-top-color: #E7BFC9; }
+.stages .is-now::before { background: var(--rose); box-shadow: 0 0 10px rgba(231,191,201,0.7); }
+.stages .is-now b { color: var(--text); }
+.stages .is-now span { color: #E7BFC9; }
+.glance-room--wip { margin-top: calc(var(--room-y) * -0.4); }
+
+/* How I'll know it works */
+.measure-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: end; margin-bottom: var(--gap-head); }
+.measure-head .h2 { margin-bottom: 0; }
+.measure .qh-k--hyp { margin-top: 0; }
+.measure .hyp { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2.5rem; }
+
+@media (max-width: 860px) {
+  .wip-cover-grid { grid-template-columns: 1fr; }
+  .wip-cover-grid > .shot img { height: 34svh; }
+  .measure-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  .measure .hyp { grid-template-columns: 1fr; }
+  .stages b { font-size: 0.85rem; }
+}

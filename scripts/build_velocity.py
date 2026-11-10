@@ -103,20 +103,40 @@ CALC = """<div class="calc reveal" aria-label="How the capacity numbers work">
   </div>
 </div>"""
 
-MAIN = f'''
-  <main id="main">
+def tcard(asset, alt, n, title, body, sample=False):
+    fig = img(asset, alt, sample=sample, sizes='(max-width: 860px) 92vw, 30vw', cls='tcard-shot')
+    return (f'<article class="tcard reveal">{fig}<div class="tcard-copy"><span class="pattern-n">{n}</span>'
+            f'<h3 class="tcard-t">{title}</h3><p>{body}</p></div></article>')
 
-    <!-- 1 · Cover + metadata (one screen) -->
-    <header class="cs-cover" data-light="warm">
-      <p class="cs-kicker">Case study 01 — Self-initiated design exploration</p>
-      <h1 class="display cs-title">
-        <span class="line-mask"><span>Velocity</span></span>
-        <span class="line-mask"><span><em>AI</em></span></span>
-      </h1>
-      <p class="cs-lede">Capacity intelligence that shows a team lead who can take on more work, before anyone is committed to it.</p>
-      <div class="cs-ctas">
-        <a class="btn-pill" href="{PROTO}" target="_blank" rel="noopener">Try the prototype</a>
-        <a class="link-quiet" href="#problem">Read the story</a>
+TABS = [('Manager dashboard', 'sketch-dashboard', 'Notebook sketch of the manager dashboard: four summary boxes, an AI recommendation panel and upcoming deadlines', 'shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights'),
+        ('Employee time', 'sketch-timesheet', 'Notebook sketch of a timesheet with a time block', 'shot-employee-time', 'The employee Time area: timesheets, leave and company holidays in three tabs'),
+        ('People and roles', 'sketch-roles-flow', 'Notebook sketch of the roles flow: a user becomes a manager, an employee or an individual contributor', 'shot-people-drawer', 'People and capacity with a person’s detail panel open: four-week capacity, projects, skills and AI suggestions')]
+def ftabs():
+    btns = ''.join(f'<button type="button" role="tab" id="ftb-{i}" aria-controls="ft-{i}" aria-selected="{"true" if i == 0 else "false"}" tabindex="{0 if i == 0 else -1}">{t[0]}</button>' for i, t in enumerate(TABS))
+    panels = ''.join(f'<div role="tabpanel" id="ft-{i}" aria-labelledby="ftb-{i}"{"" if i == 0 else " hidden"}>{scrub(t[1], t[2], t[3], t[4], t[0])}</div>' for i, t in enumerate(TABS))
+    return f'<div class="ftabs reveal" data-tabs><div class="ftabs-list" role="tablist" aria-label="Final screens">{btns}</div>{panels}</div>'
+
+PROTO_CTA = f'<a class="btn-pill" href="{PROTO}" target="_blank" rel="noopener">Try the prototype<span class="sr-only"> (opens Figma Make in a new tab)</span></a><span class="cta-note">Opens in Figma Make</span>'
+
+MAIN = f'''
+  <main id="main" data-toc-root>
+
+    <!-- Cover: title, teaser screen, metadata (one screen) -->
+    <header class="cs-cover cs-cover--media" data-light="warm" id="top" data-toc="Overview">
+      <div class="cover-grid">
+        <div class="cover-copy">
+          <p class="cs-kicker">Case study 01 · Self-initiated · {{READ}} min read</p>
+          <h1 class="display cs-title">
+            <span class="line-mask"><span>Velocity</span></span>
+            <span class="line-mask"><span><em>AI</em></span></span>
+          </h1>
+          <p class="cs-lede">Capacity intelligence that shows a team lead who can take on more work, before anyone is committed to it.</p>
+          <div class="cs-ctas">
+            <span class="cta-wrap">{PROTO_CTA}</span>
+            <a class="link-quiet" href="#glance">Read the story</a>
+          </div>
+        </div>
+        {img('shot-dashboard', 'Velocity AI manager dashboard: KPI cards, capacity by person and week, and AI insights', sample=True, sizes='(max-width: 860px) 92vw, 50vw', cls='cover-media', eager=True)}
       </div>
       <dl class="meta-row">
         <div><dt>Role</dt><dd>Product concept, user research, product design, AI-directed prototype — end to end</dd></div>
@@ -127,8 +147,17 @@ MAIN = f'''
       </dl>
     </header>
 
-    <!-- 2 · The problem -->
-    <section class="room" id="problem" data-light="near">
+    <!-- At a glance -->
+    <section class="glance-room" id="glance" data-light="near" aria-label="At a glance">
+      <div class="glance reveal">
+        <div><span>The problem</span><p>Work gets assigned on gut feel. Nobody can see who actually has room until a deadline slips.</p></div>
+        <div><span>What I made</span><p>A capacity tool where AI drafts the plan and recommends people, and a lead checks every change before it happens.</p></div>
+        <div><span>What it shows</span><p>How I design AI people can trust, and how four interviews changed what I built.</p></div>
+      </div>
+    </section>
+
+    <!-- 01 · The problem -->
+    <section class="room" id="problem" data-light="near" data-toc="Problem">
       <p class="label reveal">01 — The problem</p>
       <div class="two-col">
         <h2 class="h2 reveal d1">Four projects. A teammate had one. <em>Nobody could see it.</em></h2>
@@ -145,25 +174,9 @@ MAIN = f'''
       <p class="goal reveal"><span>Design goal</span>Move the capacity conversation to <em>before</em> a commitment is made.</p>
     </section>
 
-    <!-- 3 · Sketch to system -->
-    <section class="room" id="system" data-light="cool">
-      <p class="label reveal">02 — Sketch → system</p>
-      <div class="split">
-        {img('sketch-conceptual-model', 'Notebook sketch of the conceptual model: project and employee data feed a synthesis step, and Plan My Project turns a description into tasks, skills and a timeline', cls='reveal', caption='The first conceptual model, in a notebook')}
-        <div>
-          <h2 class="h2 reveal d1">It started <em>on paper.</em></h2>
-          <p class="body reveal d2">One loop holds the whole product. A lead describes a project, the AI drafts the tasks and recommends people, and nothing moves until the lead has edited the plan and chosen to commit it.</p>
-          <ol class="loop reveal d3" aria-label="The core loop">
-            <li>Describe a project</li><li>AI drafts tasks</li><li>AI recommends people</li><li>Lead edits</li><li>Commit</li>
-          </ol>
-        </div>
-      </div>
-      {CALC}
-    </section>
-
-    <!-- 4 · Research -->
-    <section class="room" id="research" data-light="reading">
-      <p class="label reveal">03 — Research</p>
+    <!-- 02 · Research -->
+    <section class="room" id="research" data-light="reading" data-toc="Research">
+      <p class="label reveal">02 — Research</p>
       <h2 class="h2 reveal d1 narrow-title">Four interviews. <em>Each one moved something.</em></h2>
       <div class="itable reveal" role="table" aria-label="What each interview changed">
         <div class="ir ir--head" role="row"><span role="columnheader">Who</span><span role="columnheader">What they said</span><span role="columnheader">What changed</span></div>
@@ -179,19 +192,47 @@ MAIN = f'''
       </ol>
     </section>
 
-    <!-- 5 · AI trust and control (centrepiece) -->
-    <section class="room" id="trust" data-light="focus">
-      <p class="label reveal">04 — AI trust and control</p>
+    <!-- 03 · The system -->
+    <section class="room" id="system" data-light="cool" data-toc="The system">
+      <p class="label reveal">03 — Sketch → system</p>
+      <div class="split">
+        {img('sketch-conceptual-model', 'Notebook sketch of the conceptual model: project and employee data feed a synthesis step, and Plan My Project turns a description into tasks, skills and a timeline', cls='reveal', caption='The first conceptual model, in a notebook')}
+        <div>
+          <h2 class="h2 reveal d1">It started <em>on paper.</em></h2>
+          <p class="body reveal d2">One loop holds the whole product. A lead describes a project, the AI drafts the tasks and recommends people, and nothing moves until the lead has edited the plan and chosen to commit it.</p>
+          <ol class="loop reveal d3" aria-label="The core loop">
+            <li>Describe a project</li><li>AI drafts tasks</li><li>AI recommends people</li><li>Lead edits</li><li>Commit</li>
+          </ol>
+        </div>
+      </div>
+      {CALC}
+    </section>
+
+    <!-- 04 · Onboarding -->
+    <section class="room" id="onboarding" data-light="cool" data-toc="Onboarding">
+      <p class="label reveal">04 — Onboarding</p>
+      <h2 class="h2 reveal d1 narrow-title">The assumption <em>the research broke.</em></h2>
+      {ba()}
+      <p class="pull reveal">The hard design problem wasn't the dashboard. <em>It was who keys the data in.</em></p>
+      <div class="pair pair--loose reveal">
+        {img('shot-onboarding-add-team', 'Onboarding step to add a team: a table of name, email and role, with Import from CSV and a skip option', sample=True, caption='Add the team, or skip and come back')}
+        {img('shot-create-team-paste-ai-skills', 'Create a team by pasting rows from a spreadsheet; the AI suggests skills from each role for the lead to edit before saving', sample=True, caption='Paste from a spreadsheet; AI drafts the skills, the lead checks them')}
+      </div>
+    </section>
+
+    <!-- 05 · AI trust and control -->
+    <section class="room" id="trust" data-light="focus" data-toc="AI trust">
+      <p class="label reveal">05 — AI trust and control</p>
       <div class="trust-head">
         <h2 class="h2 reveal d1">AI assists. <em>A human decides.</em></h2>
-        <p class="body reveal d2">Velocity's AI plans projects and recommends people. Every output is designed to be checked by a person before it changes anything. Five patterns carry that principle.</p>
+        <p class="body reveal d2">Velocity's AI plans projects and recommends people. Every output is designed to be checked by a person before it changes anything. Six patterns carry that principle.</p>
       </div>
 
       <article class="pattern pattern--wide reveal">
         <div class="pattern-copy">
           <span class="pattern-n">a</span>
           <h3 class="h3">Impact <em>before</em> Apply.</h3>
-          <p class="body">Each suggestion reads what → why → impact → decide. Review opens an impact panel: people and projects affected, hours moved, the effect on the timeline, a risk level. Apply lives only inside that panel. There is no way to act on a suggestion without seeing what it does.</p>
+          <p class="body">Each suggestion reads what → why → impact → decide. Review opens an impact panel: who is affected, the hours that move, the effect on the timeline. Apply lives only inside that panel, and every change can be undone.</p>
         </div>
         <div class="steps3">
           {img('shot-ai-card-collapsed', 'A collapsed AI suggestion card with a High confidence pill, a category edge, a two-line reason, and Review and Ignore buttons', sample=True, caption='1 · Review or Ignore, never Apply')}
@@ -200,71 +241,21 @@ MAIN = f'''
         </div>
       </article>
 
-      <article class="pattern reveal">
-        {img('shot-plan-step1-tasks', 'Plan My Project, step one: AI-generated tasks with hour estimates, and a feasibility score shown beside the model’s confidence')}
-        <div class="pattern-copy">
-          <span class="pattern-n">b</span>
-          <h3 class="h3">Confidence on <em>every</em> AI number.</h3>
-          <p class="body">Scores never appear alone: <span class="mono">Feasibility 87 · Model confidence 91%</span>. The confidence sits beside the number as a quiet footnote, not a headline.</p>
-        </div>
-      </article>
-
-      <article class="pattern pattern--flip reveal">
-        {img('shot-ai-thresholds', 'AI Thresholds settings: flag tasks below 70% confidence, warn on health below 60, treat a delay over 7 days as a risk')}
-        <div class="pattern-copy">
-          <span class="pattern-n">c</span>
-          <h3 class="h3">Leads set when the AI <em>speaks up.</em></h3>
-          <p class="body">Flag anything under 70% confidence, warn below a health score of 60, treat a seven-day slip as risk. A team tunes the system to its own tolerance instead of accepting mine.</p>
-        </div>
-      </article>
-
-      <article class="pattern reveal">
-        {img('shot-thin-input-refusal', 'Plan My Project declining a too-short description with the message "Need more data to run this request" and an option to upload a requirements document')}
-        <div class="pattern-copy">
-          <span class="pattern-n">d</span>
-          <h3 class="h3">It refuses <em>thin input.</em></h3>
-          <p class="body">Under 50 characters, Plan My Project says "Need more data to run this request" and asks for a requirements document instead. A confident plan built on too little is worse than no plan.</p>
-        </div>
-      </article>
-
-      <article class="pattern pattern--flip reveal">
-        <div class="pair pair--tight">
-          {img('shot-low-confidence', 'A low-confidence suggestion: the card says two of five people haven’t logged time this week, asks the lead to check before applying, and offers Remind team to log time', sample=True, caption='Unsure: says why, and how to fix it')}
-          {img('shot-empty-insights', 'The AI Insights panel on an empty workspace reading "No insights yet. Insights will appear as your team data grows."', caption='No data: says nothing')}
-        </div>
-        <div class="pattern-copy">
-          <span class="pattern-n">e</span>
-          <h3 class="h3">It says when it <em>isn't sure.</em></h3>
-          <p class="body">Below 70% confidence, a card says why: two of five people haven't logged time this week. It offers to remind them, and Apply becomes Apply anyway.</p>
-          <p class="body">With no data at all, the panel says so. An earlier version showed sample insights about named people on an empty workspace, and invented insights would cost trust on day one.</p>
-        </div>
-      </article>
-
-      <div class="reasoning reveal" aria-label="Staged reasoning lines that replace the loading spinner">
-        <p class="reasoning-k">And no spinner. While it works, the AI says what it's weighing:</p>
-        <ol><li>Analyzing similar projects…</li><li>Mapping task structure…</li><li>Simulating capacity constraints…</li><li>Evaluating feasibility…</li></ol>
-      </div>
-
-      <div class="support reveal">
-        {img('shot-plan-step2-allocate', 'Plan My Project, step two: recommended people with skill match and availability; Commit Project stays disabled until the lead selects someone', sample=True, sizes='(max-width: 860px) 92vw, 70vw')}
-        <p class="support-cap"><b>The AI recommends. The lead selects.</b> Commit Project stays blocked until someone is chosen.</p>
+      <div class="tgrid">
+        {tcard('shot-plan-step1-tasks', 'Plan My Project, step one: AI-generated tasks with hour estimates, and a feasibility score shown beside the model’s confidence', 'b', 'Confidence on <em>every</em> AI number.', 'Scores never appear alone: <span class="mono">Feasibility 87 · Model confidence 91%</span>. The confidence sits beside the number as a quiet footnote.')}
+        {tcard('shot-ai-thresholds', 'AI Thresholds settings: flag tasks below 70% confidence, warn on health below 60, treat a delay over 7 days as a risk', 'c', 'Leads set when the AI <em>speaks up.</em>', 'Flag anything under 70% confidence, warn below a health score of 60, treat a seven-day slip as risk. Each team sets its own tolerance.')}
+        {tcard('shot-thin-input-refusal', 'Plan My Project declining a too-short description with the message "Need more data to run this request" and an option to upload a requirements document', 'd', 'It refuses <em>thin input.</em>', 'Under 50 characters, Plan My Project asks for more detail or a requirements document. A confident plan built on too little is worse than no plan.')}
+        {tcard('shot-low-confidence', 'A low-confidence suggestion: the card says two of five people haven’t logged time this week, asks the lead to check before applying, and offers Remind team to log time', 'e', 'It says when it <em>isn’t sure.</em>', 'Below 70%, a card says why and offers to remind the team to log time; Apply becomes Apply anyway. With no data at all, the panel says "No insights yet" instead of inventing some.', sample=True)}
+        {tcard('shot-plan-step2-allocate', 'Plan My Project, step two: recommended people with skill match and availability; the lead selects who joins', 'f', 'The AI recommends. <em>The lead selects.</em>', 'Skill match and availability sit side by side, and nothing is committed until the lead has chosen the people.', sample=True)}
+        <article class="tcard tcard--text reveal">
+          <div class="tcard-copy"><span class="pattern-n">g</span><h3 class="tcard-t">No spinner. <em>It says what it's weighing.</em></h3>
+          <ol class="reason-lines"><li>Analyzing similar projects…</li><li>Mapping task structure…</li><li>Simulating capacity constraints…</li><li>Evaluating feasibility…</li></ol></div>
+        </article>
       </div>
     </section>
 
-    <!-- 6 · Onboarding -->
-    <section class="room" id="onboarding" data-light="cool">
-      <p class="label reveal">05 — Onboarding</p>
-      <h2 class="h2 reveal d1 narrow-title">The assumption <em>the research broke.</em></h2>
-      {ba()}
-      <p class="pull reveal">The hard design problem wasn't the dashboard. <em>It was who keys the data in.</em></p>
-      <div class="pair pair--loose reveal">
-        {img('shot-onboarding-add-team', 'Onboarding step to add a team: a table of name, email, role and skills, with Import from CSV and a skip option', sample=True, caption='Add the team, or skip and come back')}
-        {img('shot-create-team-paste-ai-skills', 'Create a team by pasting rows from a spreadsheet; the AI suggests skills from each role for the lead to edit before saving', sample=True, caption='Paste from a spreadsheet; AI drafts the skills, the lead checks them')}
-      </div>
-    </section>
-
-    <!-- 7 · Key decisions -->
-    <section class="room" id="decisions" data-light="near">
+    <!-- 06 · Key decisions -->
+    <section class="room" id="decisions" data-light="near" data-toc="Decisions">
       <p class="label reveal">06 — Key decisions</p>
       <h2 class="h2 reveal d1 narrow-title">Four decisions, <em>and what each cost.</em></h2>
       <div class="decisions">
@@ -280,18 +271,31 @@ MAIN = f'''
       <p class="deferred reveal"><span>Deliberately not built yet</span>An "I'm interested" signal, so people can flag projects they'd like to join. Valuable, and it only helps once the capacity view is trusted. Adding it early would have widened the scope without strengthening the core loop.</p>
     </section>
 
-    <!-- 8 · Sketches beside final screens -->
-    <section class="room" id="evolution" data-light="cool">
-      <p class="label reveal">07 — Notebook to screen</p>
-      <h2 class="h2 reveal d1 narrow-title">Same idea, <em>fewer crossings-out.</em></h2>
-      {scrub('sketch-dashboard', 'Notebook sketch of the manager dashboard: four summary boxes, an AI recommendation panel and upcoming deadlines', 'shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights', 'Manager dashboard')}
-      {scrub('sketch-timesheet', 'Notebook sketch of a timesheet with a time block', 'shot-employee-time', 'The employee Time area: timesheets, leave and company holidays in three tabs', 'Employee time')}
-      {scrub('sketch-roles-flow', 'Notebook sketch of the roles flow: a user becomes a manager, an employee or an individual contributor', 'shot-people-drawer', 'People and capacity with a person’s side drawer open: four-week capacity, projects, skills and AI recommendations', 'People and roles')}
+    <!-- 07 · Final design -->
+    <section class="room" id="final" data-light="cool" data-toc="Final design">
+      <p class="label reveal">07 — Final design</p>
+      <div class="final-head">
+        <h2 class="h2 reveal d1">Same idea, <em>fewer crossings-out.</em></h2>
+        <div class="final-cta reveal d2"><p class="body">Drag across each screen to see the notebook page underneath. Or click through the real thing.</p><span class="cta-wrap">{PROTO_CTA}</span></div>
+      </div>
+      {ftabs()}
     </section>
 
-    <!-- 9 · Reflections + next -->
-    <section class="room" id="reflections" data-light="quiet">
-      <p class="label reveal">08 — Reflections</p>
+    <!-- 08 · What this shows -->
+    <section class="room" id="shows" data-light="near" data-toc="What it shows">
+      <p class="label reveal">08 — What this shows</p>
+      <h2 class="h2 reveal d1 narrow-title">The evidence is the work, <em>not a usage number.</em></h2>
+      <div class="shows reveal">
+        <div><b>A working prototype</b><p>Manager and employee views, built by directing AI in Figma Make, clickable end to end.</p></div>
+        <div><b>Six trust patterns</b><p>Impact before Apply, visible confidence, team-set thresholds, refusing thin input, admitting uncertainty, the lead selects.</p></div>
+        <div><b>Four decisions, each with its cost</b><p>Every choice names the trade-off I accepted, from an extra planning step to less data for the AI.</p></div>
+        <div><b>A redesign that came from research</b><p>One interview line, "somebody would have to key in something", became five ways in.</p></div>
+      </div>
+    </section>
+
+    <!-- 09 · Reflections + next -->
+    <section class="room" id="reflections" data-light="quiet" data-toc="Reflections">
+      <p class="label reveal">09 — Reflections</p>
       <h2 class="h2 reveal d1 narrow-title">What I'd tell myself <em>in February.</em></h2>
       <div class="refs">
         <div class="ref glow reveal d1"><span>01</span><h3>Validate the edges, not just the core</h3><p>I designed the core experience before validating it. The interviews didn't change that core, but they exposed what I'd missed: how the data gets in. That became the onboarding redesign.</p></div>
@@ -309,8 +313,18 @@ MAIN = f'''
         </ul>
       </div>
 
+      <a class="next-cs glow reveal" href="/digital-barista.html">
+        <span class="next-cs-copy">
+          <span class="next-cs-k">Next case study</span>
+          <span class="next-cs-t">Digital Barista</span>
+          <span class="next-cs-l">In progress · Research phase. Helping people new to specialty coffee order without having to ask.</span>
+          <span class="next-cs-go">Read the case study <span aria-hidden="true">→</span></span>
+        </span>
+        <img class="next-cs-img" src="/images/barista/wireframe-two-picks.webp" alt="" loading="lazy" width="780" height="1688">
+      </a>
+
       <div class="cs-end reveal">
-        <a class="btn-pill" href="{PROTO}" target="_blank" rel="noopener">Try the prototype</a>
+        <span class="cta-wrap">{PROTO_CTA}</span>
         {f'<a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Read the full case study</a>' if LONGFORM_PUBLIC else ''}
         <a class="link-quiet" href="/#work">Back to all work</a>
       </div>
@@ -318,6 +332,8 @@ MAIN = f'''
     </section>
   </main>
 '''
+_words = len(re.sub(r'<[^>]+>', ' ', MAIN).split())
+MAIN = MAIN.replace('{READ}', str(max(1, round(_words / 230))))
 
 s = PAGE.read_text()
 s = re.sub(r'\n  <main id="main">.*?</main>\n', MAIN, s, flags=re.S)

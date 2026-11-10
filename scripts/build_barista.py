@@ -41,8 +41,8 @@ WIRES = [img('wireframe-onboarding', 'Grayscale phone wireframe of the single on
          img('wireframe-two-picks', 'Grayscale phone wireframe showing two picks from today’s menu: a safe pick and a stretch pick, each explained in plain words', caption='Two picks: safe and stretch'),
          img('wireframe-check-in', 'Grayscale phone wireframe of the two-tap reaction after the cup, followed by the next suggestion', caption='Two-tap check-in')]
 HAS_WIRES = any(WIRES)
-LOFI = ('''    <section class="wip-room" id="wireframes" data-light="cool">
-      <p class="label reveal">06 — Lo-fi, first wireframes</p>
+LOFI = ('''    <section class="wip-room" id="wireframes" data-light="cool" data-toc="Wireframes">
+      <p class="label reveal">03 — First look: lo-fi wireframes</p>
       <div class="wip-lofi">
       <div class="wires reveal">
         ''' + "\n        ".join(w for w in WIRES if w) + '''
@@ -91,19 +91,28 @@ PAGE = f'''<!DOCTYPE html>
     <a href="/" class="nav-logo">SP</a>
     <ul class="nav-links">
       <li><a href="/#work">All work</a></li>
-      <li class="hide-sm"><a href="#decisions">Decisions</a></li>
+      <li class="hide-sm"><a href="#wireframes">Wireframes</a></li>
       <li><a href="#research">Research</a></li>
       <li class="hide-sm"><a href="#signals">Signals</a></li>
     </ul>
   </nav>
 
-  <main id="main">
+  <main id="main" data-toc-root>
 
     <!-- 1 · Cover + 2 · metadata -->
-    <header class="wip-cover" data-light="warm">
-      <p class="wip-status"><span aria-hidden="true"></span>In progress · Research phase</p>
-      <h1 class="display wip-title">Digital Barista <em>(working title)</em></h1>
-      <p class="cs-lede">Ordering coffee shouldn't feel like an oral exam.</p>
+    <header class="wip-cover" data-light="warm" id="top" data-toc="Overview">
+      <div class="wip-cover-grid">
+        <div>
+          <p class="wip-status"><span aria-hidden="true"></span>In progress · Research phase</p>
+          <p class="wip-kicker">Case study 02 · {{READ}} min read</p>
+          <h1 class="display wip-title">Digital Barista <em>(working title)</em></h1>
+          <p class="cs-lede">Ordering coffee shouldn't feel like an oral exam.</p>
+          <ol class="stages" aria-label="Where the project is">
+            <li class="is-now"><b>Discover</b><span>Now</span></li><li><b>Define</b><span>Next</span></li><li><b>Design</b><span>Lo-fi started</span></li><li><b>Test</b><span>In a café</span></li>
+          </ol>
+        </div>
+        {img('wireframe-two-picks', 'Grayscale phone wireframe of the two picks screen: a safe pick and a stretch pick from today’s menu', sizes='(max-width: 860px) 50vw, 20vw')}
+      </div>
       <dl class="meta-row meta-row--3">
         <div><dt>Role</dt><dd>Solo — research, product design, build</dd></div>
         <div><dt>Platform</dt><dd>Phone web app, opened from a café table QR code, no download</dd></div>
@@ -111,8 +120,17 @@ PAGE = f'''<!DOCTYPE html>
       </dl>
     </header>
 
+    <!-- At a glance -->
+    <section class="glance-room glance-room--wip" id="glance" data-light="near" aria-label="At a glance">
+      <div class="glance reveal">
+        <div><span>The problem</span><p>People new to specialty coffee hand the decision to the barista, or fall back on what they already know.</p></div>
+        <div><span>What I'm making</span><p>Scan the table QR, say what you usually drink, get two picks from today's menu in plain words.</p></div>
+        <div><span>Where it stands</span><p>Research first. Conversations have started, and early signals are already shaping the picks.</p></div>
+      </div>
+    </section>
+
     <!-- 3 · Insight + 4 · Idea -->
-    <section class="wip-room" data-light="near">
+    <section class="wip-room" id="insight" data-light="near" data-toc="Insight">
       <div class="wip-insight">
         <div>
           <p class="label reveal">01 — The insight</p>
@@ -136,9 +154,11 @@ PAGE = f'''<!DOCTYPE html>
       </div>
     </section>
 
+    <!-- Lo-fi, right after the idea (only once wireframe images exist) -->
+{LOFI}
     <!-- 5 · Key decisions -->
-    <section class="wip-room" id="decisions" data-light="cool">
-      <p class="label reveal">03 — Decisions so far</p>
+    <section class="wip-room" id="decisions" data-light="cool" data-toc="Decisions">
+      <p class="label reveal">04 — Decisions so far</p>
       <div class="dcards">
         <div class="dcard reveal"><b>No prompt needed</b><p>Scan, one tap, two picks. Good help shouldn't require knowing what to ask.</p></div>
         <div class="dcard reveal d1"><b>One onboarding question</b><p>"What do you usually order?" It starts from what people already know.</p></div>
@@ -151,8 +171,8 @@ PAGE = f'''<!DOCTYPE html>
     </section>
 
     <!-- 6 · Research -->
-    <section class="wip-room" id="research" data-light="reading">
-      <p class="label reveal">04 — Research, before building</p>
+    <section class="wip-room" id="research" data-light="reading" data-toc="Research">
+      <p class="label reveal">05 — Research, before building</p>
       <div class="wip-research">
         <div>
           <p class="lead-line reveal d1">My last project taught me to validate before I build. <em>This time, research comes first.</em></p>
@@ -170,8 +190,8 @@ PAGE = f'''<!DOCTYPE html>
     </section>
 
     <!-- 6b · First conversation -->
-    <section class="wip-room" id="signals" data-light="near">
-      <p class="label reveal">05 — Early signals</p>
+    <section class="wip-room" id="signals" data-light="near" data-toc="Early signals">
+      <p class="label reveal">06 — Early signals</p>
       <div class="sig-head">
         <h2 class="h2 reveal d1">A specialty café co-founder in Chennai, <em>on what happens at the counter.</em></h2>
         <p class="body reveal d2">The conversations have started, and this is what's coming through so far. Each point is a signal to check against the next conversations, not a finding. Two already echo what I'd seen elsewhere: people asking "what do you recommend?", and confusion over tasting notes.</p>
@@ -202,14 +222,40 @@ PAGE = f'''<!DOCTYPE html>
       </div>
     </section>
 
-    <!-- 7 · Lo-fi (only once wireframe images exist) -->
-{LOFI}
+
+    <!-- How I'll know it works -->
+    <section class="wip-room" id="measure" data-light="cool" data-toc="How I'll know">
+      <p class="label reveal">07 — How I'll know it works</p>
+      <div class="measure-head">
+        <h2 class="h2 reveal d1">No usage numbers yet. <em>So these are the signals I'll watch.</em></h2>
+        <p class="body reveal d2">Before anything is built further, the flow gets tested in a café with five or six beginners. These are what I expect to see if it works.</p>
+      </div>
+      <div class="qh measure reveal">
+        <p class="qh-k qh-k--hyp">What I'll watch <i>— hypotheses, not results</i></p>
+        <ul class="hyp">
+          <li>A first-timer orders without asking "what do you recommend?"</li>
+          <li>Some people choose the stretch pick, and the check-in comes back "just right".</li>
+          <li>People answer the two-tap check-in after the cup.</li>
+          <li>Baristas notice better questions at the counter.</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- 8 · Next + 9 · footer -->
-    <section class="wip-room wip-room--end" data-light="quiet">
-      <p class="label reveal">{"07" if HAS_WIRES else "06"} — What's next</p>
+    <section class="wip-room wip-room--end" id="next" data-light="quiet" data-toc="What's next">
+      <p class="label reveal">08 — What's next</p>
       <ol class="tl reveal" aria-label="Next steps, in order">
         <li class="tl-now">Research synthesis</li><li>Refine the flow</li><li>Design system</li><li>Micro-interactions</li><li>Build</li><li>Café test with 5–6 beginners</li>
       </ol>
+      <a class="next-cs glow reveal" href="/velocity-ai.html">
+        <span class="next-cs-copy">
+          <span class="next-cs-k">Next case study</span>
+          <span class="next-cs-t">Velocity AI</span>
+          <span class="next-cs-l">Capacity intelligence where AI drafts the plan and a team lead decides. Research, AI trust patterns and a working prototype.</span>
+          <span class="next-cs-go">Read the case study <span aria-hidden="true">→</span></span>
+        </span>
+        <img class="next-cs-img next-cs-img--wide" src="/images/velocity/v2/shot-dashboard-900.webp" alt="" loading="lazy" width="900" height="562">
+      </a>
       <div class="cs-end reveal">
         <a class="btn-pill btn-pill--ghost" href="/#work">Back to work</a>
         <a class="link-quiet" href="{LINKEDIN}" target="_blank" rel="noopener">Follow along on LinkedIn</a>
@@ -226,5 +272,8 @@ PAGE = f'''<!DOCTYPE html>
 </body>
 </html>
 '''
+import re
+_main = PAGE[PAGE.index('<main'):PAGE.index('</main>')]
+PAGE = PAGE.replace('{READ}', str(max(1, round(len(re.sub(r'<[^>]+>', ' ', _main).split()) / 230))))
 (ROOT / 'digital-barista.html').write_text(PAGE)
 print('written digital-barista.html', 'status:', STATUS)

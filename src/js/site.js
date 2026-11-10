@@ -247,3 +247,74 @@ if (rail) {
   update();
 }
 import './motion.js';
+
+/* ------------------------------------------------------------------
+   Case studies: section index (progress bar, dot rail, mobile chip) and tabs
+   ------------------------------------------------------------------ */
+const tocRoot = document.querySelector('[data-toc-root]');
+if (tocRoot) {
+  const secs = [...tocRoot.querySelectorAll('[data-toc]')];
+  const bar = document.createElement('div'); bar.className = 'toc-bar'; bar.setAttribute('aria-hidden', 'true');
+  const rail = document.createElement('nav'); rail.className = 'toc-rail'; rail.setAttribute('aria-label', 'Sections');
+  const chip = document.createElement('div'); chip.className = 'toc-chip';
+  chip.innerHTML = '<button type="button" aria-expanded="false" aria-controls="toc-list"><b></b><span></span></button><ol id="toc-list" hidden></ol>';
+  const list = chip.querySelector('ol'), btn = chip.querySelector('button');
+  secs.forEach((s, i) => {
+    if (!s.id) s.id = `sec-${i}`;
+    const label = s.dataset.toc;
+    rail.insertAdjacentHTML('beforeend', `<a href="#${s.id}"><span>${label}</span><i></i></a>`);
+    list.insertAdjacentHTML('beforeend', `<li><a href="#${s.id}"><i>${String(i).padStart(2, '0')}</i>${label}</a></li>`);
+  });
+  document.body.append(bar, rail, chip);
+  const go = (e) => {
+    const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    const t = document.querySelector(a.getAttribute('href')); if (!t) return;
+    e.preventDefault(); list.hidden = true; btn.setAttribute('aria-expanded', 'false');
+    if (lenis) lenis.scrollTo(t, { duration: 0.9, offset: -40 }); else t.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+  rail.addEventListener('click', go); list.addEventListener('click', go);
+  btn.addEventListener('click', () => { list.hidden = !list.hidden; btn.setAttribute('aria-expanded', String(!list.hidden)); });
+  document.addEventListener('click', (e) => { if (!chip.contains(e.target)) { list.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
+  const railLinks = [...rail.querySelectorAll('a')], listLinks = [...list.querySelectorAll('a')];
+  let cur = -1, tick = false;
+  const update = () => {
+    tick = false;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.setProperty('--read', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
+    let idx = 0;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) idx = i; });
+    if (idx !== cur) {
+      cur = idx;
+      railLinks.forEach((a, i) => a.classList.toggle('is-on', i === idx));
+      listLinks.forEach((a, i) => { a.classList.toggle('is-on', i === idx); if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      btn.querySelector('b').textContent = `${String(idx).padStart(2, '0')} / ${String(secs.length - 1).padStart(2, '0')}`;
+      btn.querySelector('span').textContent = secs[idx].dataset.toc;
+    }
+    // the chip stays out of the way on the cover and at the very end
+    chip.classList.toggle('is-hidden', idx === 0 || scrollY > max - 40);
+  };
+  window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
+
+document.querySelectorAll('[data-tabs]').forEach((wrap) => {
+  const tabs = [...wrap.querySelectorAll('[role="tab"]')];
+  const select = (t, focus) => {
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+    const p = document.getElementById(t.getAttribute('aria-controls')).querySelector('[data-scrub]');
+    if (p) { p.style.setProperty('--p', '50%'); const r = p.querySelector('.scrub-range'); if (r) r.value = 50; }
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', (e) => {
+      const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (k) { e.preventDefault(); select(tabs[(i + k + tabs.length) % tabs.length], true); }
+    });
+  });
+});
