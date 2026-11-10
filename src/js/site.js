@@ -144,6 +144,7 @@ const roomIO = new IntersectionObserver((entries) => {
 document.querySelectorAll('[data-light]').forEach((el) => roomIO.observe(el));
 enter(document.querySelector('[data-light]')?.dataset.light || 'warm');
 
+let galleryTurn = 0; // set by the gallery walk below: which wall you're facing
 if (atm && !reduceMotion) {
   /* A slow camera move through the image: as you scroll, the view dollies in
      and pans across the room, so the background travels with you. On desktop
@@ -169,9 +170,9 @@ if (atm && !reduceMotion) {
     // a gentle wave so the pan isn't a straight line — it reads as walking, not sliding
     const wave = Math.sin(cp * Math.PI * 2.2);
     const scale = 1.1 + cp * 0.22;                // dolly in ~20% over the page
-    const tx = cmx + wave * 2.2 - cp * 2.5;       // drift across the room
+    const tx = cmx + wave * 2.2 - cp * 2.5 + galleryTurn; // drift across the room, turning toward each wall
     const ty = cmy - cp * 4.5;                    // and slowly upward
-    const rot = wave * 0.6;                       // a hint of a turning head
+    const rot = wave * 0.6 + galleryTurn * 0.18;  // a hint of a turning head
     const t = `scale(${scale.toFixed(4)}) translate3d(${tx.toFixed(3)}%, ${ty.toFixed(3)}%, 0) rotate(${rot.toFixed(3)}deg)`;
     if (t !== last) { atm.style.transform = t; last = t; }
     requestAnimationFrame(drift);
@@ -245,6 +246,82 @@ if (rail) {
     rail.scrollTo({ left: items[i].offsetLeft - rail.offsetLeft - parseFloat(getComputedStyle(rail).scrollPaddingLeft || 0), behavior: reduceMotion ? 'auto' : 'smooth' });
   }));
   update();
+}
+/* ------------------------------------------------------------------
+   Gallery walk — track lights you pass under, partitions you walk past,
+   dust in the light, and a turn toward a different wall in each room.
+   Built on the one atmosphere image; all off under reduced motion.
+   ------------------------------------------------------------------ */
+const rooms = [...document.querySelectorAll('[data-light]')];
+if (atm && rooms.length && !reduceMotion) {
+  const fx = document.createElement('div');
+  fx.className = 'gallery-fx'; fx.setAttribute('aria-hidden', 'true');
+  fx.innerHTML = '<i class="g-beam"></i><i class="g-beam"></i><i class="g-pool"></i><i class="g-pool"></i><i class="g-wall"></i><i class="g-wall"></i><canvas class="g-dust"></canvas>';
+  (document.querySelector('.scrim') || atm).after(fx);
+  const beams = [...fx.querySelectorAll('.g-beam')], pools = [...fx.querySelectorAll('.g-pool')], walls = [...fx.querySelectorAll('.g-wall')];
+  const cv = fx.querySelector('canvas'), ctx = cv.getContext('2d');
+  let W = 0, H = 0;
+  const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
+  size(); addEventListener('resize', size, { passive: true });
+  const N = isTouch ? 18 : 40;
+  const motes = Array.from({ length: N }, () => ({ x: Math.random(), y: Math.random(), r: 0.7 + Math.random() * 1.7, v: 0.00010 + Math.random() * 0.00026, ph: Math.random() * 6.28 }));
+  let turn = 0, lastT = performance.now(), running = true;
+  const lit = [];
+  const frame = (now) => {
+    if (!running) return;
+    const dt = Math.min(50, now - lastT); lastT = now;
+    const vh = innerHeight, vw = innerWidth;
+    const info = rooms.map((el, i) => { const r = el.getBoundingClientRect(); return { i, top: r.top, c: (r.top + r.height / 2 - vh / 2) / vh }; });
+    // One track light per room, alternating walls. Fixture k shows the nearest room of its parity,
+    // so a light never jumps sides while you can see it.
+    lit.length = 0;
+    [0, 1].forEach((k) => {
+      let o = null;
+      info.forEach((r) => { if (r.i % 2 === k && (!o || Math.abs(r.c) < Math.abs(o.c))) o = r; });
+      if (!o || Math.abs(o.c) > 1.4) { beams[k].style.opacity = 0; pools[k].style.opacity = 0; return; }
+      const x = (o.i % 2 ? 0.72 : 0.28) * vw;
+      const y = Math.max(-0.1, Math.min(1.15, 0.55 + o.c * 0.85)) * vh;
+      const a = Math.exp(-o.c * o.c * 2.6);
+      // the beam hangs from the ceiling and leans as you walk under it
+      beams[k].style.height = `${Math.max(0, y).toFixed(0)}px`;
+      beams[k].style.transform = `translate3d(${x.toFixed(0)}px, 0, 0) translateX(-50%) skewX(${(o.c * -14).toFixed(2)}deg)`;
+      beams[k].style.opacity = (a * 0.85).toFixed(3);
+      pools[k].style.transform = `translate3d(${x.toFixed(0)}px, ${y.toFixed(0)}px, 0) translate(-50%, -50%)`;
+      pools[k].style.opacity = a.toFixed(3);
+      lit.push({ x, y, a });
+    });
+    // Partitions: each room boundary sweeps past as a wall edge, quicker than the page (foreground parallax).
+    [0, 1].forEach((k) => {
+      let f = null;
+      info.forEach((r) => { if (r.i > 0 && r.i % 2 === k) { const t = r.top / vh; if (t > -0.6 && t < 1.6 && (f === null || Math.abs(t - 0.5) < Math.abs(f - 0.5))) f = t; } });
+      if (f === null) { walls[k].style.opacity = 0; return; }
+      const x = (f * 1.6 - 0.3) * vw;               // right → left as you walk on
+      walls[k].style.transform = `translate3d(${x.toFixed(0)}px, 0, 0)`;
+      walls[k].style.opacity = Math.max(0, 1 - Math.abs(f - 0.5) * 1.25).toFixed(3);
+    });
+    // turn toward the wall of the room you're in
+    const cur = info.reduce((m, r) => (Math.abs(r.c) < Math.abs(m.c) ? r : m), info[0]);
+    turn += ((cur.i % 2 ? 1.4 : -1.4) - turn) * 0.025; galleryTurn = turn;
+    // dust drifting through the light
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#F6E3C6';
+    const reach = Math.min(W, H) * 0.5;
+    motes.forEach((m) => {
+      m.y -= m.v * dt; m.ph += dt * 0.0006;
+      if (m.y < -0.05) { m.y = 1.05; m.x = Math.random(); }
+      const px = (m.x + Math.sin(m.ph) * 0.012) * W, py = m.y * H;
+      let glow = 0.08;
+      lit.forEach((l) => { const d = Math.hypot(px - l.x, py - l.y) / reach; glow += l.a * Math.max(0, 1 - d * d); });
+      ctx.globalAlpha = Math.min(0.85, glow * 0.8);
+      ctx.beginPath(); ctx.arc(px, py, m.r, 0, 6.283); ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) { lastT = performance.now(); requestAnimationFrame(frame); }
+  });
 }
 import './motion.js';
 
