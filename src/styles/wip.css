@@ -107,3 +107,26 @@
 .translate:not(.is-live) .tr-static { display: block; font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.6; color: var(--text); }
 .translate:not(.is-live) .tr-static span { display: block; font-family: var(--sans); font-style: normal; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-soft); margin-top: 0.4rem; }
 .translate.is-live .tr-static { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); display: block; }
+
+/* Her own line, opening the insight */
+.own-line { font-family: var(--serif); font-size: clamp(1.35rem, 2.2vw, 1.75rem); line-height: 1.35; color: var(--text); margin-bottom: var(--gap-head); max-width: 30ch; }
+.own-line q { font-style: italic; color: var(--amber-soft); }
+.qh .hyp li small { display: block; margin-top: 0.35rem; font-family: var(--sans); font-style: normal; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--amber-soft); }
+
+/* First conversation */
+.sig-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: end; margin-bottom: var(--gap-head); }
+.sig-head .h2 { margin-bottom: 0; }
+.tension { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: center; margin-top: var(--gap-block); padding: clamp(1.5rem, 3vw, 2.5rem); border: 0.5px solid var(--border-strong); background: rgba(6,12,16,0.55); }
+.tension-k, .ladder-k { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 1rem; }
+.tension-q { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(1.3rem, 2vw, 1.65rem); line-height: 1.4; color: var(--text); margin-bottom: 1rem; }
+.ladder ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; counter-reset: l; }
+.ladder li { counter-increment: l; position: relative; padding: 0.9rem 1rem 0.9rem 3.2rem; border: 0.5px solid var(--border-strong); }
+.ladder li + li { border-top: 0; }
+.ladder li::before { content: counter(l); position: absolute; left: 1rem; top: 0.85rem; font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--amber-soft); }
+.ladder li + li::after { content: '↓'; position: absolute; left: 1.05rem; top: -0.75rem; font-size: 0.8rem; color: var(--dim); background: #0b1013; padding: 0 0.2rem; }
+.ladder b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.25rem; color: var(--text); }
+.ladder span { font-size: 0.9rem; color: var(--muted); }
+.ladder-n { margin-top: 0.9rem; font-size: 0.85rem; color: var(--dim); }
+@media (max-width: 860px) {
+  .sig-head, .tension { grid-template-columns: 1fr; gap: 1.5rem; }
+}

@@ -19,8 +19,9 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
   with `python3 scripts/assets.py velocity <folder>` (WebP + 900w, real dimensions stamped into the page).
 - Digital Barista (`digital-barista.html`, built by `scripts/build_barista.py`) is in progress: label it
   "In progress · Research phase" everywhere; no café/barista/creator/participant names; hypotheses labelled as
-  hypotheses. Research status line is driven by `CONVERSATIONS` in the build script — keep it at 0
-  ("Research underway…") until interviews have actually happened. Images: `python3 scripts/assets.py barista <folder>`.
+  hypotheses. Research status line is driven by `CONVERSATIONS` in the build script — raise it only when a
+  conversation has actually happened (1 as of Nov 2026: a specialty café co-founder in Chennai, shown by role and city only).
+  Early signals from conversations are presented as signals, never findings. Images: `python3 scripts/assets.py barista <folder>`.
 - Concepts come from her instincts — propose, don't impose. Keep case studies short and graphics-led.
 - No paid subscriptions/services.
 

@@ -39,6 +39,7 @@
       <li><a href="/#work">All work</a></li>
       <li class="hide-sm"><a href="#decisions">Decisions</a></li>
       <li><a href="#research">Research</a></li>
+      <li class="hide-sm"><a href="#signals">Signals</a></li>
     </ul>
   </nav>
 
@@ -61,6 +62,7 @@
       <div class="wip-insight">
         <div>
           <p class="label reveal">01 — The insight</p>
+          <p class="own-line reveal d1">I still ask the barista <q>what would you recommend?</q> Tasting notes confuse me too.</p>
           <ul class="insight-list reveal d1">
             <li>Specialty coffee is growing fast in India, but menus assume you already speak coffee: brew methods, estates, processing, roast levels, tasting notes.</li>
             <li>Beginners feel judged asking the barista, so they default to a hazelnut latte, or guess.</li>
@@ -100,7 +102,7 @@
       <div class="wip-research">
         <div>
           <p class="lead-line reveal d1">My last project taught me to validate before I build. <em>This time, research comes first.</em></p>
-          <p class="status-line reveal d2"><span aria-hidden="true"></span>Research underway: reaching out to 24 Indian baristas, coffee creators and educators.</p>
+          <p class="status-line reveal d2"><span aria-hidden="true"></span>Currently interviewing baristas, coffee creators and educators to understand the market. 1 conversation so far.</p>
           <p class="body reveal d2">The outreach asks about the problem, not the solution. Alongside it, I'm reading reel comments by hand to hear how beginners describe the experience in their own words.</p>
           
         </div>
@@ -108,14 +110,47 @@
           <p class="qh-k">Questions I'm trying to answer</p>
           <ul><li>What makes beginners hesitate at the counter?</li><li>Where do they look for help today, if anywhere?</li><li>What do baristas wish customers felt comfortable asking?</li></ul>
           <p class="qh-k qh-k--hyp">Hypotheses to test <i>— not findings</i></p>
-          <ul class="hyp"><li>The barrier is social, not informational.</li><li>Beginners want a starting point, not an education.</li><li>Baristas would welcome better questions from customers.</li></ul>
+          <ul class="hyp"><li>The barrier is social, not informational.<small>Early signal: people hand the decision to the barista</small></li><li>Beginners want a starting point, not an education.<small>Early signal: they start from what they already drink</small></li><li>Baristas would welcome better questions from customers.</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6b · First conversation -->
+    <section class="wip-room" id="signals" data-light="near">
+      <p class="label reveal">05 — What the first conversation said</p>
+      <div class="sig-head">
+        <h2 class="h2 reveal d1">A specialty café co-founder in Chennai, <em>on what happens at the counter.</em></h2>
+        <p class="body reveal d2">One practitioner's view, so each point is a signal to check, not a finding. Two of them already echo what I'd seen elsewhere: people asking "what do you recommend?", and confusion over tasting notes.</p>
+      </div>
+      <div class="itable reveal" role="table" aria-label="What the first conversation showed, and what it changes">
+        <div class="ir ir--head" role="row"><span role="columnheader">What it shows</span><span role="columnheader">In his words</span><span role="columnheader">What it changes</span></div>
+        <div class="ir ir--key" role="row"><span role="cell">The decision gets handed over</span><q role="cell">A lot of them just end up asking ‘what do you recommend?’</q><span role="cell">That moment is the problem. The app gives the recommendation people would otherwise have to ask a stranger for.</span></div>
+        <div class="ir" role="row"><span role="cell">People start from the familiar</span><q role="cell">Most people look for something familiar first, like a cappuccino or a cold coffee.</q><span role="cell">The first question stays "what do you usually drink?", and the safe pick stays close to the answer.</span></div>
+        <div class="ir" role="row"><span role="cell">Three questions, every day</span><q role="cell">What's the difference from espresso? Which is less bitter? Are the tasting notes added flavours?</q><span role="cell">Every pick answers all three. Bitterness becomes the main scale to compare on, and each card says the notes come from the bean, nothing added.</span></div>
+        <div class="ir" role="row"><span role="cell">The words that trip people</span><q role="cell">Some don't know what a specific processing is, like a washed, natural or honey… or a thermal shock.</q><span role="cell">The plain-words glossary covers processing methods, not just flavours.</span></div>
+        <div class="ir" role="row"><span role="cell">No two menus alike</span><q role="cell">We don't add any flavour into our coffee… we do cream tops or cold foams.</q><span role="cell">A hazelnut cold brew fan has no exact match here. Picks have to come from each café's own menu, not a generic drink list.</span></div>
+      </div>
+      <div class="tension reveal">
+        <div class="tension-copy">
+          <p class="tension-k">The tension I'm working through</p>
+          <p class="tension-q"><q>I don't force anyone to get into specialty coffee… Once they ask a question, we go on explaining.</q></p>
+          <p class="body">Good baristas invite curiosity; they don't push it. So the stretch pick has to read as an invitation, never a nudge, and the safe pick is always there.</p>
+        </div>
+        <div class="ladder" aria-label="How he moves people, one step at a time">
+          <p class="ladder-k">One step at a time, the way he does it</p>
+          <ol>
+            <li><b>A milk drink</b><span>cappuccino, latte, cold coffee</span></li>
+            <li><b>A cortado</b><span>less milk, more coffee</span></li>
+            <li><b>A pour-over</b><span>black, when they're open to it</span></li>
+          </ol>
+          <p class="ladder-n">This becomes the logic for the stretch pick.</p>
         </div>
       </div>
     </section>
 
     <!-- 7 · Lo-fi (only once wireframe images exist) -->
     <section class="wip-room" id="wireframes" data-light="cool">
-      <p class="label reveal">05 — Lo-fi, first wireframes</p>
+      <p class="label reveal">06 — Lo-fi, first wireframes</p>
       <div class="wip-lofi">
       <div class="wires reveal">
         <figure class="shot" data-zoom data-asset="wireframe-onboarding"><img srcset="/images/barista/wireframe-onboarding.webp 780w" sizes="(max-width: 860px) 80vw, 26vw" src="/images/barista/wireframe-onboarding.webp" alt="Grayscale phone wireframe of the single onboarding question: What do you usually order?" loading="lazy" decoding="async" width="780" height="1688"><figcaption>One question</figcaption></figure>
@@ -128,7 +163,7 @@
 
     <!-- 8 · Next + 9 · footer -->
     <section class="wip-room wip-room--end" data-light="quiet">
-      <p class="label reveal">06 — What's next</p>
+      <p class="label reveal">07 — What's next</p>
       <ol class="tl reveal" aria-label="Next steps, in order">
         <li class="tl-now">Research synthesis</li><li>Refine the flow</li><li>Design system</li><li>Micro-interactions</li><li>Build</li><li>Café test with 5–6 beginners</li>
       </ol>
