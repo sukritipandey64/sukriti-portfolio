@@ -488,3 +488,5 @@
   .phones img { opacity: 0.22; }
   .phones img:nth-child(2) { opacity: 0.3; }
 }
+.nowrap { white-space: nowrap; }
+.next-cs-t em { font-style: italic; color: var(--muted); }

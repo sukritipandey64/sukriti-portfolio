@@ -284,57 +284,36 @@
 }
 .film-play[hidden] { display: none; }
 
-/* ---------- Digital Barista: the menu, translated (homepage card) ---------- */
+@media (max-width: 860px) { .work-media.film { aspect-ratio: auto; } }
+
+/* ---------- Ctrl+Alt+Decaf: one menu line at a time, said plainly (homepage card) ---------- */
+.nowrap { white-space: nowrap; }
 .work-card--brew { border-style: solid; }
-.brew { position: relative; display: flex; flex-direction: column; background: radial-gradient(120% 90% at 20% 10%, rgba(184,138,149,0.10), transparent 60%), #0d1215; }
-.brew-stage { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr; column-gap: 1.5rem; padding: clamp(1.25rem, 3svh, 2rem) clamp(1.25rem, 2.4vw, 2rem) 0; overflow: hidden; }
-.brew-menu { grid-column: 1; grid-row: 1; }
-.brew-menu-k, .brew-k { display: flex; align-items: center; gap: 0.7rem; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 0.7rem; }
-.brew-menu-k span { color: var(--dim); letter-spacing: 0.12em; }
-.brew-menu ul { list-style: none; margin: 0; padding: 0; border-top: 0.5px solid var(--border-strong); }
-.brew-item { display: block; width: 100%; text-align: left; padding: 0.7rem 0.6rem 0.75rem; min-height: 44px; font: inherit; color: inherit; background: transparent; border: 0; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.3s; }
-.brew-item:hover, .brew-item.is-on { background: rgba(240,237,230,0.05); }
-.brew-item:focus-visible { outline: 1px solid var(--amber); outline-offset: -2px; }
-.bi-name { display: block; font-family: var(--serif); font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--text); line-height: 1.25; }
-.bi-notes { display: block; margin-top: 0.2rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.82rem; color: var(--dim); letter-spacing: 0.02em; }
-.brew-item.is-on .bi-notes { color: #E7BFC9; }
-.brew-item.is-done .bi-notes { color: var(--amber-soft); }
-.brew-read { grid-column: 1; grid-row: 2; align-self: start; margin-top: 1rem; padding: 0.9rem 1rem 1rem; border: 0.5px solid var(--border-strong); background: rgba(6,12,16,0.7); }
-.brew-pick { font-weight: 400; color: var(--text); border: 0.5px solid var(--border-strong); padding: 0.1rem 0.45rem; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.3s; }
-.brew-pick.is-on { opacity: 1; }
-.brew-plain { font-family: var(--serif); font-size: clamp(1.05rem, 1.45vw, 1.25rem); line-height: 1.35; color: var(--text); min-height: 2.7em; }
-.brew-meter { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.7rem; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
-.brew-track { display: flex; gap: 4px; flex: 1; max-width: 9rem; }
-.brew-track i { flex: 1; height: 6px; background: rgba(240,237,230,0.12); transition: background 0.35s; }
-.brew-track i.is-on { background: var(--amber-soft); }
-.brew-phone { grid-column: 2; grid-row: 1 / span 2; align-self: end; height: 112%; width: auto; max-height: none; margin-bottom: -16%; border-radius: 18px 18px 0 0; filter: grayscale(1); opacity: 0.9; transform: rotate(3deg) translateY(4%); transform-origin: 50% 100%; box-shadow: 0 30px 70px -25px rgba(0,0,0,0.9); transition: transform 0.8s var(--ease), filter 0.8s; }
-.brew.is-picks .brew-phone { transform: rotate(0deg) translateY(-2%); filter: grayscale(0.6); }
-.work-card:hover .work-media img.brew-phone { transform: rotate(1deg) translateY(1%); opacity: 0.95; }
-.brew-hint { padding: 0.75rem clamp(1.25rem, 2.4vw, 2rem); border-top: 0.5px solid var(--border); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); background: rgba(6,12,16,0.9); }
-.brew-hint span { color: var(--dim); }
+.brew { position: relative; display: flex; flex-direction: column; background: radial-gradient(90% 80% at 15% 20%, rgba(184,138,149,0.08), transparent 65%), #0c1114; }
+.brew-stage { position: relative; flex: 1; min-height: 0; padding: clamp(2rem, 6svh, 3.5rem) clamp(2rem, 5vw, 4.5rem); }
+.brew-slide { position: absolute; inset: clamp(2rem, 6svh, 3.5rem) clamp(2rem, 5vw, 4.5rem) 4.5rem; margin: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; transition: opacity 0.9s ease; }
+.brew-slide.is-on { opacity: 1; }
+.brew-k { font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.7rem; }
+.brew-k--to { margin-top: clamp(1.5rem, 4svh, 2.25rem); color: var(--amber-soft); }
+.brew-menu { font-family: var(--serif); font-weight: 300; font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.25; color: var(--muted); transition: color 0.8s, opacity 0.8s; }
+.brew-menu span { display: block; margin-top: 0.35rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.84rem; letter-spacing: 0.02em; color: var(--dim); }
+.brew-plain { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(1.45rem, 2.4vw, 2.1rem); line-height: 1.25; color: var(--text); max-width: 24ch; }
+.brew-k--to, .brew-plain { opacity: 0; transform: translateY(8px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.brew-slide.is-said .brew-k--to, .brew-slide.is-said .brew-plain { opacity: 1; transform: none; }
+.brew-slide.is-said .brew-menu { opacity: 0.55; }
+.brew-scale { position: absolute; left: clamp(2rem, 5vw, 4.5rem); bottom: 1.6rem; display: flex; align-items: center; gap: 6px; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+.brew-scale span { margin-right: 0.6rem; }
+.brew-scale i { width: 6px; height: 6px; border-radius: 50%; background: rgba(240,237,230,0.16); transition: background 0.6s; }
+.brew-scale i.is-on { background: var(--amber-soft); }
+.brew-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 clamp(1.25rem, 2.4vw, 2rem); min-height: 46px; border-top: 0.5px solid var(--border); background: rgba(6,12,16,0.9); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+.brew-dots { display: flex; gap: 0.25rem; }
+.brew-dots button { width: 32px; height: 44px; display: grid; place-items: center; background: transparent; border: 0; cursor: pointer; }
+.brew-dots button::before { content: ''; width: 18px; height: 2px; background: rgba(240,237,230,0.25); transition: background 0.3s; }
+.brew-dots button[aria-pressed="true"]::before { background: var(--amber-soft); }
+.brew-dots button:focus-visible { outline: 1px solid var(--amber); outline-offset: -4px; }
 @media (max-width: 860px) {
-  .brew-stage { grid-template-columns: minmax(0, 1fr) 30%; column-gap: 0.9rem; padding: 1.1rem 1rem 0; min-height: 26rem; }
-  .brew-phone { height: auto; width: 100%; margin-bottom: -40%; }
-  .bi-name { font-size: 1rem; }
-  .bi-notes { font-size: 0.76rem; }
+  .work-media.brew { aspect-ratio: auto; }
+  .brew-stage { min-height: 21rem; padding: 2rem 1.5rem; }
+  .brew-slide { inset: 1.75rem 1.5rem 3.75rem; }
+  .brew-scale { left: 1.5rem; bottom: 1.25rem; }
 }
-/* phone floats at the right edge; the menu and readout keep the left two-thirds */
-.brew-stage { display: block; padding-right: 38%; }
-.brew-read { margin-top: 0.9rem; }
-.brew-phone { position: absolute; right: 4%; bottom: -24%; height: 96%; width: auto; margin: 0; }
-.brew.is-picks .brew-phone { transform: rotate(0deg) translateY(-6%); }
-@media (max-width: 860px) {
-  .brew-stage { padding: 1.1rem 36% 1rem 1rem; min-height: 0; }
-  .brew-phone { right: -6%; bottom: -18%; height: auto; width: 40%; }
-}
-.work-media img.brew-phone { width: auto; height: 96%; object-fit: contain; opacity: 0.9; transition: transform 0.8s var(--ease), filter 0.8s; }
-.work-card:hover .work-media img.brew-phone { transform: rotate(1deg) translateY(1%); }
-.brew.is-picks img.brew-phone, .work-card:hover .brew.is-picks img.brew-phone { transform: rotate(0deg) translateY(-6%); }
-@media (max-width: 860px) { .work-media img.brew-phone { width: 40%; height: auto; } }
-@media (max-width: 860px) {
-  .work-media.brew, .work-media.film { aspect-ratio: auto; }
-  .brew-stage { padding-bottom: 1.25rem; }
-  .work-media img.brew-phone { width: 34%; bottom: -10%; right: -4%; }
-}
-.brew-track { min-width: 4.5rem; }
-@media (max-width: 860px) { .brew-meter span:not(.brew-track) { white-space: nowrap; font-size: 0.74rem; letter-spacing: 0.04em; } .brew-meter { gap: 0.45rem; } }

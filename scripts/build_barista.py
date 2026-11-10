@@ -32,7 +32,7 @@ def img(asset, alt, default=(780, 1600), sizes='(max-width: 860px) 80vw, 26vw', 
             f'alt="{html.escape(alt)}" loading="lazy" decoding="async" width="{w}" height="{h}">{cap}</figure>')
 
 DESC = "In progress: a phone web app that helps people new to specialty coffee order without having to ask. Research first, build second."
-TITLE = "Digital Barista — In progress · Sukriti Pandey"
+TITLE = "Ctrl+Alt+Decaf — In progress · Sukriti Pandey"
 
 notes = (ASSETS / 'research-notes.webp').exists()
 notes_fig = img('research-notes', 'Handwritten research notes and an anonymised outreach board', default=(1600, 1100), sizes='(max-width: 860px) 92vw, 40vw', caption='Working notes, anonymised') if notes else ''
@@ -105,7 +105,7 @@ PAGE = f'''<!DOCTYPE html>
         <div>
           <p class="wip-status"><span aria-hidden="true"></span>In progress · Research phase</p>
           <p class="wip-kicker">Case study 02 · {{READ}} min read</p>
-          <h1 class="display wip-title">Digital Barista <em>(working title)</em></h1>
+          <h1 class="display wip-title wip-title--name"><span class="nowrap">Ctrl+Alt+<i>Decaf</i></span> <em>(working title)</em></h1>
           <p class="cs-lede">Ordering coffee shouldn't feel like an oral exam.</p>
           <ol class="stages" aria-label="Where the project is">
             <li class="is-now"><b>Discover</b><span>Now</span></li><li><b>Define</b><span>Next</span></li><li><b>Design</b><span>Lo-fi started</span></li><li><b>Test</b><span>In a café</span></li>

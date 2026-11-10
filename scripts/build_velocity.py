@@ -319,7 +319,7 @@ MAIN = f'''
       <a class="next-cs glow reveal" href="/digital-barista.html">
         <span class="next-cs-copy">
           <span class="next-cs-k">Next case study</span>
-          <span class="next-cs-t">Digital Barista</span>
+          <span class="next-cs-t">Ctrl+Alt+<em>Decaf</em></span>
           <span class="next-cs-l">In progress · Research phase. Helping people new to specialty coffee order without having to ask.</span>
           <span class="next-cs-go">Read the case study <span aria-hidden="true">→</span></span>
         </span>

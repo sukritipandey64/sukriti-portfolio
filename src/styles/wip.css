@@ -160,3 +160,5 @@
   .measure .hyp { grid-template-columns: 1fr; }
   .stages b { font-size: 0.85rem; }
 }
+.nowrap { white-space: nowrap; }
+.wip-title--name i { font-style: italic; color: var(--muted); }
