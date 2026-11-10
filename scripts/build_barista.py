@@ -111,7 +111,13 @@ PAGE = f'''<!DOCTYPE html>
             <li class="is-now"><b>Discover</b><span>Now</span></li><li><b>Define</b><span>Next</span></li><li><b>Design</b><span>Lo-fi started</span></li><li><b>Test</b><span>In a café</span></li>
           </ol>
         </div>
-        {img('wireframe-two-picks', 'Grayscale phone wireframe of the two picks screen: a safe pick and a stretch pick from today’s menu', sizes='(max-width: 860px) 50vw, 20vw')}
+      </div>
+      <div class="cover-bleed cover-bleed--phones" aria-hidden="true">
+        <div class="phones">
+          <img src="/images/barista/wireframe-onboarding.webp" alt="" width="780" height="1688">
+          <img src="/images/barista/wireframe-two-picks.webp" alt="" width="780" height="1688">
+          <img src="/images/barista/wireframe-check-in.webp" alt="" width="780" height="1688">
+        </div>
       </div>
       <dl class="meta-row meta-row--3">
         <div><dt>Role</dt><dd>Solo — research, product design, build</dd></div>

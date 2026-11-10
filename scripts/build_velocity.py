@@ -122,7 +122,7 @@ MAIN = f'''
   <main id="main" data-toc-root>
 
     <!-- Cover: title, teaser screen, metadata (one screen) -->
-    <header class="cs-cover cs-cover--media" data-light="warm" id="top" data-toc="Overview">
+    <header class="cs-cover cs-cover--bleed" data-light="warm" id="top" data-toc="Overview">
       <div class="cover-grid">
         <div class="cover-copy">
           <p class="cs-kicker">Case study 01 · Self-initiated · {{READ}} min read</p>
@@ -136,7 +136,10 @@ MAIN = f'''
             <a class="link-quiet" href="#glance">Read the story</a>
           </div>
         </div>
-        {img('shot-dashboard', 'Velocity AI manager dashboard: KPI cards, capacity by person and week, and AI insights', sample=True, sizes='(max-width: 860px) 92vw, 50vw', cls='cover-media', eager=True)}
+      </div>
+      <div class="cover-bleed" aria-hidden="true">
+        <img src="/images/velocity/v2/shot-dashboard.webp" srcset="/images/velocity/v2/shot-dashboard-900.webp 900w, /images/velocity/v2/shot-dashboard.webp 2000w" sizes="(max-width: 860px) 100vw, 70vw" alt="" width="2000" height="1250" fetchpriority="high">
+        <span class="sample-tag">Sample data</span>
       </div>
       <dl class="meta-row">
         <div><dt>Role</dt><dd>Product concept, user research, product design, AI-directed prototype — end to end</dd></div>
@@ -336,6 +339,7 @@ _words = len(re.sub(r'<[^>]+>', ' ', MAIN).split())
 MAIN = MAIN.replace('{READ}', str(max(1, round(_words / 230))))
 
 s = PAGE.read_text()
-s = re.sub(r'\n  <main id="main">.*?</main>\n', MAIN, s, flags=re.S)
+s, n = re.subn(r'\n  <main id="main"[^>]*>.*?</main>\n', lambda m: MAIN, s, flags=re.S)
+assert n == 1, 'main block not found in velocity-ai.html'
 PAGE.write_text(s)
 print('written', len(MAIN))
