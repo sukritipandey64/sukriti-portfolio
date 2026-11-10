@@ -221,3 +221,10 @@
 .reel-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: var(--progress, 25%); background: var(--amber); opacity: 0; transition: width 0.5s ease, opacity 0.4s; z-index: 2; }
 .work-reel.is-playing .reel-chip, .work-reel.is-playing .reel-bar { opacity: 1; }
 @media (max-width: 860px) { .work-reel { aspect-ratio: 16 / 10; } }
+
+/* Sample-data label on the living card: names in the frames are invented */
+.reel-sample {
+  position: absolute; right: 0.7rem; bottom: 0.7rem; z-index: 2; padding: 0.3rem 0.6rem;
+  font-family: var(--sans, 'Syne', sans-serif); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text); background: rgba(6,12,16,0.78); border: 0.5px solid var(--border-strong);
+}
