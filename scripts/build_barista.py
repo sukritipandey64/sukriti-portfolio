@@ -12,7 +12,7 @@ U = 'https://sukritipandey.vercel.app'
 CONVERSATIONS = 1  # first conversation: a specialty café co-founder (Nov 2026)
 STATUS = ("Research underway: reaching out to 24 Indian baristas, coffee creators and educators."
           if CONVERSATIONS == 0 else
-          f"Currently interviewing baristas, coffee creators and educators to understand the market. {CONVERSATIONS} {'conversation' if CONVERSATIONS == 1 else 'conversations'} so far.")
+          "Conversations with baristas, café founders and coffee educators have started. Early signals are below.")
 
 def size_of(asset, default):
     f = ASSETS / f'{asset}.webp'
@@ -171,12 +171,12 @@ PAGE = f'''<!DOCTYPE html>
 
     <!-- 6b · First conversation -->
     <section class="wip-room" id="signals" data-light="near">
-      <p class="label reveal">05 — What the first conversation said</p>
+      <p class="label reveal">05 — Early signals</p>
       <div class="sig-head">
         <h2 class="h2 reveal d1">A specialty café co-founder in Chennai, <em>on what happens at the counter.</em></h2>
-        <p class="body reveal d2">One practitioner's view, so each point is a signal to check, not a finding. Two of them already echo what I'd seen elsewhere: people asking "what do you recommend?", and confusion over tasting notes.</p>
+        <p class="body reveal d2">The conversations have started, and this is what's coming through so far. Each point is a signal to check against the next conversations, not a finding. Two already echo what I'd seen elsewhere: people asking "what do you recommend?", and confusion over tasting notes.</p>
       </div>
-      <div class="itable reveal" role="table" aria-label="What the first conversation showed, and what it changes">
+      <div class="itable reveal" role="table" aria-label="Early signals from the conversations, and what each changes">
         <div class="ir ir--head" role="row"><span role="columnheader">What it shows</span><span role="columnheader">In his words</span><span role="columnheader">What it changes</span></div>
         <div class="ir ir--key" role="row"><span role="cell">The decision gets handed over</span><q role="cell">A lot of them just end up asking ‘what do you recommend?’</q><span role="cell">That moment is the problem. The app gives the recommendation people would otherwise have to ask a stranger for.</span></div>
         <div class="ir" role="row"><span role="cell">People start from the familiar</span><q role="cell">Most people look for something familiar first, like a cappuccino or a cold coffee.</q><span role="cell">The first question stays "what do you usually drink?", and the safe pick stays close to the answer.</span></div>
