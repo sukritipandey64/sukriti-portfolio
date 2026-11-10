@@ -22,6 +22,8 @@ def size_of(asset, default):
     return default
 
 def img(asset, alt, default=(780, 1600), sizes='(max-width: 860px) 80vw, 26vw', caption=None):
+    if not (ASSETS / f'{asset}.webp').exists():
+        return ''  # production rule: no placeholders
     w, h = size_of(asset, default)
     cap = f'<figcaption>{caption}</figcaption>' if caption else ''
     small = f'/images/barista/{asset}-900.webp 900w, ' if w > 900 else ''
@@ -34,6 +36,21 @@ TITLE = "Digital Barista — In progress · Sukriti Pandey"
 
 notes = (ASSETS / 'research-notes.webp').exists()
 notes_fig = img('research-notes', 'Handwritten research notes and an anonymised outreach board', default=(1600, 1100), sizes='(max-width: 860px) 92vw, 40vw', caption='Working notes, anonymised') if notes else ''
+
+WIRES = [img('wireframe-onboarding', 'Grayscale phone wireframe of the single onboarding question: What do you usually order?', caption='One question'),
+         img('wireframe-two-picks', 'Grayscale phone wireframe showing two picks from today’s menu: a safe pick and a stretch pick, each explained in plain words', caption='Two picks: safe and stretch'),
+         img('wireframe-check-in', 'Grayscale phone wireframe of the two-tap reaction after the cup, followed by the next suggestion', caption='Two-tap check-in')]
+HAS_WIRES = any(WIRES)
+LOFI = ('''    <section class="wip-room" id="wireframes" data-light="cool">
+      <p class="label reveal">05 — Lo-fi, first wireframes</p>
+      <div class="wip-lofi">
+      <div class="wires reveal">
+        ''' + "\n        ".join(w for w in WIRES if w) + '''
+      </div>
+        <p class="wires-cap reveal">Grayscale structure first. The app gets its own design system once the research says what it needs.</p>
+      </div>
+    </section>
+''') if HAS_WIRES else ''
 
 PAGE = f'''<!DOCTYPE html>
 <html lang="en">
@@ -150,22 +167,11 @@ PAGE = f'''<!DOCTYPE html>
       </div>
     </section>
 
-    <!-- 7 · Lo-fi -->
-    <section class="wip-room" id="wireframes" data-light="cool">
-      <p class="label reveal">05 — Lo-fi, first wireframes</p>
-      <div class="wip-lofi">
-      <div class="wires reveal">
-        {img('wireframe-onboarding', 'Grayscale phone wireframe of the single onboarding question: What do you usually order?', caption='One question')}
-        {img('wireframe-two-picks', 'Grayscale phone wireframe showing two picks from today’s menu: a safe pick and a stretch pick, each explained in plain words', caption='Two picks: safe and stretch')}
-        {img('wireframe-check-in', 'Grayscale phone wireframe of the two-tap reaction after the cup, followed by the next suggestion', caption='Two-tap check-in')}
-      </div>
-        <p class="wires-cap reveal">Grayscale structure first. The app gets its own design system once the research says what it needs.</p>
-      </div>
-    </section>
-
+    <!-- 7 · Lo-fi (only once wireframe images exist) -->
+{LOFI}
     <!-- 8 · Next + 9 · footer -->
     <section class="wip-room wip-room--end" data-light="quiet">
-      <p class="label reveal">06 — What's next</p>
+      <p class="label reveal">{"06" if HAS_WIRES else "05"} — What's next</p>
       <ol class="tl reveal" aria-label="Next steps, in order">
         <li class="tl-now">Research synthesis</li><li>Refine the flow</li><li>Design system</li><li>Micro-interactions</li><li>Build</li><li>Café test with 5–6 beginners</li>
       </ol>

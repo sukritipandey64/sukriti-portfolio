@@ -237,3 +237,14 @@
 .scrub-range::-moz-range-thumb { width: 60px; height: 100vh; border: 0; background: transparent; }
 .scrub .ss-cap { margin-top: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
 .scrub .ss-cap span { font-family: var(--sans); font-style: normal; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+
+/* ---------- Layouts that adapt when an image isn't there yet ---------- */
+.split > div:only-child { grid-column: 1 / -1; max-width: 62ch; }
+.pattern > .pattern-copy:only-child { grid-column: 1 / -1; max-width: 62ch; }
+.support > .support-cap:only-child { grid-column: 1 / -1; max-width: 62ch; }
+.decisions > .dtable:only-child { grid-column: 1 / -1; }
+.pair:empty, .ba:empty { display: none; }
+.pair > .shot:only-child { grid-column: 1 / -1; max-width: 860px; }
+.ss-solo { padding: var(--gap-block) 0; border-top: 0.5px solid var(--border); }
+.ss-solo .shot img { width: min(100%, calc((100svh - 10rem) * 1.6)); margin: 0 auto; }
+.ss-solo .ss-cap { margin-top: 0.9rem; }

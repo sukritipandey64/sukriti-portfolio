@@ -8,6 +8,10 @@ ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / 'velocity-ai.html'
 PROTO = 'https://www.figma.com/make/Sho1iwOvhDxAd0g1laSmdW/Velocity-AI?fullscreen=1'
 LONGFORM = 'https://claude.ai/artifact/MZtPGgcvskxHiSCginxVDQ'
+# Flip to True only once the long-form doc is shared publicly (otherwise reviewers hit a login).
+LONGFORM_PUBLIC = False
+# Production rule: a slot whose image file doesn't exist is left out entirely (no placeholders).
+SHOW_PENDING = False
 
 KIND = {  # default intrinsic size until the real file arrives
     'shot': (1600, 1000), 'sketch': (1200, 900), 'diagram': (1600, 900),
@@ -22,7 +26,12 @@ def size_of(asset):
         return Image.open(f).size
     return KIND[asset.split('-')[0]]
 
+def has(asset):
+    return (ASSETS / f'{asset}.webp').exists()
+
 def img(asset, alt, sample=False, sizes='(max-width: 860px) 92vw, 55vw', cls='', caption=None, eager=False):
+    if not SHOW_PENDING and not has(asset):
+        return ''
     w, h = size_of(asset)
     tag = '<span class="sample-tag">Sample data</span>' if sample else ''
     cap = f'<figcaption>{caption}</figcaption>' if caption else ''
@@ -33,6 +42,11 @@ def img(asset, alt, sample=False, sizes='(max-width: 860px) 92vw, 55vw', cls='',
             f'decoding="async" width="{w}" height="{h}">{cap}</figure>')
 
 def scrub(sketch, sketch_alt, shot, shot_alt, cap):
+    if not SHOW_PENDING and not has(shot):
+        return ''
+    if not SHOW_PENDING and not has(sketch):
+        # no notebook page yet: show the final screen on its own
+        return f'<div class="ss-solo reveal">{img(shot, shot_alt, sample=True, sizes="(max-width: 860px) 92vw, 80vw")}<p class="ss-cap">{cap}</p></div>'
     w, h = size_of(shot)
     def layer(asset, alt, cls, sample=False):
         aw, ah = size_of(asset)
@@ -47,6 +61,12 @@ def scrub(sketch, sketch_alt, shot, shot_alt, cap):
             + '<span class="scrub-handle" aria-hidden="true"><i></i></span>'
             + f'<input class="scrub-range" type="range" min="0" max="100" value="100" aria-label="{html.escape(cap)}: slide between the notebook sketch and the final screen">'
             + f'</div><p class="ss-cap">{cap} <span>Drag to compare</span></p></div>')
+
+def ba():
+    before = img('sketch-login-jira-first', 'Notebook sketch of the first login: product features beside a Jira and Asana sign-in', caption='Assumed teams would arrive through Jira')
+    after = img('diagram-onboarding-five-paths', 'Diagram of five onboarding paths: email signup with a new team, invite code, email invite, connecting a project tool, and adding another team later', caption='Five ways in')
+    sides = ''.join(f'<div><span class="ba-k{k2}">{k}</span>{x}</div>' for k, k2, x in (('Before', '', before), ('After', ' ba-k--after', after)) if x)
+    return f'<div class="ba reveal">{sides}</div>' if sides else ''
 
 MAIN = f'''
   <main id="main">
@@ -194,10 +214,7 @@ MAIN = f'''
     <section class="room" id="onboarding" data-light="cool">
       <p class="label reveal">05 — Onboarding</p>
       <h2 class="h2 reveal d1 narrow-title">The assumption <em>the research broke.</em></h2>
-      <div class="ba reveal">
-        <div><span class="ba-k">Before</span>{img('sketch-login-jira-first', 'Notebook sketch of the first login: product features beside a Jira and Asana sign-in', caption='Assumed teams would arrive through Jira')}</div>
-        <div><span class="ba-k ba-k--after">After</span>{img('diagram-onboarding-five-paths', 'Diagram of five onboarding paths: email signup with a new team, invite code, email invite, connecting a project tool, and adding another team later', caption='Five ways in')}</div>
-      </div>
+      {ba()}
       <p class="pull reveal">The hard design problem wasn't the dashboard. <em>It was who keys the data in.</em></p>
       <div class="pair pair--loose reveal">
         {img('shot-onboarding-add-team', 'Onboarding step to add a team: a table of name, email, role and skills, with Import from CSV and a skip option', sample=True, caption='Add the team, or skip and come back')}
@@ -253,10 +270,10 @@ MAIN = f'''
 
       <div class="cs-end reveal">
         <a class="btn-pill" href="{PROTO}" target="_blank" rel="noopener">Try the prototype</a>
-        <a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Read the full case study</a>
+        {f'<a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Read the full case study</a>' if LONGFORM_PUBLIC else ''}
         <a class="link-quiet" href="/#work">Back to all work</a>
       </div>
-      <p class="end-note reveal">The full case study covers the design system, the visual evolution and the accessibility audit.</p>
+      {'<p class="end-note reveal">The full case study covers the design system, the visual evolution and the accessibility audit.</p>' if LONGFORM_PUBLIC else ''}
     </section>
   </main>
 '''
