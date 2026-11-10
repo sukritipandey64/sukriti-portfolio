@@ -272,3 +272,4 @@ main, nav, footer { position: relative; z-index: 5; }
 .has-cursor .lightbox, .has-cursor .lightbox * { cursor: zoom-out; }
 .has-cursor .lightbox .lightbox-close { cursor: pointer; }
 .lightbox-open .cursor, .lightbox-open .cursor-ring { opacity: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

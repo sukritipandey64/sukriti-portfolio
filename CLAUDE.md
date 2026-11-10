@@ -32,7 +32,8 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
 - `src/styles/base.css` — tokens + shared components. `home.css`, `case.css` — page styles.
 - `src/js/site.js` — cursor, reveals, glow cards, room lighting (`data-light` → `LOOKS` map), scroll-driven
   background "camera" (zoom + pan + sway), lightbox for `[data-zoom]`.
-- `src/js/motion.js` — signature motion: hero letters scatter then snap ("Chaos, but curated"), living Velocity card (frame reel on hover / in view), sketch→screen scrub on Velocity (scroll-driven until dragged; range input for keyboard), tasting-note decode on Digital Barista. All off under prefers-reduced-motion. One signature moment per page.
+- `src/js/motion.js` — signature motion: hero letters scatter then snap ("Chaos, but curated"), Velocity film on the homepage work card (product-video style: real screens, camera zooms, cursor, captions, clickable chapters; autoplays in view, pause button; scene script lives in motion.js `SHOTS`), sketch→screen scrub on Velocity (inside the Final design tabs; scroll-driven until dragged; range input for keyboard), tasting-note decode on Digital Barista. All off under prefers-reduced-motion. One signature moment per page.
+- Case studies share a section index (progress bar, right-edge dot rail on desktop, bottom chip on touch) built from `[data-toc]` in site.js, an at-a-glance strip, read time, and a Next case study card.
 - Homepage "In practice" = six exhibit-label plaques (name, medium, one figure; hover/tap swaps to one line). Detail lives in the resume, not the site.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
