@@ -167,6 +167,66 @@ document.querySelectorAll('[data-film]').forEach((film) => {
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); else if (inView && !userPaused) play(); });
 });
 
+/* 2b · Digital Barista: the menu, translated ------------------------------ */
+document.querySelectorAll('[data-brew]').forEach((brew) => {
+  const items = [...brew.querySelectorAll('.brew-item')];
+  const plain = brew.querySelector('.brew-plain'), pick = brew.querySelector('.brew-pick');
+  const bars = [...brew.querySelectorAll('.brew-track i')];
+  const glyphs = 'abcdefghijklmnopqrstuvwxyz';
+  items.forEach((it) => { const n = it.querySelector('.bi-notes'); it.dataset.from = n.textContent; });
+  let token = 0;
+  const decode = (el, target, ms, my) => new Promise((done) => {
+    if (reduce) { el.textContent = target; return done(); }
+    const start = performance.now(), from = el.textContent, len = Math.max(target.length, from.length);
+    const tick = (now) => {
+      if (my !== token) return done();
+      const k = Math.min(1, (now - start) / ms);
+      let out = '';
+      for (let j = 0; j < len; j++) {
+        const c = target[j] ?? '';
+        out += j / len < k || c === ' ' || c === '·' ? c : (c ? glyphs[(Math.random() * 26) | 0] : '');
+      }
+      el.textContent = out;
+      k < 1 ? requestAnimationFrame(tick) : done();
+    };
+    requestAnimationFrame(tick);
+  });
+  const reset = () => items.forEach((it) => { it.classList.remove('is-on', 'is-done'); it.querySelector('.bi-notes').textContent = it.dataset.from; });
+  const show = async (i, my) => {
+    const it = items[i];
+    items.forEach((x) => x.classList.remove('is-on'));
+    it.classList.add('is-on');
+    it.setAttribute('aria-pressed', 'true'); items.filter((x) => x !== it).forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    pick.classList.remove('is-on');
+    await decode(it.querySelector('.bi-notes'), it.dataset.to, 900, my);
+    if (my !== token) return;
+    it.classList.add('is-done');
+    plain.textContent = it.dataset.plain;
+    pick.textContent = it.dataset.pick; pick.classList.add('is-on');
+    bars.forEach((b, j) => b.classList.toggle('is-on', j < +it.dataset.bitter));
+  };
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  let visible = false, manual = false;
+  const run = async () => {
+    const my = ++token;
+    while (visible && !manual && my === token) {
+      reset(); brew.classList.remove('is-picks');
+      for (let i = 0; i < items.length; i++) {
+        if (!visible || manual || my !== token) return;
+        await show(i, my); await wait(2600);
+      }
+      if (my !== token) return;
+      brew.classList.add('is-picks');
+      plain.textContent = 'Two picks from today’s menu: one close to what you know, one small step further.';
+      pick.classList.remove('is-on'); bars.forEach((b) => b.classList.remove('is-on'));
+      await wait(3400);
+    }
+  };
+  items.forEach((it, i) => it.addEventListener('click', () => { manual = true; token++; brew.classList.remove('is-picks'); show(i, token); }));
+  if (reduce) { show(1, token); return; }
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !manual) run(); else if (!visible) token++; }, { threshold: 0.4 }).observe(brew);
+});
+
 /* 3 · Sketch → screen scrub ------------------------------------------------ */
 document.querySelectorAll('[data-scrub]').forEach((el) => {
   const range = el.querySelector('.scrub-range');

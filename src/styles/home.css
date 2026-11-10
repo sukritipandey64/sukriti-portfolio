@@ -283,3 +283,58 @@
   .film-cap-k, .film-cap-t { transition: opacity 0.3s; }
 }
 .film-play[hidden] { display: none; }
+
+/* ---------- Digital Barista: the menu, translated (homepage card) ---------- */
+.work-card--brew { border-style: solid; }
+.brew { position: relative; display: flex; flex-direction: column; background: radial-gradient(120% 90% at 20% 10%, rgba(184,138,149,0.10), transparent 60%), #0d1215; }
+.brew-stage { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr; column-gap: 1.5rem; padding: clamp(1.25rem, 3svh, 2rem) clamp(1.25rem, 2.4vw, 2rem) 0; overflow: hidden; }
+.brew-menu { grid-column: 1; grid-row: 1; }
+.brew-menu-k, .brew-k { display: flex; align-items: center; gap: 0.7rem; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 0.7rem; }
+.brew-menu-k span { color: var(--dim); letter-spacing: 0.12em; }
+.brew-menu ul { list-style: none; margin: 0; padding: 0; border-top: 0.5px solid var(--border-strong); }
+.brew-item { display: block; width: 100%; text-align: left; padding: 0.7rem 0.6rem 0.75rem; min-height: 44px; font: inherit; color: inherit; background: transparent; border: 0; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.3s; }
+.brew-item:hover, .brew-item.is-on { background: rgba(240,237,230,0.05); }
+.brew-item:focus-visible { outline: 1px solid var(--amber); outline-offset: -2px; }
+.bi-name { display: block; font-family: var(--serif); font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--text); line-height: 1.25; }
+.bi-notes { display: block; margin-top: 0.2rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.82rem; color: var(--dim); letter-spacing: 0.02em; }
+.brew-item.is-on .bi-notes { color: #E7BFC9; }
+.brew-item.is-done .bi-notes { color: var(--amber-soft); }
+.brew-read { grid-column: 1; grid-row: 2; align-self: start; margin-top: 1rem; padding: 0.9rem 1rem 1rem; border: 0.5px solid var(--border-strong); background: rgba(6,12,16,0.7); }
+.brew-pick { font-weight: 400; color: var(--text); border: 0.5px solid var(--border-strong); padding: 0.1rem 0.45rem; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.3s; }
+.brew-pick.is-on { opacity: 1; }
+.brew-plain { font-family: var(--serif); font-size: clamp(1.05rem, 1.45vw, 1.25rem); line-height: 1.35; color: var(--text); min-height: 2.7em; }
+.brew-meter { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.7rem; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+.brew-track { display: flex; gap: 4px; flex: 1; max-width: 9rem; }
+.brew-track i { flex: 1; height: 6px; background: rgba(240,237,230,0.12); transition: background 0.35s; }
+.brew-track i.is-on { background: var(--amber-soft); }
+.brew-phone { grid-column: 2; grid-row: 1 / span 2; align-self: end; height: 112%; width: auto; max-height: none; margin-bottom: -16%; border-radius: 18px 18px 0 0; filter: grayscale(1); opacity: 0.9; transform: rotate(3deg) translateY(4%); transform-origin: 50% 100%; box-shadow: 0 30px 70px -25px rgba(0,0,0,0.9); transition: transform 0.8s var(--ease), filter 0.8s; }
+.brew.is-picks .brew-phone { transform: rotate(0deg) translateY(-2%); filter: grayscale(0.6); }
+.work-card:hover .work-media img.brew-phone { transform: rotate(1deg) translateY(1%); opacity: 0.95; }
+.brew-hint { padding: 0.75rem clamp(1.25rem, 2.4vw, 2rem); border-top: 0.5px solid var(--border); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); background: rgba(6,12,16,0.9); }
+.brew-hint span { color: var(--dim); }
+@media (max-width: 860px) {
+  .brew-stage { grid-template-columns: minmax(0, 1fr) 30%; column-gap: 0.9rem; padding: 1.1rem 1rem 0; min-height: 26rem; }
+  .brew-phone { height: auto; width: 100%; margin-bottom: -40%; }
+  .bi-name { font-size: 1rem; }
+  .bi-notes { font-size: 0.76rem; }
+}
+/* phone floats at the right edge; the menu and readout keep the left two-thirds */
+.brew-stage { display: block; padding-right: 38%; }
+.brew-read { margin-top: 0.9rem; }
+.brew-phone { position: absolute; right: 4%; bottom: -24%; height: 96%; width: auto; margin: 0; }
+.brew.is-picks .brew-phone { transform: rotate(0deg) translateY(-6%); }
+@media (max-width: 860px) {
+  .brew-stage { padding: 1.1rem 36% 1rem 1rem; min-height: 0; }
+  .brew-phone { right: -6%; bottom: -18%; height: auto; width: 40%; }
+}
+.work-media img.brew-phone { width: auto; height: 96%; object-fit: contain; opacity: 0.9; transition: transform 0.8s var(--ease), filter 0.8s; }
+.work-card:hover .work-media img.brew-phone { transform: rotate(1deg) translateY(1%); }
+.brew.is-picks img.brew-phone, .work-card:hover .brew.is-picks img.brew-phone { transform: rotate(0deg) translateY(-6%); }
+@media (max-width: 860px) { .work-media img.brew-phone { width: 40%; height: auto; } }
+@media (max-width: 860px) {
+  .work-media.brew, .work-media.film { aspect-ratio: auto; }
+  .brew-stage { padding-bottom: 1.25rem; }
+  .work-media img.brew-phone { width: 34%; bottom: -10%; right: -4%; }
+}
+.brew-track { min-width: 4.5rem; }
+@media (max-width: 860px) { .brew-meter span:not(.brew-track) { white-space: nowrap; font-size: 0.74rem; letter-spacing: 0.04em; } .brew-meter { gap: 0.45rem; } }
