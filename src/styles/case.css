@@ -251,3 +251,86 @@
 
 /* Notebook pages: any letterbox around a portrait sketch reads as paper, not as a dark bar */
 .shot[data-asset^="sketch-"] img { background: #E9E4DA; }
+
+/* ---------- Nov 2026: right-sized images, text first ---------- */
+/* A screenshot never displays much larger than it was captured, so UI text stays at a believable size */
+.shot[style*="--cap"] { max-width: var(--cap); }
+/* Notebook photos: capped by height so a portrait page never fills the screen */
+.shot[data-asset^="sketch-"] img { width: auto; max-width: 100%; max-height: min(70svh, 720px); margin-inline: auto; }
+.shot[data-asset^="sketch-"] figcaption { text-align: left; }
+
+/* Copy gets as much room as the image; images stop dominating the row */
+.pattern { grid-template-columns: 1.1fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); }
+.pattern-copy { max-width: 46ch; }
+.pattern-copy .body { font-size: 1.1rem; }
+.pattern--flip > .pair { order: 2; }
+.support { grid-template-columns: 1.25fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); }
+.support-cap { font-size: 1.1rem; max-width: 40ch; }
+.support-cap b { font-size: clamp(1.6rem, 2.4vw, 2.1rem); line-height: 1.2; margin-bottom: 0.7rem; }
+
+/* Impact before Apply: three steps, the card at its own size */
+.steps3 { display: grid; grid-template-columns: 0.55fr 1fr 1fr; gap: 1.5rem; align-items: start; }
+.pair--tight { gap: 1rem; align-items: start; grid-template-columns: 1fr 1.25fr; }
+
+/* Capacity math */
+.calc { margin-top: var(--gap-block); padding: clamp(1.5rem, 3vw, 2.5rem); border: 0.5px solid var(--border-strong); background: rgba(6,12,16,0.55); }
+.calc-k, .calc-ex-k { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-soft); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+.calc-flow { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 0; }
+.calc-box { padding: 1.2rem 1.4rem; border: 0.5px solid var(--border-strong); position: relative; }
+.calc-box + .calc-box { border-left: 0; }
+.calc-box + .calc-box::before { content: '→'; position: absolute; left: -0.6rem; top: 50%; transform: translateY(-50%); color: var(--amber-soft); background: #0b1013; padding: 0.1rem 0; font-size: 0.95rem; }
+.calc-box > span { display: block; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.7rem; }
+.calc-box ul { list-style: none; padding: 0; margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.8; }
+.calc-box--f p { font-family: var(--serif); font-size: clamp(1.2rem, 1.8vw, 1.5rem); line-height: 1.35; color: var(--text); }
+.calc-box--f p + p { margin-top: 0.5rem; }
+.calc-box--f b { font-weight: 400; color: var(--amber-soft); }
+.calc-ex { margin-top: 2rem; }
+.calc-ex-l { color: var(--muted); font-size: 1.05rem; line-height: 1.8; max-width: 70ch; }
+.calc-ex-l b { color: var(--text); font-weight: 500; }
+.sample-tag--inline { position: static; letter-spacing: 0.14em; }
+.calc-bars { margin-top: 1.4rem; display: grid; gap: 1rem; max-width: 760px; }
+.cb { display: grid; grid-template-columns: 4.5rem 1fr 11rem; gap: 1rem; align-items: center; }
+.cb-n { font-size: 0.95rem; color: var(--text); }
+.cb-t { position: relative; height: 16px; background: rgba(240,237,230,0.06); }
+.cb-t i { position: absolute; left: 0; height: 5px; }
+.cb-before { top: 1px; background: #8E9A9E; }
+.cb-before.cb-over { background: #E07A6E; }
+.cb-after { bottom: 1px; background: var(--amber-soft); }
+.cb-cap { position: absolute; left: 66.7%; top: -4px; bottom: -4px; border-left: 1px dashed var(--text); }
+.cb-v { font-size: 0.95rem; color: var(--text); font-variant-numeric: tabular-nums; }
+.cb-v small { display: block; font-size: 0.78rem; color: var(--dim); }
+.calc-legend { margin-top: 0.9rem; font-size: 0.8rem; color: var(--dim); }
+
+/* Five ways in */
+.paths { margin: 0; padding: clamp(1.25rem, 2.5vw, 2rem); border: 0.5px solid rgba(224,196,156,0.35); background: rgba(6,12,16,0.55); }
+.paths-in { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; counter-reset: p; }
+.paths-in li { counter-increment: p; display: grid; grid-template-columns: 1.8rem 1fr; column-gap: 0.6rem; padding: 0.75rem 0.9rem; border: 0.5px solid var(--border-strong); color: var(--muted); font-size: 0.95rem; line-height: 1.4; }
+.paths-in li::before { content: counter(p); grid-row: span 2; font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--amber-soft); line-height: 1; }
+.paths-in b { font-weight: 500; color: var(--text); display: block; }
+.paths-join { height: 2rem; margin: 0 auto; width: 1px; background: linear-gradient(var(--border-strong), var(--amber-soft)); }
+.paths-mid, .paths-out { padding: 0.9rem 1rem; border: 0.5px solid var(--border-strong); text-align: center; }
+.paths-mid span, .paths-out span { display: block; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.4rem; }
+.paths-mid p { color: var(--text); font-size: 1rem; line-height: 1.6; }
+.paths-mid i { color: var(--amber-soft); font-style: normal; padding: 0 0.3rem; }
+.paths-out { margin-top: 0.6rem; font-family: var(--serif); font-size: 1.35rem; color: var(--text); border-color: rgba(224,196,156,0.45); }
+.paths figcaption { margin-top: 0.9rem; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+.ba { grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); }
+
+@media (max-width: 1100px) {
+  .steps3 { grid-template-columns: 1fr 1fr; }
+  .steps3 > .shot:first-child { grid-column: 1 / -1; max-width: 360px; }
+}
+@media (max-width: 860px) {
+  .steps3, .pair--tight, .calc-flow { grid-template-columns: 1fr; }
+  .steps3 > .shot:first-child { max-width: 320px; }
+  .pattern--flip > .pair { order: 0; }
+  .calc-box + .calc-box { border-left: 0.5px solid var(--border-strong); border-top: 0; }
+  .calc-box + .calc-box::before { content: '↓'; left: 50%; top: -0.7rem; transform: translateX(-50%); padding: 0 0.3rem; }
+  .cb { grid-template-columns: 3.5rem 1fr; }
+  .cb-v { grid-column: 2; }
+  .shot[data-asset^="sketch-"] img { max-height: 60svh; }
+}
+.pattern--wide { grid-template-columns: 1fr; gap: 2rem; }
+.pattern--wide .pattern-copy { max-width: none; }
+@media (max-width: 860px) { .pattern { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .support, .ba { grid-template-columns: 1fr; gap: 1.75rem; } .support-cap { max-width: none; } }

@@ -14,7 +14,7 @@ PAGES = {
               'sketch-timesheet', 'shot-dashboard', 'shot-plan-step1-tasks', 'shot-plan-step2-allocate',
               'shot-ai-card-collapsed', 'shot-ai-card-impact-panel', 'shot-ai-thresholds', 'shot-thin-input-refusal',
               'shot-empty-insights', 'shot-team-switcher', 'shot-create-team-paste-ai-skills',
-              'shot-onboarding-add-team', 'shot-people-drawer', 'shot-employee-time', 'diagram-onboarding-five-paths'],
+              'shot-onboarding-add-team', 'shot-people-drawer', 'shot-employee-time', 'diagram-onboarding-five-paths', 'shot-ai-applied', 'shot-low-confidence'],
   },
   'barista': {
     'out': 'barista', 'build': 'build_barista.py',

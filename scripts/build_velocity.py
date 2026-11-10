@@ -36,7 +36,8 @@ def img(asset, alt, sample=False, sizes='(max-width: 860px) 92vw, 55vw', cls='',
     tag = '<span class="sample-tag">Sample data</span>' if sample else ''
     cap = f'<figcaption>{caption}</figcaption>' if caption else ''
     load = '' if eager else ' loading="lazy"'
-    return (f'<figure class="shot {cls}" data-zoom data-asset="{asset}">{tag}'
+    cap_w = f' style="--cap:{round(w * 0.62)}px"' if asset.startswith('shot-') else ''
+    return (f'<figure class="shot {cls}" data-zoom data-asset="{asset}"{cap_w}>{tag}'
             f'<img srcset="{"/images/velocity/v2/" + asset + "-900.webp 900w, " if w > 900 else ""}/images/velocity/v2/{asset}.webp {w}w" '
             f'sizes="{sizes}" src="/images/velocity/v2/{asset}.webp" alt="{html.escape(alt)}"{load} '
             f'decoding="async" width="{w}" height="{h}">{cap}</figure>')
@@ -64,9 +65,43 @@ def scrub(sketch, sketch_alt, shot, shot_alt, cap):
 
 def ba():
     before = img('sketch-login-jira-first', 'Notebook sketch of the first login: product features beside a Jira and Asana sign-in', caption='Assumed teams would arrive through Jira')
-    after = img('diagram-onboarding-five-paths', 'Diagram of five onboarding paths: email signup with a new team, invite code, email invite, connecting a project tool, and adding another team later', caption='Five ways in')
+    after = PATHS
     sides = ''.join(f'<div><span class="ba-k{k2}">{k}</span>{x}</div>' for k, k2, x in (('Before', '', before), ('After', ' ba-k--after', after)) if x)
     return f'<div class="ba reveal">{sides}</div>' if sides else ''
+
+PATHS = """<figure class="paths" aria-label="Five ways into Velocity, all ending on the dashboard">
+  <ol class="paths-in">
+    <li><b>Sign up</b>and create a team</li>
+    <li><b>Find your company</b>and join teammates</li>
+    <li><b>Invite code</b>or link from an admin</li>
+    <li><b>Email invite</b>from your lead</li>
+    <li><b>Add a team later</b>from the team switcher</li>
+  </ol>
+  <div class="paths-join" aria-hidden="true"></div>
+  <div class="paths-mid"><span>Then add your people, three ways</span><p>Type them in <i>·</i> Import a CSV <i>·</i> Paste rows and the AI drafts skills</p></div>
+  <div class="paths-out"><span>Lands on</span>The dashboard</div>
+  <figcaption>Five ways in, none of them need Jira</figcaption>
+</figure>"""
+
+CALC = """<div class="calc reveal" aria-label="How the capacity numbers work">
+  <p class="calc-k">Under the hood, straight from the notebook</p>
+  <div class="calc-flow">
+    <div class="calc-box"><span>Recalculates when</span><ul><li>an assignment changes</li><li>a timesheet is submitted</li><li>leave is approved</li></ul></div>
+    <div class="calc-box calc-box--f"><span>The math</span>
+      <p><b>Available</b> = working days × hours a day − leave</p>
+      <p><b>Load</b> = assigned hours ÷ available</p></div>
+    <div class="calc-box"><span>Shows the lead</span><ul><li>free hours this week</li><li>load in hours and %</li><li>who is over capacity</li></ul></div>
+  </div>
+  <div class="calc-ex">
+    <p class="calc-ex-k">Worked example <span class="sample-tag sample-tag--inline">Sample data</span></p>
+    <p class="calc-ex-l">5 days × 8h − 0 leave = <b>40h available</b>. Sarah is assigned 48h, so her load is <b>120%</b>. The AI suggests moving 8h of Dashboard UI QA to Alex.</p>
+    <div class="calc-bars">
+      <div class="cb"><span class="cb-n">Sarah</span><span class="cb-t"><i style="width:80%" class="cb-before cb-over"></i><i style="width:66.7%" class="cb-after"></i><em class="cb-cap"></em></span><span class="cb-v">48h → 40h <small>120% → 100%</small></span></div>
+      <div class="cb"><span class="cb-n">Alex</span><span class="cb-t"><i style="width:33.3%" class="cb-before"></i><i style="width:46.7%" class="cb-after"></i><em class="cb-cap"></em></span><span class="cb-v">20h → 28h <small>50% → 70%</small></span></div>
+    </div>
+    <p class="calc-legend">Upper bar now, lower bar after the move. The line is 40h.</p>
+  </div>
+</div>"""
 
 MAIN = f'''
   <main id="main">
@@ -123,6 +158,7 @@ MAIN = f'''
           </ol>
         </div>
       </div>
+      {CALC}
     </section>
 
     <!-- 4 · Research -->
@@ -157,9 +193,10 @@ MAIN = f'''
           <h3 class="h3">Impact <em>before</em> Apply.</h3>
           <p class="body">Each suggestion reads what → why → impact → decide. Review opens an impact panel: people and projects affected, hours moved, the effect on the timeline, a risk level. Apply lives only inside that panel. There is no way to act on a suggestion without seeing what it does.</p>
         </div>
-        <div class="pair">
-          {img('shot-ai-card-collapsed', 'A collapsed AI suggestion card with a High confidence pill, a category edge, a two-line reason, and Review and Ignore buttons', sample=True, caption='Collapsed: Review or Ignore, never Apply')}
-          {img('shot-ai-card-impact-panel', 'The suggestion expanded into an impact analysis panel listing people and projects affected, hours moved, timeline effect and risk, with Apply inside it', sample=True, caption='Expanded: the consequences, then Apply')}
+        <div class="steps3">
+          {img('shot-ai-card-collapsed', 'A collapsed AI suggestion card with a High confidence pill, a category edge, a two-line reason, and Review and Ignore buttons', sample=True, caption='1 · Review or Ignore, never Apply')}
+          {img('shot-ai-card-impact-panel', 'Review open: the impact panel lists the tasks that move and each person’s hours before and after, while the timeline shows the proposed bars and new totals', sample=True, caption='2 · The math before the decision: 48h → 40h')}
+          {img('shot-ai-applied', 'After Apply: the dashboard KPIs show what changed, and a confirmation offers Undo', sample=True, caption='3 · Applied, with the change shown and an Undo')}
         </div>
       </article>
 
@@ -191,11 +228,15 @@ MAIN = f'''
       </article>
 
       <article class="pattern pattern--flip reveal">
-        {img('shot-empty-insights', 'The AI Insights panel on an empty workspace reading "No insights yet. Insights will appear as your team data grows."')}
+        <div class="pair pair--tight">
+          {img('shot-low-confidence', 'A low-confidence suggestion: the card says two of five people haven’t logged time this week, asks the lead to check before applying, and offers Remind team to log time', sample=True, caption='Unsure: says why, and how to fix it')}
+          {img('shot-empty-insights', 'The AI Insights panel on an empty workspace reading "No insights yet. Insights will appear as your team data grows."', caption='No data: says nothing')}
+        </div>
         <div class="pattern-copy">
           <span class="pattern-n">e</span>
-          <h3 class="h3">It admits it <em>doesn't know yet.</em></h3>
-          <p class="body">An earlier version showed sample insights about named people on an empty workspace. On a real team, invented insights would cost trust on day one. Now the panel just says so.</p>
+          <h3 class="h3">It says when it <em>isn't sure.</em></h3>
+          <p class="body">Below 70% confidence, a card says why: two of five people haven't logged time this week. It offers to remind them, and Apply becomes Apply anyway.</p>
+          <p class="body">With no data at all, the panel says so. An earlier version showed sample insights about named people on an empty workspace, and invented insights would cost trust on day one.</p>
         </div>
       </article>
 

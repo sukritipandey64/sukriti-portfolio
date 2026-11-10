@@ -97,6 +97,25 @@
           </ol>
         </div>
       </div>
+      <div class="calc reveal" aria-label="How the capacity numbers work">
+  <p class="calc-k">Under the hood, straight from the notebook</p>
+  <div class="calc-flow">
+    <div class="calc-box"><span>Recalculates when</span><ul><li>an assignment changes</li><li>a timesheet is submitted</li><li>leave is approved</li></ul></div>
+    <div class="calc-box calc-box--f"><span>The math</span>
+      <p><b>Available</b> = working days × hours a day − leave</p>
+      <p><b>Load</b> = assigned hours ÷ available</p></div>
+    <div class="calc-box"><span>Shows the lead</span><ul><li>free hours this week</li><li>load in hours and %</li><li>who is over capacity</li></ul></div>
+  </div>
+  <div class="calc-ex">
+    <p class="calc-ex-k">Worked example <span class="sample-tag sample-tag--inline">Sample data</span></p>
+    <p class="calc-ex-l">5 days × 8h − 0 leave = <b>40h available</b>. Sarah is assigned 48h, so her load is <b>120%</b>. The AI suggests moving 8h of Dashboard UI QA to Alex.</p>
+    <div class="calc-bars">
+      <div class="cb"><span class="cb-n">Sarah</span><span class="cb-t"><i style="width:80%" class="cb-before cb-over"></i><i style="width:66.7%" class="cb-after"></i><em class="cb-cap"></em></span><span class="cb-v">48h → 40h <small>120% → 100%</small></span></div>
+      <div class="cb"><span class="cb-n">Alex</span><span class="cb-t"><i style="width:33.3%" class="cb-before"></i><i style="width:46.7%" class="cb-after"></i><em class="cb-cap"></em></span><span class="cb-v">20h → 28h <small>50% → 70%</small></span></div>
+    </div>
+    <p class="calc-legend">Upper bar now, lower bar after the move. The line is 40h.</p>
+  </div>
+</div>
     </section>
 
     <!-- 4 · Research -->
@@ -131,14 +150,15 @@
           <h3 class="h3">Impact <em>before</em> Apply.</h3>
           <p class="body">Each suggestion reads what → why → impact → decide. Review opens an impact panel: people and projects affected, hours moved, the effect on the timeline, a risk level. Apply lives only inside that panel. There is no way to act on a suggestion without seeing what it does.</p>
         </div>
-        <div class="pair">
-          <figure class="shot " data-zoom data-asset="shot-ai-card-collapsed"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-ai-card-collapsed.webp 592w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-card-collapsed.webp" alt="A collapsed AI suggestion card with a High confidence pill, a category edge, a two-line reason, and Review and Ignore buttons" loading="lazy" decoding="async" width="592" height="510"><figcaption>Collapsed: Review or Ignore, never Apply</figcaption></figure>
-          <figure class="shot " data-zoom data-asset="shot-ai-card-impact-panel"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-ai-card-impact-panel-900.webp 900w, /images/velocity/v2/shot-ai-card-impact-panel.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-card-impact-panel.webp" alt="The suggestion expanded into an impact analysis panel listing people and projects affected, hours moved, timeline effect and risk, with Apply inside it" loading="lazy" decoding="async" width="2000" height="1250"><figcaption>Expanded: the consequences, then Apply</figcaption></figure>
+        <div class="steps3">
+          <figure class="shot " data-zoom data-asset="shot-ai-card-collapsed" style="--cap:367px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-ai-card-collapsed.webp 592w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-card-collapsed.webp" alt="A collapsed AI suggestion card with a High confidence pill, a category edge, a two-line reason, and Review and Ignore buttons" loading="lazy" decoding="async" width="592" height="510"><figcaption>1 · Review or Ignore, never Apply</figcaption></figure>
+          <figure class="shot " data-zoom data-asset="shot-ai-card-impact-panel" style="--cap:1240px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-ai-card-impact-panel-900.webp 900w, /images/velocity/v2/shot-ai-card-impact-panel.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-card-impact-panel.webp" alt="Review open: the impact panel lists the tasks that move and each person’s hours before and after, while the timeline shows the proposed bars and new totals" loading="lazy" decoding="async" width="2000" height="1525"><figcaption>2 · The math before the decision: 48h → 40h</figcaption></figure>
+          <figure class="shot " data-zoom data-asset="shot-ai-applied" style="--cap:1240px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-ai-applied-900.webp 900w, /images/velocity/v2/shot-ai-applied.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-applied.webp" alt="After Apply: the dashboard KPIs show what changed, and a confirmation offers Undo" loading="lazy" decoding="async" width="2000" height="1525"><figcaption>3 · Applied, with the change shown and an Undo</figcaption></figure>
         </div>
       </article>
 
       <article class="pattern reveal">
-        <figure class="shot " data-zoom data-asset="shot-plan-step1-tasks"><img srcset="/images/velocity/v2/shot-plan-step1-tasks-900.webp 900w, /images/velocity/v2/shot-plan-step1-tasks.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-plan-step1-tasks.webp" alt="Plan My Project, step one: AI-generated tasks with hour estimates, and a feasibility score shown beside the model’s confidence" loading="lazy" decoding="async" width="2000" height="1250"></figure>
+        <figure class="shot " data-zoom data-asset="shot-plan-step1-tasks" style="--cap:1240px"><img srcset="/images/velocity/v2/shot-plan-step1-tasks-900.webp 900w, /images/velocity/v2/shot-plan-step1-tasks.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-plan-step1-tasks.webp" alt="Plan My Project, step one: AI-generated tasks with hour estimates, and a feasibility score shown beside the model’s confidence" loading="lazy" decoding="async" width="2000" height="1525"></figure>
         <div class="pattern-copy">
           <span class="pattern-n">b</span>
           <h3 class="h3">Confidence on <em>every</em> AI number.</h3>
@@ -147,7 +167,7 @@
       </article>
 
       <article class="pattern pattern--flip reveal">
-        <figure class="shot " data-zoom data-asset="shot-ai-thresholds"><img srcset="/images/velocity/v2/shot-ai-thresholds-900.webp 900w, /images/velocity/v2/shot-ai-thresholds.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-thresholds.webp" alt="AI Thresholds settings: flag tasks below 70% confidence, warn on health below 60, treat a delay over 7 days as a risk" loading="lazy" decoding="async" width="2000" height="1250"></figure>
+        <figure class="shot " data-zoom data-asset="shot-ai-thresholds" style="--cap:842px"><img srcset="/images/velocity/v2/shot-ai-thresholds-900.webp 900w, /images/velocity/v2/shot-ai-thresholds.webp 1358w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-ai-thresholds.webp" alt="AI Thresholds settings: flag tasks below 70% confidence, warn on health below 60, treat a delay over 7 days as a risk" loading="lazy" decoding="async" width="1358" height="1252"></figure>
         <div class="pattern-copy">
           <span class="pattern-n">c</span>
           <h3 class="h3">Leads set when the AI <em>speaks up.</em></h3>
@@ -156,7 +176,7 @@
       </article>
 
       <article class="pattern reveal">
-        <figure class="shot " data-zoom data-asset="shot-thin-input-refusal"><img srcset="/images/velocity/v2/shot-thin-input-refusal-900.webp 900w, /images/velocity/v2/shot-thin-input-refusal.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-thin-input-refusal.webp" alt="Plan My Project declining a too-short description with the message &quot;Need more data to run this request&quot; and an option to upload a requirements document" loading="lazy" decoding="async" width="2000" height="1250"></figure>
+        <figure class="shot " data-zoom data-asset="shot-thin-input-refusal" style="--cap:1240px"><img srcset="/images/velocity/v2/shot-thin-input-refusal-900.webp 900w, /images/velocity/v2/shot-thin-input-refusal.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-thin-input-refusal.webp" alt="Plan My Project declining a too-short description with the message &quot;Need more data to run this request&quot; and an option to upload a requirements document" loading="lazy" decoding="async" width="2000" height="770"></figure>
         <div class="pattern-copy">
           <span class="pattern-n">d</span>
           <h3 class="h3">It refuses <em>thin input.</em></h3>
@@ -165,11 +185,15 @@
       </article>
 
       <article class="pattern pattern--flip reveal">
-        <figure class="shot " data-zoom data-asset="shot-empty-insights"><img srcset="/images/velocity/v2/shot-empty-insights.webp 840w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-empty-insights.webp" alt="The AI Insights panel on an empty workspace reading &quot;No insights yet. Insights will appear as your team data grows.&quot;" loading="lazy" decoding="async" width="840" height="468"></figure>
+        <div class="pair pair--tight">
+          <figure class="shot " data-zoom data-asset="shot-low-confidence" style="--cap:368px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-low-confidence.webp 594w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-low-confidence.webp" alt="A low-confidence suggestion: the card says two of five people haven’t logged time this week, asks the lead to check before applying, and offers Remind team to log time" loading="lazy" decoding="async" width="594" height="768"><figcaption>Unsure: says why, and how to fix it</figcaption></figure>
+          <figure class="shot " data-zoom data-asset="shot-empty-insights" style="--cap:521px"><img srcset="/images/velocity/v2/shot-empty-insights.webp 840w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-empty-insights.webp" alt="The AI Insights panel on an empty workspace reading &quot;No insights yet. Insights will appear as your team data grows.&quot;" loading="lazy" decoding="async" width="840" height="468"><figcaption>No data: says nothing</figcaption></figure>
+        </div>
         <div class="pattern-copy">
           <span class="pattern-n">e</span>
-          <h3 class="h3">It admits it <em>doesn't know yet.</em></h3>
-          <p class="body">An earlier version showed sample insights about named people on an empty workspace. On a real team, invented insights would cost trust on day one. Now the panel just says so.</p>
+          <h3 class="h3">It says when it <em>isn't sure.</em></h3>
+          <p class="body">Below 70% confidence, a card says why: two of five people haven't logged time this week. It offers to remind them, and Apply becomes Apply anyway.</p>
+          <p class="body">With no data at all, the panel says so. An earlier version showed sample insights about named people on an empty workspace, and invented insights would cost trust on day one.</p>
         </div>
       </article>
 
@@ -179,7 +203,7 @@
       </div>
 
       <div class="support reveal">
-        <figure class="shot " data-zoom data-asset="shot-plan-step2-allocate"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-plan-step2-allocate-900.webp 900w, /images/velocity/v2/shot-plan-step2-allocate.webp 2000w" sizes="(max-width: 860px) 92vw, 70vw" src="/images/velocity/v2/shot-plan-step2-allocate.webp" alt="Plan My Project, step two: recommended people with skill match and availability; Commit Project stays disabled until the lead selects someone" loading="lazy" decoding="async" width="2000" height="1250"></figure>
+        <figure class="shot " data-zoom data-asset="shot-plan-step2-allocate" style="--cap:1240px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-plan-step2-allocate-900.webp 900w, /images/velocity/v2/shot-plan-step2-allocate.webp 2000w" sizes="(max-width: 860px) 92vw, 70vw" src="/images/velocity/v2/shot-plan-step2-allocate.webp" alt="Plan My Project, step two: recommended people with skill match and availability; Commit Project stays disabled until the lead selects someone" loading="lazy" decoding="async" width="2000" height="1525"></figure>
         <p class="support-cap"><b>The AI recommends. The lead selects.</b> Commit Project stays blocked until someone is chosen.</p>
       </div>
     </section>
@@ -188,11 +212,23 @@
     <section class="room" id="onboarding" data-light="cool">
       <p class="label reveal">05 — Onboarding</p>
       <h2 class="h2 reveal d1 narrow-title">The assumption <em>the research broke.</em></h2>
-      <div class="ba reveal"><div><span class="ba-k">Before</span><figure class="shot " data-zoom data-asset="sketch-login-jira-first"><img srcset="/images/velocity/v2/sketch-login-jira-first-900.webp 900w, /images/velocity/v2/sketch-login-jira-first.webp 1814w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/sketch-login-jira-first.webp" alt="Notebook sketch of the first login: product features beside a Jira and Asana sign-in" loading="lazy" decoding="async" width="1814" height="2400"><figcaption>Assumed teams would arrive through Jira</figcaption></figure></div></div>
+      <div class="ba reveal"><div><span class="ba-k">Before</span><figure class="shot " data-zoom data-asset="sketch-login-jira-first"><img srcset="/images/velocity/v2/sketch-login-jira-first-900.webp 900w, /images/velocity/v2/sketch-login-jira-first.webp 1814w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/sketch-login-jira-first.webp" alt="Notebook sketch of the first login: product features beside a Jira and Asana sign-in" loading="lazy" decoding="async" width="1814" height="2400"><figcaption>Assumed teams would arrive through Jira</figcaption></figure></div><div><span class="ba-k ba-k--after">After</span><figure class="paths" aria-label="Five ways into Velocity, all ending on the dashboard">
+  <ol class="paths-in">
+    <li><b>Sign up</b>and create a team</li>
+    <li><b>Find your company</b>and join teammates</li>
+    <li><b>Invite code</b>or link from an admin</li>
+    <li><b>Email invite</b>from your lead</li>
+    <li><b>Add a team later</b>from the team switcher</li>
+  </ol>
+  <div class="paths-join" aria-hidden="true"></div>
+  <div class="paths-mid"><span>Then add your people, three ways</span><p>Type them in <i>·</i> Import a CSV <i>·</i> Paste rows and the AI drafts skills</p></div>
+  <div class="paths-out"><span>Lands on</span>The dashboard</div>
+  <figcaption>Five ways in, none of them need Jira</figcaption>
+</figure></div></div>
       <p class="pull reveal">The hard design problem wasn't the dashboard. <em>It was who keys the data in.</em></p>
       <div class="pair pair--loose reveal">
-        <figure class="shot " data-zoom data-asset="shot-onboarding-add-team"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-onboarding-add-team-900.webp 900w, /images/velocity/v2/shot-onboarding-add-team.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-onboarding-add-team.webp" alt="Onboarding step to add a team: a table of name, email, role and skills, with Import from CSV and a skip option" loading="lazy" decoding="async" width="2000" height="1250"><figcaption>Add the team, or skip and come back</figcaption></figure>
-        <figure class="shot " data-zoom data-asset="shot-create-team-paste-ai-skills"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-create-team-paste-ai-skills-900.webp 900w, /images/velocity/v2/shot-create-team-paste-ai-skills.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-create-team-paste-ai-skills.webp" alt="Create a team by pasting rows from a spreadsheet; the AI suggests skills from each role for the lead to edit before saving" loading="lazy" decoding="async" width="2000" height="1250"><figcaption>Paste from a spreadsheet; AI drafts the skills, the lead checks them</figcaption></figure>
+        <figure class="shot " data-zoom data-asset="shot-onboarding-add-team" style="--cap:1240px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-onboarding-add-team-900.webp 900w, /images/velocity/v2/shot-onboarding-add-team.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-onboarding-add-team.webp" alt="Onboarding step to add a team: a table of name, email, role and skills, with Import from CSV and a skip option" loading="lazy" decoding="async" width="2000" height="1800"><figcaption>Add the team, or skip and come back</figcaption></figure>
+        <figure class="shot " data-zoom data-asset="shot-create-team-paste-ai-skills" style="--cap:1240px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-create-team-paste-ai-skills-900.webp 900w, /images/velocity/v2/shot-create-team-paste-ai-skills.webp 2000w" sizes="(max-width: 860px) 92vw, 55vw" src="/images/velocity/v2/shot-create-team-paste-ai-skills.webp" alt="Create a team by pasting rows from a spreadsheet; the AI suggests skills from each role for the lead to edit before saving" loading="lazy" decoding="async" width="2000" height="1525"><figcaption>Paste from a spreadsheet; AI drafts the skills, the lead checks them</figcaption></figure>
       </div>
     </section>
 
@@ -208,7 +244,7 @@
           <div class="dr" role="row"><b role="cell">Hours and utilisation, not task counts</b><span role="cell">Fifteen small tasks can be lighter than two large ones.</span><span role="cell">Every task needs an effort estimate.</span></div>
           <div class="dr" role="row"><b role="cell">No monitoring</b><span role="cell">No activity tracking, payroll or attendance. It must not feel like surveillance.</span><span role="cell">Less data for the AI to learn from.</span></div>
         </div>
-        <figure class="shot reveal d1 decisions-shot" data-zoom data-asset="shot-team-switcher"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-team-switcher-900.webp 900w, /images/velocity/v2/shot-team-switcher.webp 2000w" sizes="(max-width: 860px) 92vw, 30vw" src="/images/velocity/v2/shot-team-switcher.webp" alt="The team switcher at the foot of the sidebar, listing each team with the person’s role on it and a Create New Team option" loading="lazy" decoding="async" width="2000" height="1250"><figcaption>Roles belong to teams</figcaption></figure>
+        <figure class="shot reveal d1 decisions-shot" data-zoom data-asset="shot-team-switcher" style="--cap:325px"><span class="sample-tag">Sample data</span><img srcset="/images/velocity/v2/shot-team-switcher.webp 524w" sizes="(max-width: 860px) 92vw, 30vw" src="/images/velocity/v2/shot-team-switcher.webp" alt="The team switcher at the foot of the sidebar, listing each team with the person’s role on it and a Create New Team option" loading="lazy" decoding="async" width="524" height="490"><figcaption>Roles belong to teams</figcaption></figure>
       </div>
       <p class="deferred reveal"><span>Deliberately not built yet</span>An "I'm interested" signal, so people can flag projects they'd like to join. Valuable, and it only helps once the capacity view is trusted. Adding it early would have widened the scope without strengthening the core loop.</p>
     </section>
