@@ -162,3 +162,4 @@
 }
 .nowrap { white-space: nowrap; }
 .wip-title--name i { font-style: italic; color: var(--muted); }
+.wip-full { margin-top: 1rem; animation: fadeUp 0.7s 0.55s both; }

@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / 'public' / 'images' / 'barista'
 LINKEDIN = 'https://www.linkedin.com/in/sukritipandey1908/'
+FULL = 'https://www.notion.so/414a0e18a1df810586dcfe31695092c4'  # Notion write-up, published to the web
 U = 'https://sukritipandey.vercel.app'
 
 # Flip to the second wording once conversations have actually started (spec §6).
@@ -107,6 +108,7 @@ PAGE = f'''<!DOCTYPE html>
           <p class="wip-kicker">Case study 02 · {{READ}} min read</p>
           <h1 class="display wip-title wip-title--name"><span class="nowrap">Ctrl+Alt+<i>Decaf</i></span> <em>(working title)</em></h1>
           <p class="cs-lede">Ordering coffee shouldn't feel like an oral exam.</p>
+          <p class="wip-full"><a class="link-quiet" href="{FULL}" target="_blank" rel="noopener">Full write-up<span class="sr-only"> (opens in Notion)</span></a></p>
           <ol class="stages" aria-label="Where the project is">
             <li class="is-now"><b>Discover</b><span>Now</span></li><li><b>Define</b><span>Next</span></li><li><b>Design</b><span>Lo-fi started</span></li><li><b>Test</b><span>In a café</span></li>
           </ol>
@@ -263,6 +265,7 @@ PAGE = f'''<!DOCTYPE html>
         <img class="next-cs-img next-cs-img--wide" src="/images/velocity/v2/shot-dashboard-900.webp" alt="" loading="lazy" width="900" height="562">
       </a>
       <div class="cs-end reveal">
+        <a class="btn-pill" href="{FULL}" target="_blank" rel="noopener">Read the full write-up<span class="sr-only"> (opens in Notion)</span></a>
         <a class="btn-pill btn-pill--ghost" href="/#work">Back to work</a>
         <a class="link-quiet" href="{LINKEDIN}" target="_blank" rel="noopener">Follow along on LinkedIn</a>
       </div>

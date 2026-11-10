@@ -490,3 +490,5 @@
 }
 .nowrap { white-space: nowrap; }
 .next-cs-t em { font-style: italic; color: var(--muted); }
+.paths-in li.paths-soon { border-style: dashed; color: var(--dim); }
+.paths-in li.paths-soon b { color: var(--muted); }

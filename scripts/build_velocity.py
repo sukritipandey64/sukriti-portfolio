@@ -7,9 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / 'velocity-ai.html'
 PROTO = 'https://www.figma.com/make/Sho1iwOvhDxAd0g1laSmdW/Velocity-AI?fullscreen=1'
-LONGFORM = 'https://claude.ai/artifact/MZtPGgcvskxHiSCginxVDQ'
+LONGFORM = 'https://www.notion.so/414a0e18a1df813cb99cf2b1359d1a88'  # Notion, published to the web
 # Flip to True only once the long-form doc is shared publicly (otherwise reviewers hit a login).
-LONGFORM_PUBLIC = False
+LONGFORM_PUBLIC = True
 # Production rule: a slot whose image file doesn't exist is left out entirely (no placeholders).
 SHOW_PENDING = False
 
@@ -71,16 +71,16 @@ def ba():
 
 PATHS = """<figure class="paths" aria-label="Five ways into Velocity, all ending on the dashboard">
   <ol class="paths-in">
-    <li><b>Sign up</b>and create a team</li>
-    <li><b>Find your company</b>and join teammates</li>
+    <li><b>Sign up</b>find your company or start a new team</li>
     <li><b>Invite code</b>or link from an admin</li>
     <li><b>Email invite</b>from your lead</li>
+    <li class="paths-soon"><b>Connect a project tool</b>Google or Jira, marked Soon</li>
     <li><b>Add a team later</b>from the team switcher</li>
   </ol>
   <div class="paths-join" aria-hidden="true"></div>
   <div class="paths-mid"><span>Then add your people, three ways</span><p>Type them in <i>·</i> Import a CSV <i>·</i> Paste rows and the AI drafts skills</p></div>
   <div class="paths-out"><span>Lands on</span>The dashboard</div>
-  <figcaption>Five ways in, none of them need Jira</figcaption>
+  <figcaption>Five ways in, matched to how a team already works. Only one needs a project tool.</figcaption>
 </figure>"""
 
 CALC = """<div class="calc reveal" aria-label="How the capacity numbers work">
@@ -134,6 +134,7 @@ MAIN = f'''
           <div class="cs-ctas">
             <span class="cta-wrap">{PROTO_CTA}</span>
             <a class="link-quiet" href="#glance">Read the story</a>
+            {f'<a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Full case study<span class="sr-only"> (opens in Notion)</span></a>' if LONGFORM_PUBLIC else ''}
           </div>
         </div>
       </div>
@@ -328,7 +329,7 @@ MAIN = f'''
 
       <div class="cs-end reveal">
         <span class="cta-wrap">{PROTO_CTA}</span>
-        {f'<a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Read the full case study</a>' if LONGFORM_PUBLIC else ''}
+        {f'<a class="link-quiet" href="{LONGFORM}" target="_blank" rel="noopener">Read the full case study<span class="sr-only"> (opens in Notion)</span></a>' if LONGFORM_PUBLIC else ''}
         <a class="link-quiet" href="/#work">Back to all work</a>
       </div>
       {'<p class="end-note reveal">The full case study covers the design system, the visual evolution and the accessibility audit.</p>' if LONGFORM_PUBLIC else ''}
