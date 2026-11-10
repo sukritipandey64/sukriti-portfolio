@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / 'velocity-ai.html'
 PROTO = 'https://www.figma.com/make/Sho1iwOvhDxAd0g1laSmdW/Velocity-AI?fullscreen=1'
-LONGFORM = 'https://www.notion.so/414a0e18a1df813cb99cf2b1359d1a88'  # Notion, published to the web
+LONGFORM = 'https://concrete-dessert-15b.notion.site/Velocity-AI-Full-case-study-414a0e18a1df813cb99cf2b1359d1a88'  # Notion, published to the web
 # Flip to True only once the long-form doc is shared publicly (otherwise reviewers hit a login).
 LONGFORM_PUBLIC = True
 # Production rule: a slot whose image file doesn't exist is left out entirely (no placeholders).

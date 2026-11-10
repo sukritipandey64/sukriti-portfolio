@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / 'public' / 'images' / 'barista'
 LINKEDIN = 'https://www.linkedin.com/in/sukritipandey1908/'
-FULL = 'https://www.notion.so/414a0e18a1df810586dcfe31695092c4'  # Notion write-up, published to the web
+FULL = 'https://concrete-dessert-15b.notion.site/Ctrl-Alt-Decaf-Case-study-in-progress-414a0e18a1df810586dcfe31695092c4'  # Notion write-up, published to the web
 U = 'https://sukritipandey.vercel.app'
 
 # Flip to the second wording once conversations have actually started (spec §6).
