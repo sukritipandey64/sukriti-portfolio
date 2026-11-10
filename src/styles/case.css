@@ -248,3 +248,6 @@
 .ss-solo { padding: var(--gap-block) 0; border-top: 0.5px solid var(--border); }
 .ss-solo .shot img { width: min(100%, calc((100svh - 10rem) * 1.6)); margin: 0 auto; }
 .ss-solo .ss-cap { margin-top: 0.9rem; }
+
+/* Notebook pages: any letterbox around a portrait sketch reads as paper, not as a dark bar */
+.shot[data-asset^="sketch-"] img { background: #E9E4DA; }

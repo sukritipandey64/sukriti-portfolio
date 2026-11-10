@@ -114,7 +114,7 @@ MAIN = f'''
     <section class="room" id="system" data-light="cool">
       <p class="label reveal">02 — Sketch → system</p>
       <div class="split">
-        {img('sketch-conceptual-model', 'Notebook sketch of the conceptual model: inputs feed a synthesis step, which feeds Plan My Project and the capacity engine', cls='reveal', caption='The first conceptual model, in a notebook')}
+        {img('sketch-conceptual-model', 'Notebook sketch of the conceptual model: project and employee data feed a synthesis step, and Plan My Project turns a description into tasks, skills and a timeline', cls='reveal', caption='The first conceptual model, in a notebook')}
         <div>
           <h2 class="h2 reveal d1">It started <em>on paper.</em></h2>
           <p class="body reveal d2">One loop holds the whole product. A lead describes a project, the AI drafts the tasks and recommends people, and nothing moves until the lead has edited the plan and chosen to commit it.</p>
@@ -243,7 +243,7 @@ MAIN = f'''
     <section class="room" id="evolution" data-light="cool">
       <p class="label reveal">07 — Notebook to screen</p>
       <h2 class="h2 reveal d1 narrow-title">Same idea, <em>fewer crossings-out.</em></h2>
-      {scrub('sketch-dashboard', 'Notebook sketch of the manager dashboard with a capacity formula', 'shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights', 'Manager dashboard')}
+      {scrub('sketch-dashboard', 'Notebook sketch of the manager dashboard: four summary boxes, an AI recommendation panel and upcoming deadlines', 'shot-dashboard', 'The final manager dashboard: KPI cards, capacity by person and week, deadlines and AI insights', 'Manager dashboard')}
       {scrub('sketch-timesheet', 'Notebook sketch of a timesheet with a time block', 'shot-employee-time', 'The employee Time area: timesheets, leave and company holidays in three tabs', 'Employee time')}
       {scrub('sketch-roles-flow', 'Notebook sketch of the roles flow: a user becomes a manager, an employee or an individual contributor', 'shot-people-drawer', 'People and capacity with a person’s side drawer open: four-week capacity, projects, skills and AI recommendations', 'People and roles')}
     </section>
