@@ -10,6 +10,7 @@ export default defineConfig({
         velocity: resolve(__dirname, 'velocity-ai.html'),
         barista: resolve(__dirname, 'digital-barista.html'),
         curator: resolve(__dirname, 'curator.html'),
+        editorial: resolve(__dirname, 'editorial.html'),
       },
     },
   },

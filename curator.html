@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0A1419">
   <title>The Curator — an installation · Sukriti Pandey</title>
-  <meta name="description" content="Five pieces arrive out of place. Arrange them however you like. The Curator reads how you decided, not what you made.">
+  <meta name="description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
   <link rel="canonical" href="https://sukritipandey.vercel.app/curator.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sukriti Pandey">
   <meta property="og:url" content="https://sukritipandey.vercel.app/curator.html">
   <meta property="og:title" content="The Curator — an installation · Sukriti Pandey">
-  <meta property="og:description" content="Five pieces arrive out of place. Arrange them however you like. The Curator reads how you decided, not what you made.">
+  <meta property="og:description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
   <meta property="og:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Curator — an installation · Sukriti Pandey">
-  <meta name="twitter:description" content="Five pieces arrive out of place. Arrange them however you like. The Curator reads how you decided, not what you made.">
+  <meta name="twitter:description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
   <meta name="twitter:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -48,42 +48,32 @@
       </header>
 
       <div class="cur-stage-wrap">
+        <div class="cur-hud" data-hud hidden>
+          <span class="cur-hud-room" data-hud-room></span>
+          <span class="cur-hud-score"><b data-hud-score>0</b> pts</span>
+          <span class="cur-hud-time" data-hud-time>0:00</span>
+        </div>
         <div class="cur-stage" data-stage role="group" aria-label="Composition area">
           <div class="cur-grid" aria-hidden="true"></div>
-          <div class="cur-pick" data-pick>
-            <p class="cur-pick-k">Choose what to curate</p>
-            <button type="button" class="cur-opt" data-material="wall">
-              <span class="cur-opt-icon cur-opt-icon--wall" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="cur-opt-t">A gallery wall</span>
-              <span class="cur-opt-d">Four works and a wall label</span>
-            </button>
-            <button type="button" class="cur-opt" data-material="spread">
-              <span class="cur-opt-icon cur-opt-icon--spread" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="cur-opt-t">An editorial spread</span>
-              <span class="cur-opt-d">Five pieces of a magazine page</span>
-            </button>
-            <button type="button" class="cur-opt" data-material="screen">
-              <span class="cur-opt-icon cur-opt-icon--screen" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="cur-opt-t">A product screen</span>
-              <span class="cur-opt-d">Five parts of an interface</span>
-            </button>
-          </div>
+          <div class="cur-pick" data-pick></div>
         </div>
         <p class="cur-caption" data-caption aria-live="polite"></p>
       </div>
 
       <div class="cur-panel" data-panel="pick">
-        <p class="cur-lede">Five pieces arrive out of place. Put them wherever you think they belong. There’s no right answer. It’s watching <em>how</em> you get there.</p>
-        <p class="cur-meta">About a minute · works with touch, mouse or keyboard</p>
+        <p class="cur-lede">Three rooms, three briefs. Five pieces arrive out of place; meet the brief, snap to the grid, beat the clock. It scores the layout, and reads <em>how</em> you got there.</p>
+        <p class="cur-meta">About a minute a room · touch, mouse or keyboard</p>
       </div>
 
       <div class="cur-panel" data-panel="play" hidden>
-        <p class="cur-lede cur-lede--sm">Drag the pieces until it feels right, then call it. <span class="cur-kbd">Keyboard: Tab to a piece, arrow keys to move it.</span></p>
+        <p class="cur-k">The brief</p>
+        <ul class="cur-brief" data-brief aria-live="polite"></ul>
         <div class="cur-actions">
           <button type="button" class="btn-pill" data-done disabled>Hang it</button>
           <button type="button" class="btn-pill btn-pill--ghost" data-shuffle>Shuffle</button>
-          <button type="button" class="cur-textbtn" data-back>Change material</button>
+          <button type="button" class="cur-textbtn" data-back>All rooms</button>
         </div>
+        <p class="cur-kbd">Keyboard: Tab to a piece, arrow keys to move it.</p>
       </div>
 
       <div class="cur-panel cur-result" data-panel="result" hidden tabindex="-1"></div>

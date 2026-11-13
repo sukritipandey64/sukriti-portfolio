@@ -35,12 +35,16 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
   background "camera" (zoom + pan + sway), gallery walk over the one image (`.gallery-fx`: a track-light beam + pool per room on alternating walls, partition shadows sweeping past at room boundaries, dust motes lit by the beams, a slight camera turn per room; off under reduced motion), lightbox for `[data-zoom]`.
 - `src/js/motion.js` — signature motion: hero letters scatter then snap ("Chaos, but curated"), Velocity film on the homepage work card (product-video style: real screens, camera zooms, cursor, captions, clickable chapters; autoplays in view, pause button; scene script lives in motion.js `SHOTS`), sketch→screen scrub on Velocity (inside the Final design tabs; scroll-driven until dragged; range input for keyboard), tasting-note decode on Digital Barista, and the homepage Ctrl+Alt+Decaf card (calm: one example menu line at a time, then its plain-words version and a bitterness dot scale; dots to switch lines; lots of space on purpose). Case study covers fade a product visual in full-bleed (`.cover-bleed`): the dashboard on Velocity, three lo-fi phones on Barista. All off under prefers-reduced-motion. One signature moment per page.
 - Case studies share a section index (progress bar, right-edge dot rail on desktop, bottom chip on touch) built from `[data-toc]` in site.js, an at-a-glance strip, read time, and a Next case study card.
-- The Curator (`curator.html`, `src/js/curator.js`, `src/styles/curator.css`; linked from the homepage Installation plaque): mobile-first installation.
-  The player picks a material (gallery wall / editorial spread / product screen; `MATERIALS`), five pieces arrive scattered and tilted, they drag
-  (or Tab + arrow keys) and call it. The grid stays invisible until a piece nears a line (magnet); touching a piece straightens it; at the end
-  every piece snaps to the grid ("Chaos, but curated."). The reveal reads HOW they decided, not what they made: first-move delay, moves,
-  revisions, whether the heaviest piece moved first, time → Explorer / Editor / Architect / Decider (`STYLES`; each type gated on its defining behaviour).
-  Her choices: reveal = decision style; material = player's choice; mobile first.
+- The Curator (`curator.html`, `src/js/curator.js`, `src/styles/curator.css`; linked from the homepage Installation plaque): a mobile-first game.
+  Three rooms (`ROOMS`: gallery wall / editorial spread / product screen; `MATERIALS`), each with five pieces that arrive scattered and a
+  three-line brief judged live (`brief[].f`, geometry helpers at the top of the file). Drag or Tab + arrow keys. Score = 100 per brief line
+  + grid snaps with a streak multiplier (capped) + time under par (only once two lines are met). Stars = lines met; stars across rooms
+  give a rank (Intern → Chief curator); best scores kept in localStorage (optional). The grid is invisible until a piece nears a line; touching a
+  piece straightens it; at the end everything snaps ("Chaos, but curated."). The result also reads HOW they decided (Explorer / Editor /
+  Architect / Decider; `STYLES`, each gated on its defining behaviour). Her choices: gamified, decision-style reveal, player picks the room, mobile first.
+- `editorial.html` (+ `src/styles/editorial.css`, `src/js/editorial.js`): an EXPLORATION of a light, fashion-magazine homepage (paper/ink/vermilion,
+  Bodoni Moda masthead, cover lines, editor's letter, feature spreads, numbers index). noindex and not linked from the live site; standalone
+  (does not load base.css or site.js). Same copy and content rules as the homepage. Not a decision yet: the dark gallery site is still the portfolio.
 - Homepage "In practice" = six exhibit-label plaques (name, medium, one figure; hover/tap swaps to one line). Detail lives in the resume, not the site.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
