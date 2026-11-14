@@ -48,6 +48,13 @@ Live: https://sukritipandey.vercel.app — Vercel auto-deploys every push to `ma
   as the main site. The collection page is typographic plates (no artwork images: only hang images that are free to use or her own photos);
   two entries are hers (Arsham x Tiffany box, the SFMOMA piece whose title she forgot), three are placeholders she may swap.
 - Homepage section 03 "The work I do" (`.story`) and the editorial editor's letter are a short first-person NARRATIVE of the kind of work she does and enjoys. Her rule: the portfolio must not show her resume. No project lists, counts, big figures or resume links in that section (the resume download stays in Contact only).
+- Two editions, one portfolio (her idea, "two sides of me"): Chaos = the dark gallery, Curated = the editorial. Every page has a twin and a fixed
+  `.edition` switch (bottom-left) injected by site.js / editorial.js from the `TWINS` map: `/`↔`/editorial.html`, `/velocity-ai.html`↔`/editorial-velocity.html`,
+  `/digital-barista.html`↔`/editorial-decaf.html`, `/collection.html`↔`/editorial-collection.html`. The dark collection (`collection.html`, `src/styles/collection.css`)
+  is also written by `scripts/build_editorial.py` (`PLATES`). The Curator is its own app, shared by both. Which edition is the default at `/` is HER decision
+  (pending): the dark one still is. Keep facts identical across twins.
+- Picture rule (both editions): an image AND its caption fit one screen on a MacBook Air (~680-760px tall): editorial `.fig img` max-height
+  `calc(100svh - 12rem)`; dark `.shot img` `calc(100svh - 13rem)`.
 - Images in `public/images/` (atmosphere.jpg, velocity/*.jpg). Resume at `public/files/Sukriti-Pandey-Resume.pdf`.
 
 ## Spacing (one rhythm everywhere)

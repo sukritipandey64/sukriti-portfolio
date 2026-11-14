@@ -340,3 +340,5 @@ a.install:focus-visible { outline: 1px solid var(--amber-soft); outline-offset: 
 .story-body .story-pull { font-family: var(--serif); font-weight: 300; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.25; color: var(--text); padding: 0.4rem 0 0.4rem 1.25rem; border-left: 1px solid var(--amber-soft); }
 .story-pull em { font-style: italic; color: var(--amber-soft); }
 @media (max-width: 860px) { .story { grid-template-columns: 1fr; } .story-h { position: static; } }
+
+.install-also { display: inline-block; margin-top: var(--gap-block); }

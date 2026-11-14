@@ -420,6 +420,72 @@ COLLECTION = f'''    <section class="case-cover">
       <a href="/curator.html"><p class="folio"><span>→</span> Next</p><h2 class="hed hed--xl">The <em>Curator</em></h2><p class="dek">Enough looking. Your turn to hang something.</p></a>
     </section>'''
 
+
+# The collection, in the gallery (dark) language: each work is a room with its own light.
+PLATES = [
+    ("01", "p-box", "Bronze Eroded Tiffany Blue Box", "Daniel Arsham × Tiffany &amp; Co.", "Sculpture · 2021", "The most recognisable box in retail, shown as if it had been dug up centuries from now. It breaks the box, literally. Packaging as fossil."),
+    ("02", "p-roof", "Olympiapark roof", "Frei Otto with Behnisch &amp; Partner", "Architecture · Munich · 1972", "A stadium roof that behaves like a tent. Structure doing the least it can and getting away with it."),
+    ("03", "p-nave", "Sagrada Família", "Antoni Gaudí", "Architecture · Barcelona · begun 1882", "Columns that branch like trees, light that arrives in colour. Also the world’s most patient deadline."),
+    ("04", "p-fold", "SFMOMA, the rippled façade", "Snøhetta", "Architecture · San Francisco · 2016", "A building that looks like fog had a good idea. Quiet from far away, restless up close."),
+    ("05", "p-lost", "Untitled (I forgot the title)", "Seen at SFMOMA", "Name misplaced · impression intact", "One piece stopped me in the gallery and I didn’t photograph the label. Rookie curator error. This wall is holding its place."),
+]
+LIGHTS = ["warm", "cool", "flare", "near", "quiet"]
+def dark_collection():
+    rooms = "".join(f'''
+    <section class="room hang {cls}" data-light="{LIGHTS[i]}">
+      <div class="hang-art reveal" aria-hidden="true"><span>{n}</span></div>
+      <div class="hang-label reveal d2">
+        <p class="label">No. {n}</p>
+        <h2 class="h2">{title}</h2>
+        <p class="hang-maker">{maker}</p>
+        <p class="hang-meta">{meta}</p>
+        <p class="body">{note}</p>
+      </div>
+    </section>''' for i, (n, cls, title, maker, meta, note) in enumerate(PLATES))
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0A1419">
+  <title>The collection — Sukriti Pandey</title>
+  <meta name="description" content="Five things Sukriti Pandey can't stop looking at.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/collection.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <nav class="nav" aria-label="Collection">
+    <a href="/" class="nav-logo">SP</a>
+    <ul class="nav-links">
+      <li><a href="/#work">All work</a></li>
+      <li><a href="/curator.html">Play</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <main id="main">
+    <section class="room hang-intro" data-light="warm">
+      <p class="label reveal">The collection · Hung, not ranked</p>
+      <h1 class="display reveal d1">Five things I can’t stop <em>looking at.</em></h1>
+      <p class="body reveal d2">Not all of it is art. Some of it is a roof. All of it changed how I look at a screen.</p>
+    </section>{rooms}
+    <section class="room hang-next" data-light="flare">
+      <a href="/curator.html" class="link-quiet reveal">Enough looking. Your turn to hang something</a>
+    </section>
+  </main>
+  <footer class="site-footer"><span>Sukriti Pandey — 2026</span><em>Chaos, but curated.</em></footer>
+  <script type="module" src="/src/js/site.js"></script>
+</body>
+</html>
+'''
+(ROOT / "collection.html").write_text(dark_collection())
+print("wrote collection.html")
+
 PAGES = {
     "editorial.html": ("Sukriti Pandey — The editorial edition", "A light, magazine-editorial edition of Sukriti Pandey's portfolio.", HOME, ""),
     "editorial-velocity.html": ("Velocity AI — AI drafts. People decide. · Sukriti Pandey", "Velocity AI case study, editorial edition.", VELOCITY, "velocity"),

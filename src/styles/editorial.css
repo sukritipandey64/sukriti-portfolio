@@ -311,3 +311,19 @@ a:hover .more { gap: 1.1rem; color: var(--red); border-color: var(--red); }
   .dtable th, .dtable td { display: block; width: auto !important; padding: 0.15rem 0; border: 0; }
   .fig--paper img { transform: rotate(-0.6deg); }
 }
+
+/* Every picture fits one screen WITH its caption (MacBook Air is ~700px tall inside the browser). */
+.fig, .feature-img { display: grid; justify-items: center; }
+.fig img, .feature-img > img:first-child { width: auto; max-width: 100%; max-height: calc(100svh - 12rem); object-fit: contain; }
+.fig figcaption, .feature-img figcaption { justify-self: start; }
+.fig--paper img { max-height: calc(100svh - 14rem); }
+.shots3 .fig img { max-height: min(46svh, 420px); }
+@media (min-width: 721px) { .cover-img { width: min(100%, calc((100svh - 21rem) * 0.8)); } }
+.decaf-phones img { max-height: calc(100svh - 14rem); width: auto; max-width: 100%; justify-self: center; }
+
+/* Edition switch: the same portfolio in two languages */
+.edition { position: fixed; left: 1rem; bottom: 1rem; z-index: 60; display: flex; padding: 3px; border-radius: 99px; background: var(--paper); border: 1px solid var(--ink); box-shadow: 0 10px 30px rgba(60, 40, 20, 0.18); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.edition a, .edition span { padding: 0.45rem 0.85rem; border-radius: 99px; text-decoration: none; color: var(--ink); }
+.edition span { background: var(--ink); color: var(--paper); }
+.edition a:hover { color: var(--red); }
+.fig { width: fit-content; max-width: 100%; margin-inline: auto; }

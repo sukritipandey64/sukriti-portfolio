@@ -1,0 +1,22 @@
+/* The collection, gallery edition: one work per room, each under its own light. */
+.hang-intro { min-height: 70svh; display: grid; align-content: center; gap: var(--gap-label); }
+.hang-intro .display em { font-style: italic; color: var(--amber-soft); }
+.hang-intro .body { max-width: 34rem; }
+.hang { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: center; min-height: 88svh; }
+.hang:nth-of-type(odd) .hang-art { order: 2; }
+.hang-art { position: relative; aspect-ratio: 5 / 4; max-height: calc(100svh - 14rem); justify-self: center; width: min(100%, calc((100svh - 14rem) * 1.25)); overflow: hidden; border: 10px solid #1d1713; outline: 0.5px solid rgba(224, 196, 156, 0.35); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 120px rgba(224, 160, 90, 0.12); }
+.hang-art span { position: absolute; right: 4%; bottom: -8%; font-family: var(--serif); font-weight: 300; font-size: clamp(6rem, 17vw, 14rem); line-height: 1; color: rgba(255, 255, 255, 0.14); }
+.hang-art::before { content: ''; position: absolute; }
+/* abstract colour studies, not pictures of the works */
+.p-box .hang-art { background: linear-gradient(135deg, #8fd3cb, #4c9a92); }
+.p-roof .hang-art { background: linear-gradient(180deg, #9db9c4, #4f6f7b); } .p-roof .hang-art::before { left: -10%; right: -10%; top: 30%; height: 60%; border-top: 2px solid #0A1419; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+.p-nave .hang-art { background: linear-gradient(90deg, #e8a15a, #b23a22 45%, #3d7a7a 55%, #14323b); } .p-nave .hang-art::before { inset: 0; background: repeating-linear-gradient(90deg, transparent 0 9%, rgba(10, 20, 25, 0.6) 9% 10.5%); }
+.p-fold .hang-art { background: #cfcbc2; } .p-fold .hang-art::before { inset: 0; background: repeating-linear-gradient(176deg, transparent 0 16px, rgba(10, 20, 25, 0.16) 16px 18px, transparent 18px 30px, rgba(10, 20, 25, 0.07) 30px 34px); }
+.p-lost .hang-art { background: rgba(240, 237, 230, 0.03); border-style: dashed; border-width: 1px; border-color: rgba(240, 237, 230, 0.4); box-shadow: none; }
+.p-lost .hang-art::before { content: 'Reserved'; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 0.76rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--dim); }
+.hang-label { max-width: 30rem; }
+.hang-label .h2 { margin: var(--gap-label) 0 0.6rem; }
+.hang-maker { font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--amber-soft); }
+.hang-meta { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin: 0.3rem 0 var(--gap-para); text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.hang-next { min-height: 40svh; display: grid; place-items: center; }
+@media (max-width: 860px) { .hang { grid-template-columns: 1fr; min-height: 0; } .hang:nth-of-type(odd) .hang-art { order: 0; } .hang-art { width: 100%; } }

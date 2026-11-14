@@ -395,3 +395,19 @@ document.querySelectorAll('[data-tabs]').forEach((wrap) => {
     });
   });
 });
+
+/* Edition switch: every page has a twin in the other design language. */
+{
+  const TWINS = { '/': '/editorial.html', '/index.html': '/editorial.html', '/velocity-ai.html': '/editorial-velocity.html', '/digital-barista.html': '/editorial-decaf.html', '/collection.html': '/editorial-collection.html' };
+  const here = location.pathname.replace(/\/$/, '') || '/';
+  const dark = TWINS[here];
+  const light = Object.keys(TWINS).find((k) => TWINS[k] === here && k !== '/index.html');
+  if (dark || light) {
+    const nav = document.createElement('nav');
+    nav.className = 'edition'; nav.setAttribute('aria-label', 'Edition');
+    nav.innerHTML = dark
+      ? `<span aria-current="true">Chaos</span><a href="${dark}">Curated</a>`
+      : `<a href="${light}">Chaos</a><span aria-current="true">Curated</span>`;
+    document.body.append(nav);
+  }
+}

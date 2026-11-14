@@ -51,7 +51,7 @@
   font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-soft);
 }
 /* every screenshot fits the screen it's viewed on */
-.shot img { max-height: calc(100svh - 8rem); object-fit: contain; }
+.shot img { max-height: calc(100svh - 13rem); object-fit: contain; }
 
 /* ---------- Problem ---------- */
 .contrast { display: grid; grid-template-columns: 1fr 1fr; margin-top: var(--gap-block); border: 0.5px solid var(--border-strong); }
@@ -209,7 +209,7 @@
 /* ---------- Motion: sketch → screen scrub ---------- */
 .scrub { --p: 100%; padding: var(--gap-block) 0; border-top: 0.5px solid var(--border); }
 .scrub-stage {
-  position: relative; aspect-ratio: var(--ar, 1.6); width: min(100%, calc((100svh - 10rem) * var(--ar, 1.6)));
+  position: relative; aspect-ratio: var(--ar, 1.6); width: min(100%, calc((100svh - 14rem) * var(--ar, 1.6)));
   margin: 0 auto; overflow: hidden; border: 0.5px solid var(--border-strong); background: #141414;
   box-shadow: 0 30px 80px -30px rgba(0,0,0,0.75); touch-action: pan-y;
 }
@@ -246,7 +246,7 @@
 .pair:empty, .ba:empty { display: none; }
 .pair > .shot:only-child { grid-column: 1 / -1; max-width: 860px; }
 .ss-solo { padding: var(--gap-block) 0; border-top: 0.5px solid var(--border); }
-.ss-solo .shot img { width: min(100%, calc((100svh - 10rem) * 1.6)); margin: 0 auto; }
+.ss-solo .shot img { width: min(100%, calc((100svh - 14rem) * 1.6)); margin: 0 auto; }
 .ss-solo .ss-cap { margin-top: 0.9rem; }
 
 /* Notebook pages: any letterbox around a portrait sketch reads as paper, not as a dark bar */
@@ -256,7 +256,7 @@
 /* A screenshot never displays much larger than it was captured, so UI text stays at a believable size */
 .shot[style*="--cap"] { max-width: var(--cap); }
 /* Notebook photos: capped by height so a portrait page never fills the screen */
-.shot[data-asset^="sketch-"] img { width: auto; max-width: 100%; max-height: min(70svh, 720px); margin-inline: auto; }
+.shot[data-asset^="sketch-"] img { width: auto; max-width: 100%; max-height: min(62svh, 720px); margin-inline: auto; }
 .shot[data-asset^="sketch-"] figcaption { text-align: left; }
 
 /* Copy gets as much room as the image; images stop dominating the row */
