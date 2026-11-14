@@ -1,26 +1,34 @@
 /* ==========================================================================
-   The Curator — a small game.
-   Three rooms (gallery wall, editorial spread, product screen). In each,
-   five pieces arrive out of place and the player has a three-line brief.
-   Score = brief met (100 a line) + grid snaps (with a streak multiplier)
-   + time under par. Stars = lines of the brief met; stars add up to a rank.
-   The grid stays invisible until a piece comes near it; touching a piece
-   straightens it; at the end everything snaps: their chaos, curated.
-   The result also reads HOW they decided (Explorer / Editor / Architect /
-   Decider) from first-move delay, moves, revisions and what moved first.
+   The Curator — a phone-first game.
+   Three rooms in order (gallery wall, editorial spread, product screen).
+   Each has five pieces and a three-line brief judged live. Each finished
+   room reveals one line of the player's card (Pace, Method, Eye); three
+   rooms complete the card, which can be downloaded as an image.
+
+   The hooks, on purpose:
+   - a card with three hidden lines on the home screen (curiosity, a set to complete)
+   - rooms unlock in order (a visible path, the goal gets closer)
+   - a speed bonus that drains while you play (loss feels bigger than gain)
+   - snap streaks and ticking brief lines (instant, earned feedback)
+   - something of your own to keep at the end (the card, with your name)
+
+   Score = 100 per brief line + grid snaps (streak multiplier, capped)
+   + what is left of the speed bonus (only once two lines are met).
    ========================================================================== */
 
 const root = document.querySelector('[data-curator]');
 if (root) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, el = root) => el.querySelector(s);
-  const stage = $('[data-stage]'), gridEl = $('.cur-grid'), pick = $('[data-pick]'), caption = $('[data-caption]');
-  const hud = $('[data-hud]'), hudRoom = $('[data-hud-room]'), hudScore = $('[data-hud-score]'), hudTime = $('[data-hud-time]');
-  const briefEl = $('[data-brief]'), doneBtn = $('[data-done]');
-  const panels = Object.fromEntries([...root.querySelectorAll('[data-panel]')].map((p) => [p.dataset.panel, p]));
+  const $$ = (s, el = root) => [...el.querySelectorAll(s)];
+  const screens = Object.fromEntries($$('[data-scr]').map((el) => [el.dataset.scr, el]));
+  const stage = $('[data-stage]'), gridEl = $('.cur-grid'), caption = $('[data-caption]'), coach = $('[data-coach]');
+  const hudRoom = $('[data-hud-room]'), hudScore = $('[data-hud-score]'), bonusBar = $('[data-bonus-bar]'), bonusN = $('[data-bonus-n]');
+  const briefEl = $('[data-brief]'), doneBtn = $('[data-done]'), resultEl = $('[data-result]');
+  const deckEl = $('[data-deck]'), pathEl = $('[data-path]'), startBtn = $('[data-start]'), cardEl = $('[data-card]'), nameInput = $('[data-name]');
   const ring = document.querySelector('.cursor-ring');
 
-  const COLS = 6, ROWS = 8, MAGNET = 0.32, PAR = 45, SNAP_CAP = 150;
+  const COLS = 6, ROWS = 8, MAGNET = 0.32, PAR = 45, BONUS = 180, SNAP_CAP = 150;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const now = () => performance.now();
 
@@ -40,68 +48,78 @@ if (root) {
   const ROOMS = ['wall', 'spread', 'screen'];
   const MATERIALS = {
     wall: {
-      title: 'The gallery wall', name: 'gallery wall', verb: 'Hang it', cls: 'is-wall', icon: 'wall', sub: 'Four works and a label',
+      title: 'Gallery wall', verb: 'Hang it', cls: 'is-wall', trait: 'Pace', bg: '#1c1a18',
       brief: [
         { t: 'Nothing overlaps', f: (P, all) => noOverlap(all) },
-        { t: 'The label sits right beside the large canvas', f: (P) => beside(P.label, P.sun) },
+        { t: 'Label right beside the large canvas', f: (P) => beside(P.label, P.sun) },
         { t: 'Two works hang on one line', f: (P) => onOneLine([P.sun, P.bands, P.orb, P.horizon]) },
       ],
       pieces: [
-        { id: 'sun', label: 'Large canvas', w: 3, h: 3, anchor: true, html: frame('art-sun') },
-        { id: 'bands', label: 'Tall canvas', w: 2, h: 3, html: frame('art-bands') },
-        { id: 'orb', label: 'Small canvas', w: 2, h: 2, html: frame('art-orb') },
-        { id: 'horizon', label: 'Wide canvas', w: 3, h: 1, html: frame('art-horizon') },
-        { id: 'label', label: 'Wall label', w: 2, h: 1, html: '<span class="cp-label"><b>Untitled (Restraint)</b><i>2026 · light on nothing</i></span>' },
+        { id: 'sun', label: 'Large canvas', w: 3, h: 3, anchor: true, c: '#E8A15A', html: frame('art-sun') },
+        { id: 'bands', label: 'Tall canvas', w: 2, h: 3, c: '#3D7A7A', html: frame('art-bands') },
+        { id: 'orb', label: 'Small canvas', w: 2, h: 2, c: '#B88A95', html: frame('art-orb') },
+        { id: 'horizon', label: 'Wide canvas', w: 3, h: 1, c: '#E0C49C', html: frame('art-horizon') },
+        { id: 'label', label: 'Wall label', w: 2, h: 1, c: '#EFEBE3', html: '<span class="cp-label"><b>Untitled (Restraint)</b><i>2026 · light on nothing</i></span>' },
       ],
     },
     spread: {
-      title: 'The editorial spread', name: 'editorial spread', verb: 'Send to print', cls: 'is-spread', icon: 'spread', sub: 'Five pieces of a magazine page',
+      title: 'Editorial spread', verb: 'Send to print', cls: 'is-spread', trait: 'Method', bg: '#E6DED0',
       brief: [
         { t: 'Nothing overlaps', f: (P, all) => noOverlap(all) },
         { t: 'The image bleeds to a side edge', f: (P) => P.image.x < 0.15 || P.image.x + P.image.w > COLS - 0.15 },
-        { t: 'The headline sits above the pull quote', f: (P) => above(P.head, P.quote) },
+        { t: 'Headline sits above the pull quote', f: (P) => above(P.head, P.quote) },
       ],
       pieces: [
-        { id: 'image', label: 'Full-height image', w: 3, h: 5, anchor: true, html: '<span class="ed-img"></span>' },
-        { id: 'head', label: 'Headline', w: 3, h: 2, html: '<span class="ed-head"><span>The Quiet <em>Season</em></span></span>' },
-        { id: 'quote', label: 'Pull quote', w: 3, h: 2, html: '<span class="ed-quote">“Restraint is its own kind of intelligence.”</span>' },
-        { id: 'cap', label: 'Caption', w: 2, h: 1, html: '<span class="ed-cap">Look 04 — wool, light, patience.</span>' },
-        { id: 'folio', label: 'Folio', w: 1, h: 1, html: '<span class="ed-folio">No.<b>04</b></span>' },
+        { id: 'image', label: 'Full-height image', w: 3, h: 5, anchor: true, c: '#8a5d3f', html: '<span class="ed-img"></span>' },
+        { id: 'head', label: 'Headline', w: 3, h: 2, c: '#1A1A18', html: '<span class="ed-head"><span>The Quiet <em>Season</em></span></span>' },
+        { id: 'quote', label: 'Pull quote', w: 3, h: 2, c: '#B5492F', html: '<span class="ed-quote">“Restraint is its own kind of intelligence.”</span>' },
+        { id: 'cap', label: 'Caption', w: 2, h: 1, c: '#9a9388', html: '<span class="ed-cap">Look 04 — wool, light, patience.</span>' },
+        { id: 'folio', label: 'Folio', w: 1, h: 1, c: '#5e584e', html: '<span class="ed-folio">No.<b>04</b></span>' },
       ],
     },
     screen: {
-      title: 'The product screen', name: 'product screen', verb: 'Ship it', cls: 'is-screen', icon: 'screen', sub: 'Five parts of an interface',
+      title: 'Product screen', verb: 'Ship it', cls: 'is-screen', trait: 'Eye', bg: '#0E181D',
       brief: [
         { t: 'Nothing overlaps', f: (P, all) => noOverlap(all) },
         { t: 'Navigation runs along the top', f: (P) => P.nav.y < 0.15 },
-        { t: 'The button sits directly under the chart', f: (P) => under(P.btn, P.chart) },
+        { t: 'Button directly under the chart', f: (P) => under(P.btn, P.chart) },
       ],
       pieces: [
-        { id: 'chart', label: 'Chart card', w: 4, h: 3, anchor: true, html: '<span class="ui-card ui-chart"><b>This week</b><span class="ui-bars"><i style="--h:52%"></i><i style="--h:78%"></i><i style="--h:40%"></i><i style="--h:92%" class="hot"></i><i style="--h:64%"></i><i style="--h:30%"></i></span></span>' },
-        { id: 'nav', label: 'Navigation bar', w: 6, h: 1, html: '<span class="ui-card ui-nav"><b>SP</b><i>Overview</i><i>Team</i><i>Plan</i></span>' },
-        { id: 'kpi', label: 'Metric card', w: 2, h: 2, html: '<span class="ui-card ui-kpi"><b>12</b><i>open tasks</i></span>' },
-        { id: 'btn', label: 'Primary button', w: 2, h: 1, html: '<span class="ui-btn">Review</span>' },
-        { id: 'list', label: 'Team list', w: 2, h: 3, html: '<span class="ui-card ui-list"><i></i><i></i><i></i></span>' },
+        { id: 'chart', label: 'Chart card', w: 4, h: 3, anchor: true, c: '#2E5F61', html: '<span class="ui-card ui-chart"><b>This week</b><span class="ui-bars"><i style="--h:52%"></i><i style="--h:78%"></i><i style="--h:40%"></i><i style="--h:92%" class="hot"></i><i style="--h:64%"></i><i style="--h:30%"></i></span></span>' },
+        { id: 'nav', label: 'Navigation bar', w: 6, h: 1, c: '#3a5560', html: '<span class="ui-card ui-nav"><b>SP</b><i>Overview</i><i>Team</i><i>Plan</i></span>' },
+        { id: 'kpi', label: 'Metric card', w: 2, h: 2, c: '#E0C49C', html: '<span class="ui-card ui-kpi"><b>12</b><i>open tasks</i></span>' },
+        { id: 'btn', label: 'Primary button', w: 2, h: 1, c: '#F0D9B5', html: '<span class="ui-btn">Review</span>' },
+        { id: 'list', label: 'Team list', w: 2, h: 3, c: '#6fb3ae', html: '<span class="ui-card ui-list"><i></i><i></i><i></i></span>' },
       ],
     },
   };
 
-  const STYLES = {
-    explorer: { plain: 'an Explorer', line: 'You moved first and asked later. The layout turned up somewhere in the trying.' },
-    editor: { plain: 'an Editor', line: 'You looked before you touched, then cut until it held.' },
-    architect: { plain: 'an Architect', line: 'You placed the heaviest thing first, then built everything round it.' },
-    decider: { plain: 'a Decider', line: 'About one move per piece. You knew before you started.' },
+  // the four ways people decide: pace (leap / look) x method (edit / commit)
+  const TYPES = {
+    'leap-edit': { name: 'The Explorer', line: 'Moves first, asks later. The layout turns up somewhere in the trying.' },
+    'look-edit': { name: 'The Editor', line: 'Looks before touching, then cuts until it holds.' },
+    'look-commit': { name: 'The Architect', line: 'Reads the room, places each piece once, and means it.' },
+    'leap-commit': { name: 'The Decider', line: 'Fast, final, unbothered. Knew before starting.' },
   };
   const RANKS = [[9, 'Chief curator'], [6, 'Curator'], [3, 'Assistant curator'], [0, 'Intern']];
 
-  // best stars per room: a per-visitor convenience, so the game still works without storage
-  const KEY = 'curator-best-v1';
-  let best = {};
-  try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { best = {}; }
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) { /* fine */ } };
-  const totalStars = () => ROOMS.reduce((t, k) => t + (best[k]?.stars || 0), 0);
+  // saved progress: a per-visitor convenience, the game works without it
+  const KEY = 'curator-v2';
+  let save = { rooms: {}, name: '', coached: false };
+  try { save = { ...save, ...(JSON.parse(localStorage.getItem(KEY) || '{}') || {}) }; } catch (e) { /* fine */ }
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(save)); } catch (e) { /* fine */ } };
+  const done = (k) => save.rooms[k];
+  const totalStars = () => ROOMS.reduce((t, k) => t + (done(k)?.stars || 0), 0);
+  const totalScore = () => ROOMS.reduce((t, k) => t + (done(k)?.score || 0), 0);
   const rank = () => RANKS.find(([n]) => totalStars() >= n)[1];
+  const allDone = () => ROOMS.every(done);
+  const nextRoom = () => ROOMS.find((k) => !done(k));
+  const typeOf = () => TYPES[`${done('wall')?.trait.k || 'look'}-${done('spread')?.trait.k || 'commit'}`];
   const stars = (n, cls = '') => `<span class="cur-stars ${cls}" aria-label="${n} of 3 stars">${[0, 1, 2].map((i) => `<i class="${i < n ? 'on' : ''}">★</i>`).join('')}</span>`;
+  const thumb = (k) => {
+    const r = done(k); if (!r) return '';
+    return `<span class="thumb" style="background:${MATERIALS[k].bg}">${r.layout.map((p) => `<i style="left:${(p.x / COLS) * 100}%;top:${(p.y / ROWS) * 100}%;width:${(p.w / COLS) * 100}%;height:${(p.h / ROWS) * 100}%;background:${p.c}"></i>`).join('')}</span>`;
+  };
 
   // grid guides (lines 1..5 / 1..7)
   for (let i = 1; i < COLS; i++) gridEl.insertAdjacentHTML('beforeend', `<span class="g-v" data-v="${i}" style="left:${(i / COLS) * 100}%"></span>`);
@@ -110,10 +128,10 @@ if (root) {
 
   let key = null, mat = null, pieces = [], m = null, z = 10, tick = null;
 
-  const setMode = (mode) => {
-    root.dataset.mode = mode;
-    Object.entries(panels).forEach(([k, p]) => { p.hidden = k !== mode; });
-    hud.hidden = mode === 'pick';
+  const show = (name) => {
+    root.dataset.screen = name;
+    Object.entries(screens).forEach(([k, el]) => { el.hidden = k !== name; });
+    $$('[data-rank]').forEach((el) => { el.textContent = `${rank()} · ${totalStars()}/9 ★`; });
   };
   const place = (p) => {
     p.el.style.left = `${(p.x / COLS) * 100}%`;
@@ -144,7 +162,7 @@ if (root) {
     stage.append(el);
     setTimeout(() => el.remove(), 1100);
   };
-  const burst = (n = 18) => {
+  const burst = (n = 20) => {
     if (reduce) return;
     for (let i = 0; i < n; i++) {
       const s = document.createElement('span');
@@ -156,7 +174,7 @@ if (root) {
       setTimeout(() => s.remove(), 1500);
     }
   };
-  const setScore = () => { hudScore.textContent = m.snapPts; };
+  const bonusNow = () => Math.round(BONUS * clamp(1 - Math.max(0, now() - m.t0) / 1000 / PAR, 0, 1));
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
   // ---- the brief, judged live ---------------------------------------------
@@ -176,12 +194,15 @@ if (root) {
     m.met = met;
     doneBtn.classList.toggle('is-ready', all);
     stage.classList.toggle('is-met', all);
-    if (all && !was && announce) { caption.textContent = `Brief met. ${mat.verb} when you’re ready.`; buzz([30, 40, 30]); }
+    if (all && !was && announce) { caption.textContent = `Brief met. ${mat.verb} before the bonus drains.`; buzz([30, 40, 30]); }
   };
 
   // ---- measuring -----------------------------------------------------------
   const startMove = (p) => {
-    if (!m.first) { m.first = p.id; m.firstAt = Math.max(0, now() - m.t0); doneBtn.disabled = false; }
+    if (!m.first) {
+      m.first = p.id; m.firstAt = Math.max(0, now() - m.t0); doneBtn.disabled = false;
+      coach.hidden = true; if (!save.coached) { save.coached = true; persist(); }
+    }
     m.moves++;
     if (p.moved) m.revisions++;
     p.moved = true;
@@ -197,7 +218,7 @@ if (root) {
     m.snapPts = Math.min(SNAP_CAP, m.snapPts + pts);
     pop(p, `+${pts}${m.streak > 1 ? ` ×${m.streak}` : ''}`, m.streak > 1 ? 'hot' : '');
     p.el.classList.add('is-snapped'); setTimeout(() => p.el.classList.remove('is-snapped'), 450);
-    buzz(12); setScore();
+    buzz(12); hudScore.textContent = m.snapPts;
   };
 
   // ---- build a round -------------------------------------------------------
@@ -224,18 +245,18 @@ if (root) {
     stage.classList.remove('is-wall', 'is-spread', 'is-screen', 'is-curated', 'is-met');
     stage.classList.add(mat.cls);
     stage.querySelectorAll('.cp, .cur-pop, .cur-spark').forEach((el) => el.remove());
-    pick.hidden = true;
+    resultEl.hidden = true; resultEl.classList.remove('is-up');
     doneBtn.textContent = mat.verb; doneBtn.disabled = true; doneBtn.classList.remove('is-ready');
     m = { t0: now() + (reduce ? 0 : 900), first: null, firstAt: 0, moves: 0, revisions: 0, shuffles: 0, snapPts: 0, streak: 0, met: [false, false, false] };
-    hudRoom.textContent = `Room ${ROOMS.indexOf(k) + 1}/3 · ${mat.title.replace('The ', '')}`;
-    setScore(); hudTime.textContent = '0:00';
+    const idx = ROOMS.indexOf(k);
+    hudRoom.textContent = `Room ${idx + 1} · ${mat.title}`;
+    $$('[data-steps] li').forEach((li, i) => { li.className = i < idx ? 'done' : i === idx ? 'now' : ''; });
+    hudScore.textContent = '0';
+    coach.hidden = save.coached;
     clearInterval(tick);
-    tick = setInterval(() => {
-      const s = Math.max(0, (now() - m.t0) / 1000);
-      hudTime.textContent = fmt(s);
-      hudTime.classList.toggle('over', s > PAR);
-    }, 250);
-    briefEl.innerHTML = mat.brief.map((r) => `<li><i aria-hidden="true"></i><span><span class="sr-only">Not yet: </span>${r.t}</span><b aria-hidden="true">100</b></li>`).join('');
+    const paint = () => { const b = bonusNow(); bonusN.textContent = b; bonusBar.style.transform = `scaleX(${b / BONUS})`; bonusBar.parentElement.classList.toggle('low', b < BONUS * 0.3); };
+    paint(); tick = setInterval(paint, 200);
+    briefEl.innerHTML = mat.brief.map((r) => `<li><i aria-hidden="true"></i><span><span class="sr-only">Not yet: </span>${r.t}</span><b aria-hidden="true">+100</b></li>`).join('');
     pieces = mat.pieces.map((d, i) => {
       const el = document.createElement('div');
       el.className = 'cp'; el.tabIndex = 0;
@@ -263,17 +284,18 @@ if (root) {
       setTimeout(() => { p.el.style.opacity = ''; place(p); }, 60 + i * 110);
       setTimeout(() => p.el.classList.remove('is-arriving'), 1000 + i * 110);
     });
-    setMode('play');
+    show('play');
     evaluate(false);
-    caption.textContent = `${/^[aeiou]/.test(mat.name) ? 'An' : 'A'} ${mat.name}, out of place. Meet the brief.`;
+    caption.textContent = 'Five pieces, out of place. Meet the brief.';
   };
 
   // ---- interaction ---------------------------------------------------------
   function bind(p) {
     const el = p.el;
     let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false, counted = false, id = null;
+    const live = () => root.dataset.screen === 'play' && resultEl.hidden;
     el.addEventListener('pointerdown', (e) => {
-      if (root.dataset.mode !== 'play' || e.button > 0) return;
+      if (!live() || e.button > 0) return;
       e.preventDefault();
       id = e.pointerId; el.setPointerCapture(id);
       dragging = true; counted = false;
@@ -305,7 +327,7 @@ if (root) {
     el.addEventListener('pointercancel', end);
     let lastKey = 0;
     el.addEventListener('keydown', (e) => {
-      if (root.dataset.mode !== 'play') return;
+      if (!live()) return;
       const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
       if (!d) return;
       e.preventDefault();
@@ -326,22 +348,22 @@ if (root) {
     }
   }
 
-  // ---- how they decided ----------------------------------------------------
-  const read = () => {
-    const n = pieces.length, fm = m.firstAt / 1000, t = Math.max(0, (now() - m.t0) / 1000), per = m.moves / n;
-    const anchor = pieces.find((p) => p.anchor);
-    // each type needs its defining behaviour; extras only break ties
-    const score = {
-      explorer: fm < 2.5 && (per >= 1.5 || m.shuffles > 0) ? 3 + (per >= 2.5 ? 1 : 0) + m.shuffles : 0,
-      editor: m.revisions >= 2 ? 2 + (fm >= 3 ? 1.5 : 0) + m.revisions * 0.3 : 0,
-      architect: m.first === anchor.id ? 3 + (m.revisions <= 1 ? 1 : 0) : 0,
-      decider: m.moves <= n + 1 && m.revisions <= 1 ? 3 + (t < 30 ? 0.5 : 0) : 0,
-    };
-    let type = Object.keys(score).reduce((a, b) => (score[b] > score[a] ? b : a), 'editor');
-    if (!score[type]) type = m.revisions ? 'editor' : (fm < 2.5 ? 'explorer' : 'decider');
-    let line = STYLES[type].line;
-    if (type === 'editor' && fm < 3) line = 'You placed things quickly, then went back and cut until it held.';
-    return { type, line, fm, t };
+  // ---- what each room reveals ----------------------------------------------
+  const traitFor = (k) => {
+    const fm = m.firstAt / 1000, anchor = pieces.find((p) => p.anchor);
+    if (k === 'wall') {
+      return fm < 2.5
+        ? { k: 'leap', title: 'You leap.', line: `First move in ${fm.toFixed(1)}s. You think in motion.` }
+        : { k: 'look', title: 'You look first.', line: `${fm.toFixed(1)}s before your first move. You read the room.` };
+    }
+    if (k === 'spread') {
+      return m.revisions >= 2
+        ? { k: 'edit', title: 'You edit.', line: `${m.revisions} revisions. Nothing is final until it holds.` }
+        : { k: 'commit', title: 'You commit.', line: `${m.moves} moves, barely a second thought.` };
+    }
+    return m.first === anchor.id
+      ? { k: 'big', title: 'Big things first.', line: 'You placed the heaviest piece, then built round it.' }
+      : { k: 'small', title: 'Details first.', line: 'You started small and let the big piece find its place.' };
   };
 
   const countUp = (el, to) => {
@@ -354,87 +376,177 @@ if (root) {
   const finish = () => {
     clearInterval(tick);
     evaluate(false);
-    const r = read();
+    const t = Math.max(0, (now() - m.t0) / 1000);
     const metN = m.met.filter(Boolean).length;
     const briefPts = metN * 100;
-    const timePts = metN >= 2 ? Math.round(Math.max(0, PAR - r.t) * 4) : 0;
+    const timePts = metN >= 2 ? bonusNow() : 0;
     const total = briefPts + m.snapPts + timePts;
-    const prev = best[key];
-    const isBest = !prev || total > prev.score;
-    best[key] = { stars: Math.max(prev?.stars || 0, metN), score: Math.max(prev?.score || 0, total) };
-    save();
-
-    setMode('result');
-    stage.classList.remove('is-met'); stage.classList.add('is-curated');
+    const prev = done(key);
+    const trait = traitFor(key);
     // their composition, snapped to the grid and straightened
     pieces.forEach((p) => { p.x = Math.round(p.x); p.y = Math.round(p.y); p.rot = 0; place(p); });
-    caption.innerHTML = 'Your composition, snapped to the grid. <em>Chaos, but curated.</em>';
-    if (metN === 3) { setTimeout(() => burst(), 500); buzz([20, 50, 20, 50, 60]); }
+    save.rooms[key] = {
+      stars: Math.max(prev?.stars || 0, metN), score: Math.max(prev?.score || 0, total), trait,
+      layout: pieces.map((p) => ({ x: p.x, y: p.y, w: p.w, h: p.h, c: p.c })),
+    };
+    persist();
+    stage.classList.remove('is-met'); stage.classList.add('is-curated');
+    caption.innerHTML = 'Snapped to the grid. <em>Chaos, but curated.</em>';
+    if (metN === 3) { setTimeout(() => burst(), 300); buzz([20, 50, 20, 50, 60]); }
 
-    const next = ROOMS[(ROOMS.indexOf(key) + 1) % ROOMS.length];
-    const allDone = ROOMS.every((k) => best[k]);
+    const last = allDone();
     const verdict = ['The brief got away from you.', 'One line of the brief. A start.', 'Two of three. Nearly a show.', 'Brief met, in full.'][metN];
-    panels.result.innerHTML = `
-      <p class="cur-k">Room ${ROOMS.indexOf(key) + 1}/3 · ${mat.title.replace('The ', '')}${isBest && prev ? ' · <b class="cur-new">New best</b>' : ''}</p>
+    const n = ROOMS.filter(done).length;
+    resultEl.innerHTML = `
+      <div class="result-grab" aria-hidden="true"></div>
       ${stars(metN, 'cur-stars--big is-in')}
-      <h2 class="cur-type"><span data-total>0</span> <small>pts</small></h2>
-      <p class="cur-line">${verdict}</p>
-      <dl class="cur-stats">
-        <div><dt>Brief</dt><dd>${briefPts}</dd></div>
-        <div><dt>Snaps</dt><dd>${m.snapPts}</dd></div>
-        <div><dt>Time ${fmt(r.t)}</dt><dd>${timePts}</dd></div>
-        <div><dt>Moves</dt><dd>${m.moves}</dd></div>
-      </dl>
-      ${metN < 2 ? '<p class="cur-why">The time bonus only counts once two lines of the brief are met.</p>' : ''}
-      <p class="cur-how"><b>How you played: ${STYLES[r.type].plain}.</b> ${r.line} <span>First move ${r.fm.toFixed(1)}s · ${m.revisions} revision${m.revisions === 1 ? '' : 's'}.</span></p>
-      <p class="cur-rank">Rank: <b>${rank()}</b> · ${totalStars()}/9 stars${allDone && totalStars() === 9 ? ' · every brief met' : ''}</p>
-      <div class="cur-actions">
-        <button type="button" class="btn-pill" data-next>${metN === 3 || !allDone ? 'Next room' : 'Next room'} <span aria-hidden="true">→</span></button>
-        <button type="button" class="btn-pill btn-pill--ghost" data-again>Replay</button>
-        <button type="button" class="cur-textbtn" data-back>All rooms</button>
-      </div>`;
-    countUp($('[data-total]', panels.result), total);
-    $('[data-next]', panels.result).addEventListener('click', () => begin(next));
-    $('[data-again]', panels.result).addEventListener('click', () => begin(key));
-    $('[data-back]', panels.result).addEventListener('click', back);
-    // on a phone the result sits under the stage: let the curated layout land, then bring it up
-    const stacked = window.matchMedia('(max-width: 899px)').matches;
-    setTimeout(() => {
-      panels.result.focus({ preventScroll: true });
-      if (stacked) panels.result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    }, reduce ? 0 : 1300);
+      <p class="result-score"><b data-total>0</b> pts${prev && total > prev.score ? ' <span class="cur-new">New best</span>' : ''}</p>
+      <p class="result-verdict">${verdict}</p>
+      <p class="result-break"><span>Brief ${briefPts}</span><span>Snaps ${m.snapPts}</span><span>Speed ${timePts}</span><span>${fmt(t)}</span></p>
+      ${metN < 2 ? '<p class="result-note">The speed bonus only counts once two lines of the brief are met.</p>' : ''}
+      <div class="reveal-card">
+        <p class="reveal-k">Card line ${n}/3 revealed · ${mat.trait}</p>
+        <p class="reveal-t">${trait.title}</p>
+        <p class="reveal-l">${trait.line}</p>
+      </div>
+      <button type="button" class="cta" data-next>${last ? 'Reveal my card' : `Next: room ${ROOMS.indexOf(nextRoom()) + 1}`} <span aria-hidden="true">→</span></button>
+      <button type="button" class="ghost ghost--wide" data-again>Replay this room</button>`;
+    resultEl.hidden = false;
+    requestAnimationFrame(() => resultEl.classList.add('is-up'));
+    countUp($('[data-total]', resultEl), total);
+    $('[data-next]', resultEl).addEventListener('click', () => (last ? showCard() : begin(nextRoom())));
+    $('[data-again]', resultEl).addEventListener('click', () => begin(key));
+    setTimeout(() => resultEl.focus({ preventScroll: true }), 400);
   };
 
-  // ---- room select ---------------------------------------------------------
-  const renderPick = () => {
-    pick.innerHTML = `<p class="cur-pick-k">Choose a room</p>${ROOMS.map((k, i) => {
-      const r = MATERIALS[k], b = best[k];
-      return `<button type="button" class="cur-opt" data-material="${k}">
-        <span class="cur-opt-icon cur-opt-icon--${r.icon}" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="cur-opt-t"><small>0${i + 1}</small> ${r.title}</span>
-        <span class="cur-opt-d">${b ? `Best ${b.score} pts` : r.sub} ${stars(b?.stars || 0)}</span>
-      </button>`;
-    }).join('')}<p class="cur-pick-rank">Rank: <b>${rank()}</b> · ${totalStars()}/9 stars</p>`;
-    pick.querySelectorAll('[data-material]').forEach((b) => b.addEventListener('click', () => begin(b.dataset.material)));
-  };
-  const back = () => {
+  // ---- home: the card you're filling, the path you're on --------------------
+  const home = () => {
     clearInterval(tick);
     stage.querySelectorAll('.cp, .cur-pop, .cur-spark').forEach((el) => el.remove());
-    stage.classList.remove('is-wall', 'is-spread', 'is-screen', 'is-curated', 'is-met');
-    pieces = []; renderPick(); pick.hidden = false;
-    caption.textContent = '';
-    setMode('pick');
-    pick.querySelector('button')?.focus({ preventScroll: true });
+    const n = ROOMS.filter(done).length;
+    deckEl.innerHTML = `
+      <div class="deck-card ${allDone() ? 'is-full' : ''}">
+        <p class="deck-k">Your Curator’s card <span>${n}/3</span></p>
+        <p class="deck-type">${allDone() ? typeOf().name : '? ? ?'}</p>
+        <ul>${ROOMS.map((k) => {
+          const r = done(k);
+          return `<li class="${r ? 'on' : ''}"><span>${MATERIALS[k].trait}</span><b>${r ? r.trait.title : 'Hidden'}</b></li>`;
+        }).join('')}</ul>
+      </div>`;
+    const nx = nextRoom();
+    pathEl.innerHTML = ROOMS.map((k, i) => {
+      const r = done(k), open = r || k === nx;
+      return `<li><button type="button" data-room="${k}" ${open ? '' : 'disabled'} class="${r ? 'is-done' : k === nx ? 'is-next' : 'is-locked'}">
+        <span class="path-n">${open ? i + 1 : '🔒'}</span>
+        <span class="path-t">${MATERIALS[k].title}</span>
+        ${r ? stars(r.stars) : `<span class="path-s">${k === nx ? 'Up next' : 'Locked'}</span>`}
+      </button></li>`;
+    }).join('');
+    $$('[data-room]', pathEl).forEach((b) => b.addEventListener('click', () => begin(b.dataset.room)));
+    startBtn.textContent = allDone() ? 'See my card' : n ? `Continue: room ${ROOMS.indexOf(nx) + 1}` : 'Start room 1';
+    show('home');
   };
 
+  // ---- the card --------------------------------------------------------------
+  const cardHTML = () => {
+    const t = typeOf();
+    return `<div class="kard">
+      <p class="kard-k"><span>The Curator’s card</span><span>${rank()}</span></p>
+      <p class="kard-name" data-kname>${save.name ? save.name : 'A curator'}</p>
+      <p class="kard-type">${t.name}</p>
+      <p class="kard-line">${t.line}</p>
+      <ul class="kard-traits">${ROOMS.map((k) => `<li><span>${MATERIALS[k].trait}</span><b>${done(k).trait.title}</b></li>`).join('')}</ul>
+      <div class="kard-thumbs">${ROOMS.map(thumb).join('')}</div>
+      <p class="kard-foot"><span>${totalStars()}/9 ★ · ${totalScore()} pts</span><span>sukritipandey.vercel.app</span></p>
+    </div>`;
+  };
+  const showCard = () => {
+    clearInterval(tick);
+    cardEl.innerHTML = cardHTML();
+    nameInput.value = save.name || '';
+    show('card');
+    cardEl.querySelector('.kard').classList.add('is-in');
+  };
+  nameInput.addEventListener('input', () => {
+    save.name = nameInput.value.trim().slice(0, 22); persist();
+    const el = $('[data-kname]', cardEl); if (el) el.textContent = save.name || 'A curator';
+  });
+
+  // the same card, drawn to a canvas so it can be saved as an image
+  const drawCard = async () => {
+    const W = 1080, H = 1350, cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const c = cv.getContext('2d');
+    try { await Promise.all(['300 100px "Cormorant Garamond"', 'italic 300 100px "Cormorant Garamond"', '400 30px "Syne"'].map((f) => document.fonts.load(f))); } catch (e) { /* fall back to system fonts */ }
+    const serif = '"Cormorant Garamond", Georgia, serif', sans = '"Syne", system-ui, sans-serif';
+    const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#12222a'); g.addColorStop(0.55, '#0A1419'); g.addColorStop(1, '#1d1610');
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    const glow = c.createRadialGradient(W * 0.8, H * 0.1, 0, W * 0.8, H * 0.1, W * 0.9); glow.addColorStop(0, 'rgba(224,160,90,0.28)'); glow.addColorStop(1, 'rgba(224,160,90,0)');
+    c.fillStyle = glow; c.fillRect(0, 0, W, H);
+    c.strokeStyle = 'rgba(224,196,156,0.5)'; c.lineWidth = 2; c.strokeRect(40, 40, W - 80, H - 80);
+    const M = 96, amber = '#E0C49C', text = '#F0EDE6', dim = '#9aa3a6';
+    const caps = (s, x, y, col = dim, size = 24, align = 'left') => { c.font = `400 ${size}px ${sans}`; c.fillStyle = col; c.textAlign = align; try { c.letterSpacing = '5px'; } catch (e) { /* older browsers */ } c.fillText(s.toUpperCase(), x, y); try { c.letterSpacing = '0px'; } catch (e) { /* */ } };
+    caps('The Curator’s card', M, 140, amber); caps(rank(), W - M, 140, dim, 24, 'right');
+    c.textAlign = 'left';
+    c.font = `300 44px ${serif}`; c.fillStyle = dim; c.fillText(save.name || 'A curator', M, 250);
+    const t = typeOf();
+    c.font = `italic 300 132px ${serif}`; c.fillStyle = amber; c.fillText(t.name, M - 4, 390);
+    c.font = `300 40px ${serif}`; c.fillStyle = text;
+    const words = t.line.split(' '); let line = '', y = 470;
+    words.forEach((w) => { if (c.measureText(`${line}${w} `).width > W - M * 2) { c.fillText(line.trim(), M, y); y += 54; line = ''; } line += `${w} `; });
+    c.fillText(line.trim(), M, y);
+    let ty = 640;
+    ROOMS.forEach((k) => {
+      c.strokeStyle = 'rgba(240,237,230,0.18)'; c.lineWidth = 1; c.beginPath(); c.moveTo(M, ty - 52); c.lineTo(W - M, ty - 52); c.stroke();
+      caps(MATERIALS[k].trait, M, ty, dim, 22);
+      c.font = `300 50px ${serif}`; c.fillStyle = text; c.textAlign = 'right'; c.fillText(done(k).trait.title, W - M, ty + 6); c.textAlign = 'left';
+      ty += 96;
+    });
+    const tw = 232, th = tw * 1.25, gap = (W - M * 2 - tw * 3) / 2, y0 = 900;
+    ROOMS.forEach((k, i) => {
+      const x0 = M + i * (tw + gap);
+      c.fillStyle = MATERIALS[k].bg; c.fillRect(x0, y0, tw, th);
+      c.strokeStyle = 'rgba(240,237,230,0.25)'; c.strokeRect(x0, y0, tw, th);
+      done(k).layout.forEach((p) => { c.fillStyle = p.c; c.fillRect(x0 + (p.x / COLS) * tw + 3, y0 + (p.y / ROWS) * th + 3, (p.w / COLS) * tw - 6, (p.h / ROWS) * th - 6); });
+    });
+    caps(`${totalStars()}/9 ★ · ${totalScore()} pts`, M, H - 100, amber, 22);
+    caps('sukritipandey.vercel.app', W - M, H - 100, dim, 22, 'right');
+    return cv;
+  };
+  const cardBlob = async () => { const cv = await drawCard(); return new Promise((res) => cv.toBlob(res, 'image/png')); };
+  const fileName = () => `curators-card-${typeOf().name.replace('The ', '').toLowerCase()}.png`;
+  $('[data-download]').addEventListener('click', async (e) => {
+    const btn = e.currentTarget, label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Printing…';
+    try {
+      const blob = await cardBlob(), url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = fileName(); document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      btn.textContent = 'Saved. Frame it.';
+    } catch (err) { btn.textContent = 'Couldn’t save. Try again'; }
+    setTimeout(() => { btn.disabled = false; btn.textContent = label; }, 2200);
+  });
+  const shareBtn = $('[data-share]');
+  if (navigator.canShare) {
+    try { if (navigator.canShare({ files: [new File([''], 'a.png', { type: 'image/png' })] })) shareBtn.hidden = false; } catch (e) { /* no file sharing */ }
+  }
+  shareBtn.addEventListener('click', async () => {
+    try {
+      const file = new File([await cardBlob()], fileName(), { type: 'image/png' });
+      await navigator.share({ files: [file], title: 'My Curator’s card', text: `I’m ${typeOf().name}. What are you?` });
+    } catch (e) { /* cancelled */ }
+  });
+
+  // ---- wiring ---------------------------------------------------------------
   doneBtn.addEventListener('click', finish);
   $('[data-shuffle]').addEventListener('click', () => {
     m.shuffles++; m.streak = 0;
     pieces.forEach((p) => { p.moved = false; });
     scatter(); pieces.forEach(place);
     evaluate(false);
-    caption.textContent = 'Shuffled. Start again from here.';
+    caption.textContent = 'Shuffled. The bonus is still draining.';
   });
-  $('[data-panel="play"] [data-back]').addEventListener('click', back);
-  renderPick();
+  $$('[data-home]').forEach((b) => b.addEventListener('click', home));
+  startBtn.addEventListener('click', () => (allDone() ? showCard() : begin(nextRoom())));
+  home();
 }

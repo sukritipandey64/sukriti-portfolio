@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F4EFE7">
+  <title>Ctrl+Alt+Decaf — In progress · Sukriti Pandey</title>
+  <meta name="description" content="Ctrl+Alt+Decaf, in progress. Editorial edition.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="stylesheet" href="/src/styles/editorial.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="bar">
+    <a class="bar-logo" href="/editorial.html" aria-label="Sukriti Pandey, cover">SP</a>
+    <p class="bar-issue">Issue 04 <span>·</span> Winter 2026 <span>·</span> Hyderabad</p>
+    <nav aria-label="Pages">
+      <a href="/editorial-velocity.html">Velocity</a>
+      <a href="/editorial-decaf.html" aria-current="page">Decaf</a>
+      <a href="/editorial-collection.html">Collection</a>
+      <a href="/curator.html" class="hide-sm">Play</a>
+      <a href="/files/Sukriti-Pandey-Resume.pdf" target="_blank" rel="noopener" class="bar-cta">Resume</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="case-cover">
+      <p class="folio"><span>03</span> Work in progress <i>In progress · Research phase · 3 min read</i></p>
+      <div class="case-top">
+        <div>
+          <h1 class="hed hed--xl">Ctrl+Alt+<em>Decaf</em></h1>
+          <p class="dek dek--wide">Ordering coffee shouldn’t feel like an oral exam. <span class="wt">Working title.</span></p>
+          <p class="links"><a class="more" href="https://concrete-dessert-15b.notion.site/Ctrl-Alt-Decaf-Case-study-in-progress-414a0e18a1df810586dcfe31695092c4" target="_blank" rel="noopener">The full write-up, in Notion <span aria-hidden="true">↗</span></a></p>
+        </div>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Solo: research, product design, build</dd></div>
+          <div><dt>Platform</dt><dd>Phone web app from a table QR code. No download.</dd></div>
+          <div><dt>When</dt><dd>Oct 2026, ongoing</dd></div>
+          <div><dt>Stage</dt><dd>Discover now. Lo-fi started. Café test to come.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="spread">
+      <p class="folio"><span>i</span> The insight</p>
+      <div class="cols">
+        <h2 class="hed">The barrier isn’t information. It’s <em>asking.</em></h2>
+        <div class="prose">
+          <p>Specialty menus assume you already speak coffee: estates, processes, tasting notes. Beginners feel judged asking, so they order the hazelnut latte, or guess.</p>
+          <p>I still ask the barista what they’d recommend. Tasting notes confuse me too. You can love blueberries and hate blueberry coffee.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="spread tint">
+      <p class="folio"><span>ii</span> The idea</p>
+      <div class="cols cols--phones">
+        <div class="prose">
+          <h2 class="hed">Two picks, in <em>plain words.</em></h2>
+          <p>Scan the QR on the table, say what you usually drink, get a safe pick and a stretch pick from today’s menu. A two-tap check-in after the cup makes the next one better.</p>
+          <div class="menu">
+            <p class="menu-k">The menu says</p>
+            <p class="menu-a">Attikan Estate, washed, V60 <i>blueberry · floral · bright</i></p>
+            <p class="menu-k">In your words</p>
+            <p class="menu-b">Light and juicy. More iced tea than cold coffee.</p>
+          </div>
+        </div>
+        <div class="decaf-phones">
+          <img src="/images/barista/wireframe-onboarding.webp" alt="Lo-fi wireframe: one onboarding question.">
+          <img src="/images/barista/wireframe-two-picks.webp" alt="Lo-fi wireframe: two picks, safe and stretch.">
+          <img src="/images/barista/wireframe-check-in.webp" alt="Lo-fi wireframe: two-tap check-in.">
+        </div>
+      </div>
+      <p class="cap-line">Lo-fi wireframes. Grayscale first; the design system arrives when the research says what it needs.</p>
+    </section>
+
+    <section class="spread">
+      <p class="folio"><span>iii</span> Decisions so far</p>
+      <h2 class="hed">Small rules, <em>strongly brewed.</em></h2>
+      <ol class="patterns">
+        <li><span>a</span><div><h3>No prompt needed</h3><p>Scan, one tap, two picks. Good help shouldn’t require knowing what to ask.</p></div></li>
+        <li><span>b</span><div><h3>One question</h3><p>“What do you usually order?” It starts from what people already know.</p></div></li>
+        <li><span>c</span><div><h3>Always two picks</h3><p>Safe and stretch. A miss is part of the experiment, not a failure.</p></div></li>
+        <li><span>d</span><div><h3>Notes, translated</h3><p>Into food memories: jamun, jaggery, filter coffee.</p></div></li>
+        <li><span>e</span><div><h3>A two-tap check-in</h3><p>The tone: come back and we’ll explore together.</p></div></li>
+        <li><span>f</span><div><h3>Why not a chatbot?</h3><p>Picks come from this café’s menu, today. No general chatbot has that.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="spread tint">
+      <p class="folio"><span>iv</span> Early signals <i>Signals to check, not findings</i></p>
+      <h2 class="hed">What a café co-founder in Chennai hears at the <em>counter.</em></h2>
+      <ul class="quotes">
+        <li><span class="q-role">The decision gets handed over</span><blockquote>“A lot of them just end up asking ‘what do you recommend?’”</blockquote><p><b>So</b> the app gives the recommendation people would otherwise ask a stranger for.</p></li>
+        <li><span class="q-role">People start from the familiar</span><blockquote>“Most people look for something familiar first, like a cappuccino or a cold coffee.”</blockquote><p><b>So</b> the first question stays “what do you usually drink?”</p></li>
+        <li><span class="q-role">The words that trip people</span><blockquote>“Some don’t know what a specific processing is, like a washed, natural or honey… or a thermal shock.”</blockquote><p><b>So</b> the glossary covers processing, not just flavours.</p></li>
+        <li><span class="q-role">Curiosity is invited, never pushed</span><blockquote>“I don’t force anyone to get into specialty coffee… Once they ask a question, we go on explaining.”</blockquote><p><b>So</b> the stretch pick reads as an invitation, and the safe pick is always there.</p></li>
+      </ul>
+      <p class="cap-line">The conversations have started. Each point is a signal to test against the next ones.</p>
+    </section>
+
+    <section class="spread">
+      <p class="folio"><span>v</span> What’s next</p>
+      <div class="cols">
+        <h2 class="hed">Research first, <em>this time.</em></h2>
+        <div class="prose">
+          <p>My last project taught me to validate before I build. So before anything grows, the flow gets tested in a café with five or six beginners.</p>
+          <p class="side-k">What I’ll watch for (hypotheses, not results)</p>
+          <ul class="ticks"><li>A first-timer orders without asking “what do you recommend?”</li><li>Some choose the stretch pick, and the check-in comes back “just right”.</li><li>Baristas notice better questions at the counter.</li></ul>
+          <p class="links"><a class="more" href="https://concrete-dessert-15b.notion.site/Ctrl-Alt-Decaf-Case-study-in-progress-414a0e18a1df810586dcfe31695092c4" target="_blank" rel="noopener">The full write-up, in Notion <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="spread nextup">
+      <a href="/editorial-collection.html"><p class="folio"><span>→</span> Next</p><h2 class="hed hed--xl">The <em>collection</em></h2><p class="dek">Five things I can’t stop looking at.</p></a>
+    </section>
+  </main>
+  <footer class="foot">
+    <span>Sukriti Pandey — 2026</span>
+    <span>Editorial edition, an exploration. <a href="/">See the gallery edition</a></span>
+  </footer>
+  <script type="module" src="/src/js/editorial.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 /* Editorial edition (exploration): quiet reveals only. */
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const els = document.querySelectorAll('.masthead, .cover-grid, .cover-foot, .folio, .hed, .letter-body, .letter-side, .feature-img, .feature-copy > div, .decaf-copy > *, .decaf-phones img, .index-list li, .play-card, .contact li');
+const els = document.querySelectorAll('.masthead, .cover-grid, .cover-foot, .folio, .hed, .letter-body, .letter-side, .feature-img, .feature-copy > div, .decaf-copy > *, .decaf-phones img, .play-card, .contact li, .dek--wide, .credits, .fig, .prose, .quotes li, .patterns li, .dtable, .refl li, .plate, .duo-card .dek');
 if (reduce || !('IntersectionObserver' in window)) {
   els.forEach((el) => el.classList.add('in'));
 } else {

@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0A1419">
   <title>The Curator — an installation · Sukriti Pandey</title>
-  <meta name="description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
+  <meta name="description" content="Three rooms, three briefs, one card. The Curator scores your layout, reads how you decide, and gives you a card to keep.">
   <link rel="canonical" href="https://sukritipandey.vercel.app/curator.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sukriti Pandey">
   <meta property="og:url" content="https://sukritipandey.vercel.app/curator.html">
   <meta property="og:title" content="The Curator — an installation · Sukriti Pandey">
-  <meta property="og:description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
+  <meta property="og:description" content="Three rooms, three briefs, one card. The Curator scores your layout, reads how you decide, and gives you a card to keep.">
   <meta property="og:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Curator — an installation · Sukriti Pandey">
-  <meta name="twitter:description" content="Three rooms, three briefs. Arrange five pieces, meet the brief, beat the clock. The Curator scores the layout and reads how you decided.">
+  <meta name="twitter:description" content="Three rooms, three briefs, one card. The Curator scores your layout, reads how you decide, and gives you a card to keep.">
   <meta name="twitter:image" content="https://sukritipandey.vercel.app/images/og-home.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -41,49 +41,73 @@
   </nav>
 
   <main id="main">
-    <section class="cur" data-light="flare" data-curator data-mode="pick">
-      <header class="cur-head">
+    <section class="cur" data-light="flare" data-curator data-screen="home">
+      <aside class="cur-side">
         <p class="label">Installation · Behaviour lab</p>
         <h1 class="cur-title">The <em>Curator</em></h1>
-      </header>
+        <p class="cur-lede">Three rooms, three briefs. It scores your layout, reads <em>how</em> you decide, and deals you a card to keep.</p>
+        <p class="cur-meta">Designed for the phone. On a bigger screen it stays phone-sized, on purpose.</p>
+      </aside>
 
-      <div class="cur-stage-wrap">
-        <div class="cur-hud" data-hud hidden>
-          <span class="cur-hud-room" data-hud-room></span>
-          <span class="cur-hud-score"><b data-hud-score>0</b> pts</span>
-          <span class="cur-hud-time" data-hud-time>0:00</span>
+      <div class="phone">
+        <div class="app" data-app>
+          <!-- Home -->
+          <div class="scr scr-home" data-scr="home">
+            <header class="home-top">
+              <a class="app-x" href="/#lab" aria-label="Back to the portfolio">←</a>
+              <span class="app-k">The Curator</span>
+              <span class="app-rank" data-rank></span>
+            </header>
+            <h2 class="home-h">Three rooms.<br><em>One card.</em></h2>
+            <p class="home-p">Arrange each room. Every room reveals one line of your card.</p>
+            <div class="deck" data-deck></div>
+            <ol class="path" data-path></ol>
+            <button type="button" class="cta" data-start>Start room 1</button>
+          </div>
+
+          <!-- Play -->
+          <div class="scr scr-play" data-scr="play" hidden>
+            <header class="app-bar">
+              <button type="button" class="app-x" data-home aria-label="Leave the room">✕</button>
+              <ol class="app-steps" data-steps aria-hidden="true"><li></li><li></li><li></li></ol>
+              <span class="app-score"><b data-hud-score>0</b> pts</span>
+            </header>
+            <div class="bonus" aria-hidden="true"><i data-bonus-bar></i></div>
+            <p class="room-line"><span data-hud-room></span><span class="bonus-n">Speed bonus <b data-bonus-n>180</b></span></p>
+            <div class="stage-fit">
+              <div class="cur-stage" data-stage role="group" aria-label="Composition area">
+                <div class="cur-grid" aria-hidden="true"></div>
+                <p class="coach" data-coach hidden>Drag a piece. The grid shows up when you’re close.</p>
+              </div>
+            </div>
+            <p class="cur-caption" data-caption aria-live="polite"></p>
+            <div class="sheet">
+              <ul class="cur-brief" data-brief aria-live="polite"></ul>
+              <div class="sheet-row">
+                <button type="button" class="ghost" data-shuffle aria-label="Shuffle the pieces">Shuffle</button>
+                <button type="button" class="cta" data-done disabled>Hang it</button>
+              </div>
+            </div>
+            <div class="result" data-result hidden tabindex="-1"></div>
+          </div>
+
+          <!-- Card -->
+          <div class="scr scr-card" data-scr="card" hidden>
+            <header class="home-top">
+              <button type="button" class="app-x" data-home aria-label="Back to the rooms">←</button>
+              <span class="app-k">Your card</span>
+              <span class="app-rank" data-rank></span>
+            </header>
+            <div class="card-wrap" data-card></div>
+            <label class="name-field"><span>Name on the card (optional)</span><input type="text" maxlength="22" autocomplete="given-name" placeholder="Your name" data-name></label>
+            <button type="button" class="cta" data-download>Download my card</button>
+            <button type="button" class="ghost ghost--wide" data-share hidden>Share</button>
+            <button type="button" class="ghost ghost--wide" data-home>Replay a room</button>
+          </div>
         </div>
-        <div class="cur-stage" data-stage role="group" aria-label="Composition area">
-          <div class="cur-grid" aria-hidden="true"></div>
-          <div class="cur-pick" data-pick></div>
-        </div>
-        <p class="cur-caption" data-caption aria-live="polite"></p>
       </div>
-
-      <div class="cur-panel" data-panel="pick">
-        <p class="cur-lede">Three rooms, three briefs. Five pieces arrive out of place; meet the brief, snap to the grid, beat the clock. It scores the layout, and reads <em>how</em> you got there.</p>
-        <p class="cur-meta">About a minute a room · touch, mouse or keyboard</p>
-      </div>
-
-      <div class="cur-panel" data-panel="play" hidden>
-        <p class="cur-k">The brief</p>
-        <ul class="cur-brief" data-brief aria-live="polite"></ul>
-        <div class="cur-actions">
-          <button type="button" class="btn-pill" data-done disabled>Hang it</button>
-          <button type="button" class="btn-pill btn-pill--ghost" data-shuffle>Shuffle</button>
-          <button type="button" class="cur-textbtn" data-back>All rooms</button>
-        </div>
-        <p class="cur-kbd">Keyboard: Tab to a piece, arrow keys to move it.</p>
-      </div>
-
-      <div class="cur-panel cur-result" data-panel="result" hidden tabindex="-1"></div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <span>Sukriti Pandey — 2026</span>
-    <em>Chaos, but curated.</em>
-  </footer>
 
   <script type="module" src="/src/js/site.js"></script>
   <script type="module" src="/src/js/curator.js"></script>
