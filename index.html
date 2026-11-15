@@ -25,8 +25,27 @@
   <link rel="preload" as="image" href="/images/atmosphere.webp" type="image/webp">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/home.css">
+  <script>
+    /* Front door: shown on a plain visit to the homepage, skipped for deep links (#work…) and once an edition is chosen this session. */
+    try { if (!location.hash && !sessionStorage.getItem('edition')) document.documentElement.classList.add('has-door'); } catch (e) { document.documentElement.classList.add('has-door'); }
+  </script>
 </head>
 <body>
+  <div class="door" data-door role="dialog" aria-modal="true" aria-label="Choose how to see the work">
+    <p class="door-top"><span>Sukriti Pandey</span><span>Same work. Two ways in.</span></p>
+    <a class="door-half door-read" href="/editorial.html" data-door-read>
+      <span class="door-k">Edition one</span>
+      <span class="door-h">Know the work <em>first.</em></span>
+      <span class="door-p">The case studies, plainly. Short reads, big pictures, no detours.</span>
+      <span class="door-go">Read <span aria-hidden="true">→</span></span>
+    </a>
+    <a class="door-half door-feel" href="#top" data-door-feel>
+      <span class="door-k">Edition two</span>
+      <span class="door-h">Experience the work <em>first.</em></span>
+      <span class="door-p">A gallery you walk through. Rooms, light, and a little chaos.</span>
+      <span class="door-go">Enter <span aria-hidden="true">→</span></span>
+    </a>
+  </div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <div class="atmosphere" aria-hidden="true"></div>

@@ -20,9 +20,12 @@ if (reduce || !('IntersectionObserver' in window)) {
   if (dark || light) {
     const nav = document.createElement('nav');
     nav.className = 'edition'; nav.setAttribute('aria-label', 'Edition');
+    // "Read" = the editorial (know the work first), "Experience" = the gallery (experience it first).
+    // Going to the gallery home from here skips the front door: the choice has just been made.
+    const lightHref = light === '/' ? '/#top' : light;
     nav.innerHTML = dark
-      ? `<span aria-current="true">Chaos</span><a href="${dark}">Curated</a>`
-      : `<a href="${light}">Chaos</a><span aria-current="true">Curated</span>`;
+      ? `<a href="${dark}">Read</a><span aria-current="true">Experience</span>`
+      : `<span aria-current="true">Read</span><a href="${lightHref}">Experience</a>`;
     document.body.append(nav);
   }
 }

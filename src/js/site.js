@@ -475,9 +475,35 @@ document.querySelectorAll('[data-tabs]').forEach((wrap) => {
   if (dark || light) {
     const nav = document.createElement('nav');
     nav.className = 'edition'; nav.setAttribute('aria-label', 'Edition');
+    // "Read" = the editorial (know the work first), "Experience" = the gallery (experience it first).
+    // Going to the gallery home from here skips the front door: the choice has just been made.
+    const lightHref = light === '/' ? '/#top' : light;
     nav.innerHTML = dark
-      ? `<span aria-current="true">Chaos</span><a href="${dark}">Curated</a>`
-      : `<a href="${light}">Chaos</a><span aria-current="true">Curated</span>`;
+      ? `<a href="${dark}">Read</a><span aria-current="true">Experience</span>`
+      : `<span aria-current="true">Read</span><a href="${lightHref}">Experience</a>`;
     document.body.append(nav);
   }
+}
+
+/* Front door (homepage only): two ways in. Left opens the editorial; right is a window onto the gallery
+   already running behind it, and choosing it simply lifts the door. */
+{
+  const door = document.querySelector('[data-door]');
+  if (door && document.documentElement.classList.contains('has-door')) {
+    const rest = [...document.body.children].filter((el) => el !== door && !el.classList.contains('cursor-dot') && !el.classList.contains('cursor-ring'));
+    const remember = (v) => { try { sessionStorage.setItem('edition', v); } catch (e) { /* fine */ } };
+    rest.forEach((el) => { if (el.matches('main, nav, footer, a')) el.inert = true; });
+    lenis?.stop(); document.documentElement.style.overflow = 'hidden';
+    const open = () => {
+      remember('gallery');
+      door.classList.add('is-leaving');
+      rest.forEach((el) => { el.inert = false; });
+      lenis?.start(); document.documentElement.style.overflow = '';
+      setTimeout(() => { document.documentElement.classList.remove('has-door'); door.remove(); document.querySelector('#main')?.focus?.({ preventScroll: true }); }, reduceMotion ? 0 : 900);
+    };
+    door.querySelector('[data-door-feel]').addEventListener('click', (e) => { e.preventDefault(); open(); });
+    door.querySelector('[data-door-read]').addEventListener('click', () => remember('editorial'));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.body.contains(door)) open(); });
+    door.querySelector('[data-door-read]').focus({ preventScroll: true });
+  } else if (door) door.remove();
 }

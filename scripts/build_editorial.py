@@ -45,7 +45,7 @@ def page(title, desc, body, here=""):
   </main>
   <footer class="foot">
     <span>Sukriti Pandey — 2026</span>
-    <span>Editorial edition, an exploration. <a href="/">See the gallery edition</a></span>
+    <span>The reading edition. <a href="/#top">Experience it instead</a></span>
   </footer>
   <script type="module" src="/src/js/editorial.js"></script>
 </body>
