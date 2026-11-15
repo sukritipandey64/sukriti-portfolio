@@ -263,8 +263,69 @@ if (atm && rooms.length && !reduceMotion) {
   let W = 0, H = 0;
   const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
   size(); addEventListener('resize', size, { passive: true });
-  const N = isTouch ? 18 : 40;
-  const motes = Array.from({ length: N }, () => ({ x: Math.random(), y: Math.random(), r: 0.7 + Math.random() * 1.7, v: 0.00010 + Math.random() * 0.00026, ph: Math.random() * 6.28 }));
+  /* The swarm: one cloud of fine particles that follows you through the rooms and re-forms in each.
+     Loose while you scroll (chaos), settled into a shape when you stop (curated). It parts around the cursor. */
+  const N = isTouch ? 900 : 2600;
+  const P = Array.from({ length: N }, (_, i) => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: 0, vy: 0, u: i / N, r: Math.random(), q: Math.random(), s: Math.random() < 0.14 ? 2.2 : 1.35 }));
+  const gauss = (p) => (p.r + p.q + ((p.u * 7.13) % 1) - 1.5) * 0.9;          // roughly bell-shaped, fixed per particle
+  let whyPts = [], whyKey = '';
+  const sampleWhy = () => {
+    const key = `${W}x${H}`; if (key === whyKey) return; whyKey = key;
+    const c = document.createElement('canvas'), fs = Math.min(W * 0.26, H * 0.5);
+    c.width = Math.ceil(fs * 2.6); c.height = Math.ceil(fs * 1.3);
+    const x = c.getContext('2d');
+    x.font = `italic 300 ${fs}px "Cormorant Garamond", Georgia, serif`; x.textBaseline = 'middle'; x.fillStyle = '#fff';
+    x.fillText('why?', fs * 0.08, c.height / 2);
+    const d = x.getImageData(0, 0, c.width, c.height).data; whyPts = [];
+    for (let yy = 0; yy < c.height; yy += 3) for (let xx = 0; xx < c.width; xx += 3) if (d[(yy * c.width + xx) * 4 + 3] > 120) whyPts.push([xx, yy]);
+    const ox = isTouch ? (W - c.width) / 2 : W * 0.06, oy = H * 0.62 - c.height / 2;
+    whyPts = whyPts.map(([xx, yy]) => [xx + ox, yy + oy]);
+  };
+  const rectPt = (u, cx, cy, w, h, rot) => {      // a point on a rectangle's outline
+    const per = 2 * (w + h); let d = u * per, x, y;
+    if (d < w) { x = -w / 2 + d; y = -h / 2; } else if ((d -= w) < h) { x = w / 2; y = -h / 2 + d; }
+    else if ((d -= h) < w) { x = w / 2 - d; y = h / 2; } else { d -= w; x = -w / 2; y = h / 2 - d; }
+    const c = Math.cos(rot), sn = Math.sin(rot);
+    return [cx + x * c - y * sn, cy + x * sn + y * c];
+  };
+  const PIECES = [[0.62, 0.3, 0.2, 0.3, -0.12], [0.84, 0.36, 0.12, 0.34, 0.09], [0.7, 0.68, 0.14, 0.2, 0.06], [0.88, 0.74, 0.16, 0.08, -0.07], [0.54, 0.78, 0.1, 0.07, 0.14]];
+  const SHAPES = {
+    cloud: (p) => [p.r * W, p.q * H],
+    // hero: an empty picture frame, waiting
+    frame: (p, t) => {
+      if (p.s > 2) return [p.r * W, p.q * H];
+      const cx = isTouch ? W * 0.5 : W * 0.74, w = isTouch ? W * 0.62 : Math.min(W * 0.24, H * 0.5), h = w * 1.3;
+      const [x, y] = rectPt((p.u * 5) % 1, cx, H * 0.5 + Math.sin(t * 0.0004) * 6, w, h, 0.03);
+      return [x + gauss(p) * 5, y + gauss({ r: p.q, q: p.u, u: p.r }) * 5];
+    },
+    // how I think: a slow ring
+    ring: (p, t) => {
+      const a = p.u * 6.283 * 3 + t * 0.00008 * (0.6 + p.r), R = Math.min(W, H) * (isTouch ? 0.34 : 0.3) * (0.82 + gauss(p) * 0.12);
+      return [(isTouch ? W * 0.5 : W * 0.72) + Math.cos(a) * R, H * 0.52 + Math.sin(a) * R * 0.92];
+    },
+    // work: a ribbon running through the room
+    ribbon: (p, t) => {
+      const x = p.u * W * 1.1 - W * 0.05, k = p.u * 6.283;
+      return [x, H * 0.5 + Math.sin(k * 1.1 + t * 0.0003) * H * 0.22 + Math.sin(k * 2.7 - t * 0.0002) * H * 0.05 + gauss(p) * H * 0.03 * (0.4 + Math.abs(Math.cos(k)))];
+    },
+    // the work I do: the question it starts with
+    why: (p) => { const q = whyPts[Math.floor(p.u * 9973) % (whyPts.length || 1)]; return q ? [q[0] + (p.r - 0.5) * 3, q[1] + (p.q - 0.5) * 3] : [p.r * W, p.q * H]; },
+    // installation: five pieces, out of place
+    pieces: (p) => {
+      const k = Math.floor(p.u * 5) % 5, [cx, cy, w, h, rot] = PIECES[k];
+      const X = isTouch ? 0.5 + (cx - 0.72) * 1.6 : cx;
+      const [x, y] = rectPt((p.u * 5 * 7) % 1, X * W, cy * H, w * W * (isTouch ? 1.6 : 1), h * H, rot);
+      return [x + gauss(p) * 3, y + (p.q - 0.5) * 6];
+    },
+    // contact: everything settles on one line
+    line: (p, t) => [W * 0.08 + p.u * W * 0.84, H * 0.86 + gauss(p) * 4 + Math.sin(p.u * 20 + t * 0.0006) * 2],
+  };
+  // on a phone the text fills the screen, so the shapes that would sit on top of it give way to ones that pass behind
+  const ROOM_SHAPE = isTouch
+    ? { top: 'ribbon', think: 'ring', work: 'ribbon', practice: 'cloud', lab: 'pieces', contact: 'line' }
+    : { top: 'frame', think: 'ring', work: 'ribbon', practice: 'why', lab: 'pieces', contact: 'line' };
+  let mxp = -9999, myp = -9999, lastY = scrollY, stir = 0;
+  if (!isTouch) addEventListener('mousemove', (e) => { mxp = e.clientX; myp = e.clientY; }, { passive: true });
   let turn = 0, lastT = performance.now(), running = true;
   const lit = [];
   const frame = (now) => {
@@ -302,19 +363,28 @@ if (atm && rooms.length && !reduceMotion) {
     // turn toward the wall of the room you're in
     const cur = info.reduce((m, r) => (Math.abs(r.c) < Math.abs(m.c) ? r : m), info[0]);
     turn += ((cur.i % 2 ? 1.4 : -1.4) - turn) * 0.025; galleryTurn = turn;
-    // dust drifting through the light
+    // the swarm
+    const shapeName = ROOM_SHAPE[rooms[cur.i].id] || 'cloud';
+    if (shapeName === 'why') sampleWhy();
+    const shape = SHAPES[shapeName];
+    const dy = scrollY - lastY; lastY = scrollY;
+    stir = Math.min(1, stir * 0.94 + Math.abs(dy) * 0.012);          // scrolling loosens it
+    const pull = 0.012 + (1 - stir) * 0.03, R = 110, R2 = R * R;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = '#F6E3C6';
-    const reach = Math.min(W, H) * 0.5;
-    motes.forEach((m) => {
-      m.y -= m.v * dt; m.ph += dt * 0.0006;
-      if (m.y < -0.05) { m.y = 1.05; m.x = Math.random(); }
-      const px = (m.x + Math.sin(m.ph) * 0.012) * W, py = m.y * H;
-      let glow = 0.08;
-      lit.forEach((l) => { const d = Math.hypot(px - l.x, py - l.y) / reach; glow += l.a * Math.max(0, 1 - d * d); });
-      ctx.globalAlpha = Math.min(0.85, glow * 0.8);
-      ctx.beginPath(); ctx.arc(px, py, m.r, 0, 6.283); ctx.fill();
-    });
+    const reach = Math.min(W, H) * 0.6;
+    for (let i = 0; i < N; i++) {
+      const p = P[i], tg = shape(p, now);
+      p.vx += (tg[0] - p.x) * pull + (Math.random() - 0.5) * (0.25 + stir * 2.2);
+      p.vy += (tg[1] - p.y) * pull + (Math.random() - 0.5) * (0.25 + stir * 2.2) - dy * 0.02 * (0.3 + p.r);
+      const ddx = p.x - mxp, ddy = p.y - myp, d2 = ddx * ddx + ddy * ddy;
+      if (d2 < R2) { const f = (1 - d2 / R2) * 2.4, d = Math.sqrt(d2) || 1; p.vx += (ddx / d) * f; p.vy += (ddy / d) * f; }
+      p.vx *= 0.86; p.vy *= 0.86; p.x += p.vx; p.y += p.vy;
+      let glow = 0.62;
+      for (let k = 0; k < lit.length; k++) { const l = lit[k], d = Math.hypot(p.x - l.x, p.y - l.y) / reach; glow += l.a * Math.max(0, 1 - d * d) * 0.5; }
+      ctx.globalAlpha = Math.min(0.95, glow * (0.5 + p.q * 0.5)) * (isTouch ? 0.7 : 1);
+      ctx.fillRect(p.x, p.y, p.s, p.s);
+    }
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
