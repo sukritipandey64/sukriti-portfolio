@@ -265,8 +265,8 @@ if (atm && rooms.length && !reduceMotion) {
   size(); addEventListener('resize', size, { passive: true });
   /* The swarm: one cloud of fine particles that follows you through the rooms and re-forms in each.
      Loose while you scroll (chaos), settled into a shape when you stop (curated). It parts around the cursor. */
-  const N = isTouch ? 900 : 2600;
-  const P = Array.from({ length: N }, (_, i) => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: 0, vy: 0, u: i / N, r: Math.random(), q: Math.random(), s: Math.random() < 0.14 ? 2.2 : 1.35 }));
+  const N = isTouch ? 520 : 1500;
+  const P = Array.from({ length: N }, (_, i) => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: 0, vy: 0, u: i / N, r: Math.random(), q: Math.random(), s: Math.random() < 0.1 ? 1.8 : 1.15 }));
   const gauss = (p) => (p.r + p.q + ((p.u * 7.13) % 1) - 1.5) * 0.9;          // roughly bell-shaped, fixed per particle
   let whyPts = [], whyKey = '';
   const sampleWhy = () => {
@@ -368,21 +368,22 @@ if (atm && rooms.length && !reduceMotion) {
     if (shapeName === 'why') sampleWhy();
     const shape = SHAPES[shapeName];
     const dy = scrollY - lastY; lastY = scrollY;
-    stir = Math.min(1, stir * 0.94 + Math.abs(dy) * 0.012);          // scrolling loosens it
-    const pull = 0.012 + (1 - stir) * 0.03, R = 110, R2 = R * R;
+    stir = Math.min(1, stir * 0.93 + Math.abs(dy) * 0.006);          // scrolling loosens it
+    const pull = 0.008 + (1 - stir) * 0.018, R = 90, R2 = R * R;
+    const calm = { frame: 0.95, ring: 0.8, ribbon: 0.6, why: 0.7, pieces: 0.7, line: 0.85, cloud: 0.45 }[shapeName];   // quieter where there is more to read
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#F6E3C6';
+    ctx.fillStyle = '#E0C49C';
     const reach = Math.min(W, H) * 0.6;
     for (let i = 0; i < N; i++) {
       const p = P[i], tg = shape(p, now);
-      p.vx += (tg[0] - p.x) * pull + (Math.random() - 0.5) * (0.25 + stir * 2.2);
-      p.vy += (tg[1] - p.y) * pull + (Math.random() - 0.5) * (0.25 + stir * 2.2) - dy * 0.02 * (0.3 + p.r);
+      p.vx += (tg[0] - p.x) * pull + (Math.random() - 0.5) * (0.06 + stir * 0.9);
+      p.vy += (tg[1] - p.y) * pull + (Math.random() - 0.5) * (0.06 + stir * 0.9) - dy * 0.008 * (0.3 + p.r);
       const ddx = p.x - mxp, ddy = p.y - myp, d2 = ddx * ddx + ddy * ddy;
-      if (d2 < R2) { const f = (1 - d2 / R2) * 2.4, d = Math.sqrt(d2) || 1; p.vx += (ddx / d) * f; p.vy += (ddy / d) * f; }
-      p.vx *= 0.86; p.vy *= 0.86; p.x += p.vx; p.y += p.vy;
-      let glow = 0.62;
+      if (d2 < R2) { const f = (1 - d2 / R2) * 1.2, d = Math.sqrt(d2) || 1; p.vx += (ddx / d) * f; p.vy += (ddy / d) * f; }
+      p.vx *= 0.9; p.vy *= 0.9; p.x += p.vx; p.y += p.vy;
+      let glow = 0.5;
       for (let k = 0; k < lit.length; k++) { const l = lit[k], d = Math.hypot(p.x - l.x, p.y - l.y) / reach; glow += l.a * Math.max(0, 1 - d * d) * 0.5; }
-      ctx.globalAlpha = Math.min(0.95, glow * (0.5 + p.q * 0.5)) * (isTouch ? 0.7 : 1);
+      ctx.globalAlpha = Math.min(0.7, glow * (0.5 + p.q * 0.5)) * calm * (isTouch ? 0.8 : 1);
       ctx.fillRect(p.x, p.y, p.s, p.s);
     }
     requestAnimationFrame(frame);
