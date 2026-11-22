@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Editorial edition (exploration): builds the light, magazine-style pages.
-   editorial.html (cover + contents), editorial-velocity.html, editorial-decaf.html,
-   editorial-collection.html. Shared look lives in src/styles/editorial.css.
+   editorial.html (cover + how I think), editorial-velocity.html, editorial-decaf.html.
+   The collection and the Curator belong to the Experience edition only (her split, Nov 2026). Shared look lives in src/styles/editorial.css.
    Same content rules as the main site (see CLAUDE.md). Short copy, on purpose."""
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,8 +35,7 @@ def page(title, desc, body, here=""):
     <nav aria-label="Pages">
       {nav("/editorial-velocity.html", "Velocity", "velocity")}
       {nav("/editorial-decaf.html", "Decaf", "decaf")}
-      {nav("/editorial-collection.html", "Collection", "collection")}
-      <a href="/curator.html" class="hide-sm">Play</a>
+      <a href="/editorial.html#letter" class="hide-sm">How I think</a>
       <a href="{RESUME}" target="_blank" rel="noopener" class="bar-cta">Resume</a>
     </nav>
   </header>
@@ -59,7 +58,7 @@ def fig(src, alt, cap="", cls="", w=2000, h=1250, sample=False):
 
 COLOPHON = f'''    <section class="spread colophon" id="contact">
       <p class="folio"><span>¶</span> Colophon</p>
-      <h2 class="hed hed--xl">Let’s build something <em>considered.</em></h2>
+      <h2 class="hed hed--xl">Let’s build something considered.</h2>
       <ul class="contact">
         <li><span>Email</span><a href="mailto:sukriti1908@gmail.com">sukriti1908@gmail.com</a></li>
         <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/sukritipandey1908/" target="_blank" rel="noopener">Connect</a></li>
@@ -81,8 +80,8 @@ HOME = f'''    <section class="cover" id="top">
           <p class="cover-title" aria-hidden="true">Chaos,<br><em>but curated.</em></p>
         </figure>
         <ul class="coverlines coverlines--r">
-          <li><a href="/editorial-collection.html"><b>The collection</b> Five things I can’t stop looking at.<i>p. 04</i></a></li>
-          <li><a href="/curator.html"><b>Play</b> The Curator: three rooms, one card with your name on it.<i>p. 05</i></a></li>
+          <li><a href="#letter"><b>Why, before what</b> How I think, in one letter.<i>p. 01</i></a></li>
+          <li><a href="#contact"><b>Say hello</b> Email, LinkedIn, and the resume for the rest.<i>p. 04</i></a></li>
         </ul>
       </div>
       <p class="cover-foot"><span>Product designer</span><span>UX Designer 2, Deloitte</span><span>Open to relocation</span></p>
@@ -91,7 +90,7 @@ HOME = f'''    <section class="cover" id="top">
     <section class="spread letter" id="letter">
       <p class="folio"><span>01</span> Editor’s letter</p>
       <div class="letter-grid">
-        <h2 class="hed">I joined as a developer and kept asking <em>why.</em></h2>
+        <h2 class="hed">I joined as a developer and kept asking why.</h2>
         <div class="letter-body">
           <p class="dropcap">Why a process lived in six inboxes. Why the tool everyone needed was a spreadsheet nobody trusted. At some point I was allowed to fix the why, and that became the job.</p>
           <p>So now I take the messy, manual thing a team has quietly put up with and turn it into something they open without being told to. I design it, direct the build, and stay after launch, because the interesting part starts when real people get their hands on it.</p>
@@ -151,21 +150,6 @@ HOME = f'''    <section class="cover" id="top">
       </a>
     </section>
 
-    <section class="spread duo">
-      <a class="duo-card" href="/editorial-collection.html">
-        <p class="folio"><span>04</span> The collection</p>
-        <h2 class="hed">Five things I can’t stop <em>looking at.</em></h2>
-        <p class="dek">A fossilised gift box, a roof pretending to be a tent, a church running fashionably late.</p>
-        <p class="more">Walk the room <span aria-hidden="true">→</span></p>
-      </a>
-      <a class="duo-card duo-card--ink" href="/curator.html">
-        <p class="folio"><span>05</span> The games page</p>
-        <h2 class="hed">The <em>Curator</em></h2>
-        <p class="dek">Three rooms, three briefs. It scores your layout, reads how you decide, and hands you a card to prove it.</p>
-        <p class="more">Play on your phone <span aria-hidden="true">→</span></p>
-      </a>
-    </section>
-
 {COLOPHON}'''
 
 # -------------------------------------------------------------- velocity ----
@@ -198,7 +182,7 @@ VELOCITY = f'''    <section class="case-cover">
     <section class="spread">
       <p class="folio"><span>i</span> The problem</p>
       <div class="cols">
-        <h2 class="hed">Four projects. A teammate had <em>one.</em></h2>
+        <h2 class="hed">Four projects. A teammate had one.</h2>
         <div class="prose">
           <p>It began as a chat with Anant about measuring the return on AI spend. You can’t measure that without knowing where time goes, which led straight to a problem I was living in: work assigned on gut feel, and nobody able to see who had room.</p>
           <div class="versus">
@@ -211,7 +195,7 @@ VELOCITY = f'''    <section class="case-cover">
 
     <section class="spread tint">
       <p class="folio"><span>ii</span> Research</p>
-      <h2 class="hed">Four interviews. Each one <em>moved</em> something.</h2>
+      <h2 class="hed">Four interviews. Four changes.</h2>
       <ul class="quotes">
         {q("Senior delivery professional", "You see yourself doing the same kind of work because only the same two, three people see your availability.", "kept a human in every loop, and put an “I’m interested” signal on the roadmap.")}
         {q("Audit director", "Somebody would have to key in something.", "redesigned onboarding around getting data in with almost no effort.")}
@@ -225,7 +209,7 @@ VELOCITY = f'''    <section class="case-cover">
       <div class="cols cols--img">
         {fig("sketch-conceptual-model-900.webp", "The first conceptual model, handwritten in a notebook.", "The whole product, on one page of a notebook.", "fig--paper", 900, 1396)}
         <div class="prose">
-          <h2 class="hed">It started on <em>paper.</em></h2>
+          <h2 class="hed">It started on paper.</h2>
           <p>One loop holds everything. Nothing moves until the lead has edited the plan and chosen to commit.</p>
           <ol class="loop"><li>Describe a project</li><li>AI drafts the tasks</li><li>AI recommends people</li><li>Lead edits</li><li>Commit</li></ol>
           <p class="math"><b>40h</b> available. Sarah has <b>48h</b>. <span>The AI suggests moving 8 hours of QA to Alex, and shows the maths before anyone says yes. Sample data.</span></p>
@@ -235,7 +219,7 @@ VELOCITY = f'''    <section class="case-cover">
 
     <section class="spread tint">
       <p class="folio"><span>iv</span> Onboarding</p>
-      <h2 class="hed">The assumption research <em>broke.</em></h2>
+      <h2 class="hed">One question broke the onboarding.</h2>
       <p class="dek dek--wide">I assumed teams would arrive through Jira. Then an audit director asked who would key the data in. The hard problem was never the dashboard.</p>
       <div class="ba">
         {fig("sketch-login-jira-first-900.webp", "Early sketch assuming login through a project tool.", "Before: one door, and it needed Jira.", "fig--paper", 900, 589)}
@@ -245,7 +229,7 @@ VELOCITY = f'''    <section class="case-cover">
 
     <section class="spread">
       <p class="folio"><span>v</span> Trust</p>
-      <h2 class="hed">AI assists. A human <em>decides.</em></h2>
+      <h2 class="hed">Trust is the product.</h2>
       <div class="shots3">
         {fig("shot-ai-card-collapsed.webp", "AI suggestion card with Review and Ignore.", "1 · Review or Ignore. Never Apply.", sample=True)}
         {fig("shot-ai-card-impact-panel.webp", "Impact panel showing hours before and after.", "2 · The maths before the decision.", sample=True)}
@@ -263,7 +247,7 @@ VELOCITY = f'''    <section class="case-cover">
 
     <section class="spread tint">
       <p class="folio"><span>vi</span> Decisions</p>
-      <h2 class="hed">Four decisions, and what each <em>cost.</em></h2>
+      <h2 class="hed">Every decision had a price.</h2>
       <table class="dtable">
         <thead><tr><th scope="col">Decision</th><th scope="col">Why</th><th scope="col">The price</th></tr></thead>
         <tbody>
@@ -277,7 +261,7 @@ VELOCITY = f'''    <section class="case-cover">
 
     <section class="spread">
       <p class="folio"><span>vii</span> Reflections</p>
-      <h2 class="hed">What I’d tell myself in <em>February.</em></h2>
+      <h2 class="hed">What I’d tell myself in February.</h2>
       <ol class="refl">
         <li><h3>Validate the edges, not just the core.</h3><p>The interviews left the core alone and exposed what I’d missed: how the data gets in.</p></li>
         <li><h3>Data needs a counterweight.</h3><p>Showing availability speeds up allocation. It can also keep sending the same people the same work.</p></li>
@@ -314,7 +298,7 @@ DECAF = f'''    <section class="case-cover">
     <section class="spread">
       <p class="folio"><span>i</span> The insight</p>
       <div class="cols">
-        <h2 class="hed">The barrier isn’t information. It’s <em>asking.</em></h2>
+        <h2 class="hed">The barrier isn’t information. It’s asking.</h2>
         <div class="prose">
           <p>Specialty menus assume you already speak coffee: estates, processes, tasting notes. Beginners feel judged asking, so they order the hazelnut latte, or guess.</p>
           <p>I still ask the barista what they’d recommend. Tasting notes confuse me too. You can love blueberries and hate blueberry coffee.</p>
@@ -326,7 +310,7 @@ DECAF = f'''    <section class="case-cover">
       <p class="folio"><span>ii</span> The idea</p>
       <div class="cols cols--phones">
         <div class="prose">
-          <h2 class="hed">Two picks, in <em>plain words.</em></h2>
+          <h2 class="hed">Two picks. Plain words.</h2>
           <p>Scan the QR on the table, say what you usually drink, get a safe pick and a stretch pick from today’s menu. A two-tap check-in after the cup makes the next one better.</p>
           <div class="menu">
             <p class="menu-k">The menu says</p>
@@ -346,7 +330,7 @@ DECAF = f'''    <section class="case-cover">
 
     <section class="spread">
       <p class="folio"><span>iii</span> Decisions so far</p>
-      <h2 class="hed">Small rules, <em>strongly brewed.</em></h2>
+      <h2 class="hed">Six rules for a nervous first order.</h2>
       <ol class="patterns">
         {pat("a", "No prompt needed", "Scan, one tap, two picks. Good help shouldn’t require knowing what to ask.")}
         {pat("b", "One question", "“What do you usually order?” It starts from what people already know.")}
@@ -359,7 +343,7 @@ DECAF = f'''    <section class="case-cover">
 
     <section class="spread tint">
       <p class="folio"><span>iv</span> Early signals <i>Signals to check, not findings</i></p>
-      <h2 class="hed">What a café co-founder in Chennai hears at the <em>counter.</em></h2>
+      <h2 class="hed">Heard at the counter, in Chennai.</h2>
       <ul class="quotes">
         {sig("The decision gets handed over", "A lot of them just end up asking ‘what do you recommend?’", "the app gives the recommendation people would otherwise ask a stranger for.")}
         {sig("People start from the familiar", "Most people look for something familiar first, like a cappuccino or a cold coffee.", "the first question stays “what do you usually drink?”")}
@@ -372,7 +356,7 @@ DECAF = f'''    <section class="case-cover">
     <section class="spread">
       <p class="folio"><span>v</span> What’s next</p>
       <div class="cols">
-        <h2 class="hed">Research first, <em>this time.</em></h2>
+        <h2 class="hed">Research first, this time.</h2>
         <div class="prose">
           <p>My last project taught me to validate before I build. So before anything grows, the flow gets tested in a café with five or six beginners.</p>
           <p class="side-k">What I’ll watch for (hypotheses, not results)</p>
@@ -383,7 +367,7 @@ DECAF = f'''    <section class="case-cover">
     </section>
 
     <section class="spread nextup">
-      <a href="/editorial-collection.html"><p class="folio"><span>→</span> Next</p><h2 class="hed hed--xl">The <em>collection</em></h2><p class="dek">Five things I can’t stop looking at.</p></a>
+      <a href="/editorial-velocity.html"><p class="folio"><span>→</span> Next</p><h2 class="hed hed--xl">AI drafts.<br><em>People decide.</em></h2><p class="dek">Velocity AI, and the four interviews that broke it.</p></a>
     </section>'''
 
 # ------------------------------------------------------------ collection ----
@@ -490,7 +474,6 @@ PAGES = {
     "editorial.html": ("Sukriti Pandey — The editorial edition", "A light, magazine-editorial edition of Sukriti Pandey's portfolio.", HOME, ""),
     "editorial-velocity.html": ("Velocity AI — AI drafts. People decide. · Sukriti Pandey", "Velocity AI case study, editorial edition.", VELOCITY, "velocity"),
     "editorial-decaf.html": ("Ctrl+Alt+Decaf — In progress · Sukriti Pandey", "Ctrl+Alt+Decaf, in progress. Editorial edition.", DECAF, "decaf"),
-    "editorial-collection.html": ("The collection — Sukriti Pandey", "Five things Sukriti Pandey can't stop looking at.", COLLECTION, "collection"),
 }
 for name, (t, d, body, here) in PAGES.items():
     (ROOT / name).write_text(page(t, d, body, here))

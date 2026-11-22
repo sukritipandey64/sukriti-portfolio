@@ -13,7 +13,7 @@ if (reduce || !('IntersectionObserver' in window)) {
 
 /* Edition switch: every page has a twin in the other design language. */
 {
-  const TWINS = { '/': '/editorial.html', '/index.html': '/editorial.html', '/velocity-ai.html': '/editorial-velocity.html', '/digital-barista.html': '/editorial-decaf.html', '/collection.html': '/editorial-collection.html' };
+  const TWINS = { '/': '/editorial.html', '/index.html': '/editorial.html', '/velocity-ai.html': '/editorial-velocity.html', '/digital-barista.html': '/editorial-decaf.html' };
   const here = location.pathname.replace(/\/$/, '') || '/';
   const dark = TWINS[here];
   const light = Object.keys(TWINS).find((k) => TWINS[k] === here && k !== '/index.html');

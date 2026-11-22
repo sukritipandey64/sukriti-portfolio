@@ -14,7 +14,6 @@ export default defineConfig({
         editorial: resolve(__dirname, 'editorial.html'),
         editorialVelocity: resolve(__dirname, 'editorial-velocity.html'),
         editorialDecaf: resolve(__dirname, 'editorial-decaf.html'),
-        editorialCollection: resolve(__dirname, 'editorial-collection.html'),
       },
     },
   },

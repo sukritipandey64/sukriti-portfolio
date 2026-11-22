@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/editorial-collection.html", "destination": "/collection.html", "permanent": false }
+  ]
+}
