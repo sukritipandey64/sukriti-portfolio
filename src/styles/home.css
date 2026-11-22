@@ -1,5 +1,6 @@
-@import '@fontsource/bodoni-moda/400.css';
-@import '@fontsource/bodoni-moda/400-italic.css';
+@import '@fontsource/inter-tight/400.css';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
 /* ==========================================================================
    Homepage
    ========================================================================== */
@@ -361,10 +362,10 @@ a.install:focus-visible { outline: 1px solid var(--amber-soft); outline-offset: 
 .door-k { font-size: 0.76rem; letter-spacing: 0.24em; text-transform: uppercase; }
 .door-read .door-k { color: #5C1A17; } .door-feel .door-k { color: var(--amber-soft); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8); }
 .door-h { font-size: clamp(2.4rem, 5.6vw, 5.4rem); line-height: 0.95; letter-spacing: -0.02em; max-width: 9ch; }
-.door-read .door-h { font-family: 'Bodoni Moda', 'Didot', serif; } .door-read .door-h em { color: #5C1A17; }
+.door-read .door-h { font-family: 'Instrument Serif', Georgia, serif; letter-spacing: -0.015em; } .door-read .door-h em { color: #5C1A17; }
 .door-feel .door-h { font-family: var(--serif); font-weight: 300; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7); } .door-feel .door-h em { font-style: italic; color: var(--amber-soft); }
 .door-p { max-width: 26rem; font-size: 1.02rem; line-height: 1.6; }
-.door-read .door-p { color: #4D3F37; font-family: var(--serif); font-size: 1.3rem; line-height: 1.4; } .door-feel .door-p { color: var(--text); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.9); }
+.door-read .door-p { color: #4D3F37; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 1.05rem; line-height: 1.5; } .door-feel .door-p { color: var(--text); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.9); }
 .door-go { display: inline-flex; gap: 0.6rem; align-self: flex-start; margin-top: 0.6rem; padding: 0.95rem 1.6rem; border-radius: 99px; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; transition: gap 0.4s var(--ease), background 0.3s, color 0.3s; }
 .door-read .door-go { background: #1C1512; color: #EEE6D9; } .door-feel .door-go { border: 0.5px solid var(--amber-soft); background: rgba(10, 20, 25, 0.55); color: var(--amber-soft); backdrop-filter: blur(6px); }
 .door-half:hover .door-go, .door-half:focus-visible .door-go { gap: 1.1rem; }

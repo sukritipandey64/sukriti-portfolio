@@ -1,6 +1,6 @@
 /* Editorial edition (exploration): quiet reveals only. */
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const els = document.querySelectorAll('.masthead, .cover-grid, .cover-foot, .folio, .hed, .letter-body, .letter-side, .feature-img, .feature-copy > div, .decaf-copy > *, .decaf-phones img, .play-card, .contact li, .dek--wide, .credits, .fig, .prose, .quotes li, .patterns li, .dtable, .refl li, .plate, .duo-card .dek');
+const els = document.querySelectorAll('.cv-h, .cv-meta, .cv-copy, .work-h, .entry-top, .entry-imgs figure, .think-h, .think-body, .think-fig, .think-q, .look-h, .next-h, .next-row, .folio, .hed, .credits, .fig, .prose, .quotes li, .patterns li, .dtable, .refl li, .dek--wide');
 if (reduce || !('IntersectionObserver' in window)) {
   els.forEach((el) => el.classList.add('in'));
 } else {
@@ -43,3 +43,33 @@ if (reduce || !('IntersectionObserver' in window)) {
     }
   }
 }
+
+/* Live Hyderabad time in the top bar. */
+{
+  const els = document.querySelectorAll('[data-clock]');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+  const tick = () => els.forEach((el) => { el.textContent = `Hyderabad ${fmt.format(new Date())}`; });
+  if (els.length) { tick(); setInterval(tick, 30000); }
+}
+
+/* Chapter rail: names the chapter you are in. */
+{
+  const rail = document.querySelector('[data-rail]');
+  const secs = document.querySelectorAll('[data-chapter]');
+  if (rail && secs.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) rail.textContent = e.target.dataset.chapter; });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach((s) => io.observe(s));
+  }
+}
+
+/* Lookbook strip: drag sideways with a mouse (touch and trackpads scroll natively). */
+document.querySelectorAll('[data-strip]').forEach((strip) => {
+  let down = false, sx = 0, sl = 0, moved = false;
+  strip.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = strip.scrollLeft; strip.setPointerCapture(e.pointerId); });
+  strip.addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 3) { moved = true; strip.classList.add('is-drag'); } strip.scrollLeft = sl - dx; });
+  const up = () => { down = false; strip.classList.remove('is-drag'); };
+  strip.addEventListener('pointerup', up); strip.addEventListener('pointercancel', up);
+  strip.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') strip.scrollBy({ left: 320, behavior: 'smooth' }); if (e.key === 'ArrowLeft') strip.scrollBy({ left: -320, behavior: 'smooth' }); });
+});

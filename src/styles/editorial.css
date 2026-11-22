@@ -1,20 +1,20 @@
 /* ==========================================================================
-   Editorial edition — a light, fashion-magazine exploration of the homepage.
-   Paper, ink, one vermilion. Didone masthead, serif heds, sans captions.
+   Reading edition — "Chapters × Lookbook" (her pick, Nov 2026).
+   Oxblood + blush on paper. Instrument Serif for display, Inter Tight for text.
+   Chapters: huge condensed type, a chapter rail, light/dark panels.
+   Lookbook: deep-brown panels, tall images you drag sideways, small captions.
    ========================================================================== */
-@import '@fontsource/bodoni-moda/400.css';
-@import '@fontsource/bodoni-moda/500.css';
-@import '@fontsource/bodoni-moda/400-italic.css';
-@import '@fontsource/cormorant-garamond/400.css';
-@import '@fontsource/cormorant-garamond/400-italic.css';
-@import '@fontsource/syne/400.css';
-@import '@fontsource/syne/500.css';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource/inter-tight/400.css';
+@import '@fontsource/inter-tight/500.css';
 
 :root {
   /* Oxblood (her pick): paper, ink, deep wine. --red keeps its name but is oxblood now. */
   --paper: #EEE6D9; --paper-2: #E4D8C6; --ink: #1C1512; --soft: #4D3F37; --dim: #75665B;
   --rule: rgba(28, 21, 18, 0.16); --red: #5C1A17;
-  --didone: 'Bodoni Moda', 'Didot', serif; --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Syne', system-ui, sans-serif;
+  --didone: 'Instrument Serif', Georgia, serif; --serif: 'Instrument Serif', Georgia, serif; --sans: 'Inter Tight', system-ui, sans-serif;
+  --brown: #2A1915; --blush: #E7C8BC; --rail: 44px;
   --gutter: clamp(1.25rem, 4.5vw, 4.5rem); --room: clamp(4rem, 11vh, 8rem);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -29,7 +29,7 @@ em { font-style: italic; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 
 /* reveals */
-.js .masthead, .js .cover-grid, .js .cover-foot, .js .folio, .js .hed, .js .letter-body, .js .letter-side, .js .feature-img, .js .feature-copy > div, .js .decaf-copy > *, .js .decaf-phones img, .js .play-card, .js .contact li, .js .dek--wide, .js .credits, .js .fig, .js .prose, .js .quotes li, .js .patterns li, .js .dtable, .js .refl li, .js .plate, .js .duo-card .dek {
+.js .cv-h, .js .cv-meta, .js .cv-copy, .js .work-h, .js .entry-top, .js .entry-imgs figure, .js .think-h, .js .think-body, .js .think-fig, .js .think-q, .js .look-h, .js .next-h, .js .next-row, .js .folio, .js .hed, .js .credits, .js .fig, .js .prose, .js .quotes li, .js .patterns li, .js .dtable, .js .refl li, .js .dek--wide {
   opacity: 0; transform: translateY(18px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
 .js .in { opacity: 1 !important; transform: none !important; }
@@ -332,3 +332,125 @@ a:hover .more { gap: 1.1rem; color: var(--red); border-color: var(--red); }
 .bar nav .edition--bar { position: static; box-shadow: none; margin-right: 0.5rem; font-size: 0.72rem; }
 .bar nav .edition--bar a, .bar nav .edition--bar span { padding: 0.3rem 0.75rem; border: 0; }
 .fig { width: fit-content; max-width: 100%; margin-inline: auto; }
+
+
+/* ==========================================================================
+   Chapters × Lookbook
+   ========================================================================== */
+body { font-size: 1rem; }
+main { padding-left: var(--rail); }
+.foot { margin-left: var(--rail); }
+.rail { position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 15; border-right: 1px solid var(--rule); background: var(--paper); display: flex; align-items: center; justify-content: center; }
+.rail span { transform: rotate(-90deg); white-space: nowrap; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); transition: opacity 0.3s; }
+.bar { padding-left: calc(var(--rail) + var(--gutter)); }
+.bar-logo { font-family: var(--didone); font-style: italic; font-size: 1.6rem; letter-spacing: -0.01em; }
+.bar-issue { letter-spacing: 0.14em; }
+.bar-issue span { color: var(--dim); margin: 0; }
+.ch { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: clamp(1rem, 3vh, 2rem); }
+.hed { letter-spacing: -0.01em; }
+.dek { font-family: var(--sans); font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.45; letter-spacing: -0.01em; }
+.prose p, .letter-body p { font-family: var(--sans); font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.65; }
+.folio span { font-family: var(--didone); font-size: 1.6rem; color: var(--red); }
+
+/* Cover: the name, huge; an oxblood panel with the red sculpture */
+.cv { height: calc(100svh - 3.4rem); min-height: 34rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(19rem, 31%); }
+.cv-main { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1rem, 4vh, 2.5rem) var(--gutter) clamp(1rem, 4vh, 2rem); }
+.cv-h { font-family: var(--didone); font-weight: 400; text-transform: uppercase; font-size: clamp(4.5rem, 15.5vw, 17rem); line-height: 0.8; letter-spacing: -0.025em; display: flex; flex-direction: column; }
+.cv-meta { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.cv-meta a { text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 0.2rem; }
+.cv-meta a:hover { color: var(--red); border-color: var(--red); }
+.cv-panel { position: relative; background: var(--red); color: var(--paper); display: flex; flex-direction: column; overflow: hidden; }
+.cv-panel img { flex: 1 1 0; height: 0; min-height: 0; width: 100%; object-fit: cover; object-position: 50% 78%; mix-blend-mode: luminosity; opacity: 0.85; }
+.cv-copy { padding: clamp(1.25rem, 3vh, 2rem) clamp(1.25rem, 2.5vw, 2.25rem) clamp(1.5rem, 4vh, 2.5rem); }
+.cv-line { font-family: var(--didone); font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 0.98; letter-spacing: -0.01em; }
+.cv-line em { color: var(--blush); }
+.cv-sub { margin-top: 1rem; font-size: 0.92rem; line-height: 1.5; color: #E9D3CA; max-width: 30ch; }
+
+/* Chapter I: THE [tiles] WORK */
+.work { padding: var(--room) var(--gutter) clamp(2rem, 6vh, 4rem); border-top: 1px solid var(--rule); }
+.work-h { display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.75rem); flex-wrap: wrap; font-family: var(--didone); font-weight: 400; text-transform: uppercase; font-size: clamp(4rem, 14vw, 15rem); line-height: 0.8; letter-spacing: -0.02em; }
+.work-tiles { display: grid; grid-template-columns: repeat(2, clamp(4.5rem, 10vw, 10rem)); gap: 6px; }
+.work-tiles img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; }
+
+/* Lookbook entries */
+.entry { padding: clamp(2.5rem, 7vh, 5rem) var(--gutter) var(--room); border-top: 1px solid var(--rule); }
+.entry-link { display: block; text-decoration: none; }
+.entry-top { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: start; }
+.entry-t { font-family: var(--didone); font-weight: 400; font-size: clamp(3rem, 6.5vw, 6.5rem); line-height: 0.9; letter-spacing: -0.02em; transition: color 0.3s; }
+.entry-link:hover .entry-t { color: var(--red); }
+.entry-m { margin-top: 1.25rem; font-size: 0.82rem; line-height: 1.65; color: var(--dim); }
+.entry-p { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.3; letter-spacing: -0.015em; max-width: 30ch; }
+.entry-imgs { display: grid; grid-template-columns: 1.5fr 1fr 0.8fr; gap: clamp(0.75rem, 2vw, 1.75rem); align-items: end; margin-top: clamp(2rem, 5vh, 3.5rem); }
+.entry-imgs img { width: 100%; height: auto; max-height: calc(100svh - 14rem); object-fit: contain; object-position: left bottom; }
+.entry-imgs .e2 { align-self: start; }
+.entry-imgs figcaption { margin-top: 0.6rem; font-size: 0.78rem; color: var(--dim); }
+.entry-imgs--phones { grid-template-columns: repeat(3, minmax(0, 15rem)); justify-content: start; }
+.entry-imgs--phones img { border-radius: 14px; }
+.entry--dark { background: var(--brown); color: var(--paper); border-top: 0; }
+.entry--dark .entry-m, .entry--dark figcaption { color: #B49C8C; }
+.entry--dark .entry-t em { font-style: italic; color: var(--blush); }
+.entry--dark .entry-link:hover .entry-t { color: var(--blush); }
+.entry--dark .more { border-color: var(--paper); }
+.entry--dark a:hover .more { color: var(--blush); border-color: var(--blush); }
+
+/* Chapter II: how I think */
+.think { padding: var(--room) var(--gutter); }
+.think-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: start; }
+.think-h { font-family: var(--didone); font-weight: 400; font-size: clamp(2.6rem, 5.4vw, 5.4rem); line-height: 0.95; letter-spacing: -0.015em; }
+.think-body { display: grid; gap: 1rem; max-width: 38rem; }
+.think-body p { font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.65; color: var(--soft); }
+.think-fig { margin-top: clamp(2.5rem, 6vh, 4rem); width: min(100%, 52rem); margin-left: auto; }
+.think-fig img { width: 100%; max-height: calc(100svh - 12rem); object-fit: cover; }
+.think-fig figcaption { margin-top: 0.6rem; font-size: 0.78rem; color: var(--dim); }
+.think-q { margin-top: clamp(2rem, 6vh, 4rem); max-width: 22ch; font-family: var(--didone); font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1; letter-spacing: -0.01em; }
+.think-q em { color: var(--red); }
+
+/* Lookbook strip: drag sideways */
+.look { background: var(--brown); color: var(--paper); padding: var(--room) 0 clamp(3rem, 8vh, 5rem); }
+.look-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 1rem; padding: 0 var(--gutter); }
+.look-head .ch { grid-column: 1 / -1; color: #B49C8C; }
+.look-h { font-family: var(--didone); font-weight: 400; font-size: clamp(2.2rem, 4.6vw, 4.6rem); line-height: 0.95; letter-spacing: -0.01em; max-width: 18ch; }
+.look-hint { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: #B49C8C; }
+.strip { display: flex; gap: clamp(0.75rem, 1.4vw, 1.25rem); overflow-x: auto; padding: clamp(1.75rem, 4vh, 3rem) var(--gutter) 0.5rem; scroll-snap-type: x proximity; scrollbar-width: none; cursor: grab; -webkit-user-select: none; user-select: none; }
+.strip::-webkit-scrollbar { display: none; }
+.strip.is-drag { cursor: grabbing; scroll-snap-type: none; }
+.lk { flex: none; scroll-snap-align: start; }
+.lk img { height: min(62svh, 560px); width: auto; display: block; pointer-events: none; }
+.lk figcaption { margin-top: 0.7rem; max-width: 26ch; font-size: 0.8rem; line-height: 1.45; color: #CDBBAE; }
+.strip:focus-visible { outline: 2px solid var(--blush); outline-offset: -4px; }
+
+/* Next chapter */
+.next { background: var(--red); color: var(--paper); padding: var(--room) var(--gutter) clamp(2.5rem, 7vh, 4rem); }
+.next .ch { color: var(--blush); }
+.next-h { font-family: var(--didone); font-weight: 400; text-transform: uppercase; font-size: clamp(4.5rem, 15vw, 16rem); line-height: 0.8; letter-spacing: -0.025em; }
+.next-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 5vw, 5rem); margin-top: clamp(2rem, 6vh, 4rem); align-items: start; }
+.next-p { font-size: clamp(1.1rem, 1.6vw, 1.4rem); line-height: 1.4; color: #EBD6CD; max-width: 28ch; }
+.next .contact { margin-top: 0; border-top-color: var(--blush); }
+.next .contact li { border-bottom-color: rgba(231, 200, 188, 0.3); }
+.next .contact span { color: var(--blush); }
+.next .contact a { font-family: var(--didone); color: var(--paper); }
+.next .contact a:hover { color: var(--blush); }
+
+/* case pages: the old cover-band and "nextup" read as chapters too */
+.case-cover .hed--xl, .nextup .hed--xl { text-transform: none; }
+.nextup { background: var(--brown); color: var(--paper); }
+.nextup .dek { color: #CDBBAE; } .nextup .folio span { color: var(--blush); } .nextup .hed em { color: var(--blush); }
+
+@media (max-width: 900px) {
+  :root { --rail: 0px; }
+  .rail { display: none; }
+  .cv { grid-template-columns: 1fr; height: auto; min-height: 0; }
+  .cv-main { gap: 2rem; }
+  .cv-h { font-size: 22vw; }
+  .cv-panel img { flex: none; height: 34svh; }
+  .think-fig { width: 100%; }
+  .entry-top, .think-grid, .next-row { grid-template-columns: 1fr; }
+  .entry-imgs { grid-template-columns: 1fr 1fr; }
+  .entry-imgs .e1 { grid-column: 1 / -1; }
+  .entry-imgs--phones { grid-template-columns: repeat(3, 1fr); }
+  .work-h { font-size: 20vw; }
+  .look-head { grid-template-columns: 1fr; }
+  .lk img { height: 52svh; }
+  .next-h { font-size: 22vw; }
+}
+@media (max-width: 720px) { .bar-issue { display: none; } .cv-meta { flex-direction: column; gap: 0.6rem; } }
