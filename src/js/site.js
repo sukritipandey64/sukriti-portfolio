@@ -261,7 +261,8 @@ if (atm && rooms.length && !reduceMotion) {
   const beams = [...fx.querySelectorAll('.g-beam')], pools = [...fx.querySelectorAll('.g-pool')], walls = [...fx.querySelectorAll('.g-wall')];
   const cv = fx.querySelector('canvas'), ctx = cv.getContext('2d');
   let W = 0, H = 0;
-  const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
+  // the canvas is drawn at reduced resolution on large screens (particles are tiny; nobody sees the difference, the GPU does)
+  const size = () => { W = innerWidth; H = innerHeight; const k = W > 900 ? 0.6 : 1; cv.width = Math.round(W * k); cv.height = Math.round(H * k); ctx.setTransform(k, 0, 0, k, 0, 0); };
   size(); addEventListener('resize', size, { passive: true });
   /* The swarm: one cloud of fine particles that follows you through the rooms and re-forms in each.
      Loose while you scroll (chaos), settled into a shape when you stop (curated). It parts around the cursor. */
@@ -301,7 +302,7 @@ if (atm && rooms.length && !reduceMotion) {
     // how I think: a slow ring
     ring: (p, t) => {
       const a = p.u * 6.283 * 3 + t * 0.00008 * (0.6 + p.r), R = Math.min(W, H) * (isTouch ? 0.34 : 0.3) * (0.82 + gauss(p) * 0.12);
-      return [(isTouch ? W * 0.5 : W * 0.72) + Math.cos(a) * R, H * 0.52 + Math.sin(a) * R * 0.92];
+      return [(isTouch ? W * 0.5 : W * 0.2) + Math.cos(a) * R * (isTouch ? 1 : 0.62), (isTouch ? H * 0.52 : H * 0.66) + Math.sin(a) * R * (isTouch ? 0.92 : 0.58)];
     },
     // work: a ribbon running through the room
     ribbon: (p, t) => {
@@ -482,7 +483,21 @@ document.querySelectorAll('[data-tabs]').forEach((wrap) => {
     nav.innerHTML = dark
       ? `<a href="${dark}">Read</a><span aria-current="true">Experience</span>`
       : `<span aria-current="true">Read</span><a href="${lightHref}">Experience</a>`;
-    document.body.append(nav);
+    // In the top bar on wide screens; on phones a small floating switch that tucks away while you read (scrolling down)
+    // and comes back when you scroll up or reach the end, so it never sits on top of text.
+    const bar = document.querySelector('.nav');
+    if (bar && matchMedia('(min-width: 900px)').matches) {
+      nav.classList.add('edition--bar');
+      bar.insertBefore(nav, bar.querySelector('.nav-links'));
+    } else {
+      document.body.append(nav);
+      let lastY = scrollY;
+      addEventListener('scroll', () => {
+        const y = scrollY, end = y + innerHeight > document.documentElement.scrollHeight - 80;
+        nav.classList.toggle('is-tucked', y > 160 && y > lastY && !end);
+        lastY = y;
+      }, { passive: true });
+    }
   }
 }
 

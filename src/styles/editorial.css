@@ -326,4 +326,8 @@ a:hover .more { gap: 1.1rem; color: var(--red); border-color: var(--red); }
 .edition a, .edition span { padding: 0.45rem 0.85rem; border-radius: 99px; text-decoration: none; color: var(--ink); }
 .edition span { background: var(--ink); color: var(--paper); }
 .edition a:hover { color: var(--red); }
+.edition { transition: transform 0.45s var(--ease), opacity 0.35s; }
+.edition.is-tucked { transform: translateY(160%); opacity: 0; pointer-events: none; }
+.bar nav .edition--bar { position: static; box-shadow: none; margin-right: 0.5rem; font-size: 0.72rem; }
+.bar nav .edition--bar a, .bar nav .edition--bar span { padding: 0.3rem 0.75rem; border: 0; }
 .fig { width: fit-content; max-width: 100%; margin-inline: auto; }

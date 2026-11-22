@@ -26,6 +26,20 @@ if (reduce || !('IntersectionObserver' in window)) {
     nav.innerHTML = dark
       ? `<a href="${dark}">Read</a><span aria-current="true">Experience</span>`
       : `<span aria-current="true">Read</span><a href="${lightHref}">Experience</a>`;
-    document.body.append(nav);
+    // In the top bar on wide screens; on phones a small floating switch that tucks away while you read (scrolling down)
+    // and comes back when you scroll up or reach the end, so it never sits on top of text.
+    const bar = document.querySelector('.bar nav');
+    if (bar && matchMedia('(min-width: 900px)').matches) {
+      nav.classList.add('edition--bar');
+      bar.prepend(nav);
+    } else {
+      document.body.append(nav);
+      let lastY = scrollY;
+      addEventListener('scroll', () => {
+        const y = scrollY, end = y + innerHeight > document.documentElement.scrollHeight - 80;
+        nav.classList.toggle('is-tucked', y > 160 && y > lastY && !end);
+        lastY = y;
+      }, { passive: true });
+    }
   }
 }
